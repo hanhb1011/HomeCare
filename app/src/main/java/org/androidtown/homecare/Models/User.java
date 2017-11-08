@@ -9,7 +9,8 @@ public class User {
     private String uid;
     private String name;
     private int age;
-    private double star;
+    private double star; //평점
+
 
     public User() {
     }

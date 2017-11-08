@@ -5,6 +5,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -37,6 +38,12 @@ public class ContentActivity extends AppCompatActivity {
         profileImageView.setClipToOutline(true);
         profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        findViewById(R.id.back_button_in_activity_content).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
