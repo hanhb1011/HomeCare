@@ -30,14 +30,9 @@ public class MyPageFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view =  inflater.inflate(R.layout.fragment_my_page, container, false);
-        ///
 
 
-        tempText = view.findViewById(R.id.temp_text);
-//        tempText.setText( ((MainActivity)getActivity()).name);
 
-
-        ///
         return view;
     }
 

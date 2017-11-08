@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import org.androidtown.homecare.Fragments.BookMarkFragment;
+import org.androidtown.homecare.Fragments.MessageFragment;
 import org.androidtown.homecare.Fragments.MyPageFragment;
-import org.androidtown.homecare.Fragments.TimeLineFragment;
+import org.androidtown.homecare.Fragments.HiringFragment;
 
 /**
  * Created by hanhb on 2017-11-07.
@@ -14,14 +14,14 @@ import org.androidtown.homecare.Fragments.TimeLineFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    TimeLineFragment timeLineFragment;
-    BookMarkFragment bookMarkFragment;
+    HiringFragment hiringFragment;
+    MessageFragment messageFragment;
     MyPageFragment myPageFragment;
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
-        timeLineFragment = new TimeLineFragment();
-        bookMarkFragment = new BookMarkFragment();
+        hiringFragment = new HiringFragment();
+        messageFragment = new MessageFragment();
         myPageFragment = new MyPageFragment();
     }
 
@@ -30,9 +30,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         switch (position){
 
             case 0 :
-                return timeLineFragment;
+                return hiringFragment;
             case 1 :
-                return bookMarkFragment;
+                return messageFragment;
             case 2 :
                 return myPageFragment;
             default:

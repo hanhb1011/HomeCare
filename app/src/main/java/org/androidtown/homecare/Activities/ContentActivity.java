@@ -5,7 +5,6 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -32,9 +31,6 @@ public class ContentActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        setSupportActionBar((Toolbar)findViewById(R.id.toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         profileImageView = findViewById(R.id.profile_image_view_in_activity_content);
         profileImageView.setBackground(new ShapeDrawable(new OvalShape()));

@@ -13,7 +13,7 @@ import org.androidtown.homecare.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button timeLineButton, bookMarkButton, myPageButton;
+    Button hiringButton, messageButton, myPageButton;
     ViewPager mainViewPager;
 
     @Override
@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
 
         //버튼
-        timeLineButton = findViewById(R.id.time_line_fragment_button);
-        timeLineButton.setOnClickListener(new View.OnClickListener() {
+        hiringButton = findViewById(R.id.hiring_fragment_button);
+        hiringButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {mainViewPager.setCurrentItem(0);
             }
         });
-        bookMarkButton = findViewById(R.id.book_mark_fragment_button);
-        bookMarkButton.setOnClickListener(new View.OnClickListener() {
+        messageButton = findViewById(R.id.message_fragment_button);
+        messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {mainViewPager.setCurrentItem(1);
             }

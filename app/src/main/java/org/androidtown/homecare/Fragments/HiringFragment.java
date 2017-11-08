@@ -19,10 +19,10 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimeLineFragment extends Fragment {
+public class HiringFragment extends Fragment {
     RecyclerView recyclerView;
 
-    public TimeLineFragment() {
+    public HiringFragment() {
         // Required empty public constructor
     }
 
@@ -31,8 +31,8 @@ public class TimeLineFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_time_line, container, false);
-        recyclerView = view.findViewById(R.id.recycler_view_in_time_line);
+        View view =  inflater.inflate(R.layout.fragment_hiring, container, false);
+        recyclerView = view.findViewById(R.id.recycler_view_in_hiring);
 
         //임시로 리스트 아이템 추가
         List<Content> list = new ArrayList<>();
@@ -42,8 +42,8 @@ public class TimeLineFragment extends Fragment {
         list.add(new Content("third"));
         list.add(new Content("fourth"));
         list.add(new Content("fifth"));
-        recyclerView.setLayoutManager(new LinearLayoutManager(TimeLineFragment.this.getContext()));
-        recyclerView.setAdapter(new ContentAdapter(list, getContext(), true));
+        recyclerView.setLayoutManager(new LinearLayoutManager(HiringFragment.this.getContext()));
+        recyclerView.setAdapter(new ContentAdapter(list, getContext()));
 
 
 

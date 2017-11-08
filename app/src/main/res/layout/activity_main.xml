@@ -13,15 +13,15 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/time_line_fragment_button"
-            android:text="타임라인"
+            android:id="@+id/hiring_fragment_button"
+            android:text="구인"
             android:background="@android:color/transparent"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <Button
-            android:id="@+id/book_mark_fragment_button"
-            android:text="구독"
+            android:id="@+id/message_fragment_button"
+            android:text="메시지"
             android:background="@android:color/transparent"
             android:layout_weight="1"
             android:layout_width="wrap_content"

@@ -13,10 +13,10 @@ import org.androidtown.homecare.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookMarkFragment extends Fragment {
+public class MessageFragment extends Fragment {
 
 
-    public BookMarkFragment() {
+    public MessageFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class BookMarkFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_mark, container, false);
+        return inflater.inflate(R.layout.fragment_message, container, false);
     }
 
 }
