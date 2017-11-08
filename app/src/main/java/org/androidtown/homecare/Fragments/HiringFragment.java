@@ -31,7 +31,7 @@ public class HiringFragment extends Fragment {
     RecyclerView recyclerView;
     ImageView profileImageView;
     TextView profileNameText;
-    Button addOrCheckContentButton;
+    Button addOrCheckContentButton, filterButton;
 
     public HiringFragment() {
         // Required empty public constructor
@@ -43,24 +43,9 @@ public class HiringFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_hiring, container, false);
-        recyclerView = view.findViewById(R.id.recycler_view_in_hiring);
+        initViews(view);
+        initButtons(view);
 
-        profileImageView = view.findViewById(R.id.profile_image_view_in_hiring_fragment);
-        profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
-        profileImageView.setClipToOutline(true);
-        profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-        profileNameText = view.findViewById(R.id.name_text_view_in_hiring_fragment);
-        //이미 추가되어있으면 체크 버튼, 추가되어있지 않으면 추가 버튼으로 전환하기
-        addOrCheckContentButton = view.findViewById(R.id.content_add_or_check_button);
-        addOrCheckContentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //임시
-                Intent intent = new Intent(HiringFragment.this.getContext(), ContentAdditionActivity.class);
-                startActivityForResult(intent, MainActivity.CONTENT_ADDITION_REQUEST);
-            }
-        });
 
         //임시로 리스트 아이템 추가
         List<Content> list = new ArrayList<>();
@@ -78,6 +63,44 @@ public class HiringFragment extends Fragment {
         return view;
     }
 
+    private void initViews(View view) {
+
+        recyclerView = view.findViewById(R.id.recycler_view_in_hiring);
+
+        profileImageView = view.findViewById(R.id.profile_image_view_in_hiring_fragment);
+        profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImageView.setClipToOutline(true);
+        profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        profileNameText = view.findViewById(R.id.name_text_view_in_hiring_fragment);
+
+    }
+
+    private void initButtons(View view) {
+
+        //이미 추가되어있으면 체크 버튼, 추가되어있지 않으면 추가 버튼으로 전환하기
+        addOrCheckContentButton = view.findViewById(R.id.content_add_or_check_button);
+        addOrCheckContentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //임시
+                Intent intent = new Intent(HiringFragment.this.getContext(), ContentAdditionActivity.class);
+                startActivityForResult(intent, MainActivity.CONTENT_ADDITION_REQUEST);
+            }
+        });
+
+        //필터링 버튼
+        filterButton = view.findViewById(R.id.filter_button);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilterDialogFragment filterDialogFragment = new FilterDialogFragment();
+                filterDialogFragment.setCancelable(false);
+                filterDialogFragment.show(HiringFragment.this.getActivity().getFragmentManager(), "");
+            }
+        });
+
+    }
 
 
 }
