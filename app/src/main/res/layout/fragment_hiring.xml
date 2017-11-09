@@ -38,7 +38,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content" />
             <Button
-                android:id="@+id/content_add_or_check_button"
+                android:id="@+id/home_care_add_or_check_button"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

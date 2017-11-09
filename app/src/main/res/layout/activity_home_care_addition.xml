@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.androidtown.homecare.Activities.ContentAdditionActivity"
+    tools:context="org.androidtown.homecare.Activities.HomeCareAdditionActivity"
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/back_button_in_activity_content_addition"
+        android:id="@+id/back_button_in_activity_home_care_addition"
         android:background="@android:color/transparent"
         android:text="뒤로"
         android:textSize="15dp"

@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.androidtown.homecare.Activities.ContentActivity;
-import org.androidtown.homecare.Models.Content;
+import org.androidtown.homecare.Activities.HomeCareActivity;
+import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.R;
 
 import java.util.List;
@@ -26,16 +26,16 @@ import java.util.List;
  */
 
 /*
-    ContentAdapter : 게시물 관리 어댑터
+    HomeCareAdapter : 게시물 관리 어댑터
 
  */
 
-public class ContentAdapter extends RecyclerView.Adapter {
+public class HomeCareAdapter extends RecyclerView.Adapter {
 
-    private List<Content> list;
+    private List<HomeCare> list;
     private Context context;
 
-    public ContentAdapter(List<Content> list, Context context) {
+    public HomeCareAdapter(List<HomeCare> list, Context context) {
         this.list = list;
         this.context = context;
 
@@ -46,24 +46,24 @@ public class ContentAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_content, parent, false);
-        return new ContentViewHolder(view);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_care, parent, false);
+        return new HomeCareViewHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        final Content content = list.get(position);
+        final HomeCare homeCare = list.get(position);
 
 
-        ((ContentViewHolder)holder).bind(content);
+        ((HomeCareViewHolder)holder).bind(homeCare);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ContentActivity.class);
-                Pair<View, String> profileImagePair = Pair.create((View)((ContentViewHolder)holder).profileImageView,"profile_image_transition");
-                Pair<View, String> cardViewPair = Pair.create((View)((ContentViewHolder)holder).contentCardView,"card_view_transition");
+                Intent intent = new Intent(context, HomeCareActivity.class);
+                Pair<View, String> profileImagePair = Pair.create((View)((HomeCareViewHolder)holder).profileImageView,"profile_image_transition");
+                Pair<View, String> cardViewPair = Pair.create((View)((HomeCareViewHolder)holder).homeCareCardView,"card_view_transition");
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, profileImagePair, cardViewPair);
 
                 //인텐트에 key 넣기
@@ -81,29 +81,29 @@ public class ContentAdapter extends RecyclerView.Adapter {
         return list.size();
     }
 
-    private class ContentViewHolder extends RecyclerView.ViewHolder {
+    private class HomeCareViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         ImageView profileImageView;
         TextView titleText, dateText, payText, periodText, careTypeText, locationText;
-        CardView contentCardView;
+        CardView homeCareCardView;
 
-        public ContentViewHolder(View itemView) {
+        public HomeCareViewHolder(View itemView) {
             super(itemView);
-            contentCardView = itemView.findViewById(R.id.content_card_view);
+            homeCareCardView = itemView.findViewById(R.id.home_care_card_view);
             profileImageView = itemView.findViewById(R.id.profile_image_view);
             profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
             profileImageView.setClipToOutline(true);
             profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            titleText = itemView.findViewById(R.id.content_title_text_view);
-            dateText = itemView.findViewById(R.id.content_upload_dat_text_view);
-            periodText = itemView.findViewById(R.id.content_period_text_view);
-            payText = itemView.findViewById(R.id.content_pay_text_view);
-            careTypeText = itemView.findViewById(R.id.content_care_type_text_view);
-            locationText = itemView.findViewById(R.id.content_location_text_view);
+            titleText = itemView.findViewById(R.id.home_care_title_text_view);
+            dateText = itemView.findViewById(R.id.home_care_upload_dat_text_view);
+            periodText = itemView.findViewById(R.id.home_care_period_text_view);
+            payText = itemView.findViewById(R.id.home_care_pay_text_view);
+            careTypeText = itemView.findViewById(R.id.home_care_care_type_text_view);
+            locationText = itemView.findViewById(R.id.home_care_location_text_view);
 
         }
 
-        void bind(Content content){
+        void bind(HomeCare homeCare){
 
         }
     }

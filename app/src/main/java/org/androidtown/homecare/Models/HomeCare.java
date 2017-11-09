@@ -5,7 +5,7 @@ package org.androidtown.homecare.Models;
  */
 
 
-public class Content {
+public class HomeCare {
     private String title;
     private Object timestamp; //게시일
     private String uid;
@@ -17,7 +17,7 @@ public class Content {
     private Object endPeriod;
 
 
-    public Content(){
+    public HomeCare(){
         //timestamp = ServerValue.TIMESTAMP; //파이어베이스 서버에서 시간 불러오기
     }
 

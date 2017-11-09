@@ -15,10 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.androidtown.homecare.Activities.ContentAdditionActivity;
+import org.androidtown.homecare.Activities.HomeCareAdditionActivity;
 import org.androidtown.homecare.Activities.MainActivity;
-import org.androidtown.homecare.Adapters.ContentAdapter;
-import org.androidtown.homecare.Models.Content;
+import org.androidtown.homecare.Adapters.HomeCareAdapter;
+import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.R;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class HiringFragment extends Fragment {
     RecyclerView recyclerView;
     ImageView profileImageView;
     TextView profileNameText;
-    Button addOrCheckContentButton, filterButton;
+    Button addOrCheckHomeCareButton, filterButton;
 
     public HiringFragment() {
         // Required empty public constructor
@@ -48,15 +48,15 @@ public class HiringFragment extends Fragment {
 
 
         //임시로 리스트 아이템 추가
-        List<Content> list = new ArrayList<>();
-        list.add(new Content()); //필수
-        list.add(new Content());
-        list.add(new Content());
-        list.add(new Content());
-        list.add(new Content());
-        list.add(new Content());
+        List<HomeCare> list = new ArrayList<>();
+        list.add(new HomeCare()); //필수
+        list.add(new HomeCare());
+        list.add(new HomeCare());
+        list.add(new HomeCare());
+        list.add(new HomeCare());
+        list.add(new HomeCare());
         recyclerView.setLayoutManager(new LinearLayoutManager(HiringFragment.this.getContext()));
-        recyclerView.setAdapter(new ContentAdapter(list, getContext()));
+        recyclerView.setAdapter(new HomeCareAdapter(list, getContext()));
 
 
 
@@ -79,13 +79,13 @@ public class HiringFragment extends Fragment {
     private void initButtons(View view) {
 
         //이미 추가되어있으면 체크 버튼, 추가되어있지 않으면 추가 버튼으로 전환하기
-        addOrCheckContentButton = view.findViewById(R.id.content_add_or_check_button);
-        addOrCheckContentButton.setOnClickListener(new View.OnClickListener() {
+        addOrCheckHomeCareButton = view.findViewById(R.id.home_care_add_or_check_button);
+        addOrCheckHomeCareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //임시
-                Intent intent = new Intent(HiringFragment.this.getContext(), ContentAdditionActivity.class);
-                startActivityForResult(intent, MainActivity.CONTENT_ADDITION_REQUEST);
+                Intent intent = new Intent(HiringFragment.this.getContext(), HomeCareAdditionActivity.class);
+                startActivityForResult(intent, MainActivity.HOMECARE_ADDITION_REQUEST);
             }
         });
 

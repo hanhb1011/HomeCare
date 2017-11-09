@@ -1,6 +1,5 @@
 package org.androidtown.homecare.Fragments;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -44,7 +43,6 @@ public class MessageDialogFragment extends DialogFragment {
     //싱글톤
     static MessageDialogFragment md;
 
-    @SuppressLint("ValidFragment")
     private MessageDialogFragment(){}
 
     public static void showDialog(int code, Context context){

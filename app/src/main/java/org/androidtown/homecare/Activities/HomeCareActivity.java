@@ -13,7 +13,7 @@ import org.androidtown.homecare.R;
 
 
 //게시글을 자세히 보여주는 액티비티
-public class ContentActivity extends AppCompatActivity {
+public class HomeCareActivity extends AppCompatActivity {
 
     ImageView profileImageView;
     AppBarLayout appBarLayout;
@@ -22,7 +22,7 @@ public class ContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content);
+        setContentView(R.layout.activity_home_care);
 
         initView();
 
@@ -33,12 +33,12 @@ public class ContentActivity extends AppCompatActivity {
 
     private void initView() {
 
-        profileImageView = findViewById(R.id.profile_image_view_in_activity_content);
+        profileImageView = findViewById(R.id.profile_image_view_in_activity_home_care);
         profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
         profileImageView.setClipToOutline(true);
         profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        findViewById(R.id.back_button_in_activity_content).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back_button_in_activity_home_care).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBackPressed();

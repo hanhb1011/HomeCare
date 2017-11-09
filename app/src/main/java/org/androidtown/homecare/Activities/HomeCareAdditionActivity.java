@@ -6,21 +6,21 @@ import android.view.View;
 
 import org.androidtown.homecare.R;
 
-public class ContentAdditionActivity extends AppCompatActivity {
+public class HomeCareAdditionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_content_addition);
+        setContentView(R.layout.activity_home_care_addition);
 
         initView();
     }
 
     private void initView() {
-        findViewById(R.id.back_button_in_activity_content_addition).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.back_button_in_activity_home_care_addition).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(MainActivity.CONTENT_ADDITION_RESULT);
+                setResult(MainActivity.HOMECARE_ADDITION_RESULT);
                 finish();
             }
         });
