@@ -8,7 +8,10 @@ import android.view.Window;
 import android.widget.Button;
 
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
+import org.androidtown.homecare.Firebase.FirebaseAccount;
+import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
+import org.androidtown.homecare.Utils.BackButtonHandler;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,18 +19,43 @@ public class MainActivity extends AppCompatActivity {
     //request & result codes
     public static final int CONTENT_ADDITION_REQUEST = 1000;
     public static final int CONTENT_ADDITION_RESULT = 1001;
+
     Button hiringButton, messageButton, myPageButton;
     ViewPager mainViewPager;
+    BackButtonHandler backButtonHandler;
+
+    FirebaseAccount firebaseAccount;
+    User user;
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_main);
+
+        initInstances(); //인스턴스 생성 및 초기화
+        initAuth(); //파이어베이스 관련 객체 초기화
         initView(); //뷰 초기화
+        requestDataFromFirebase(); //파이어베이스로부터 유저 정보와 구인 정보를 받는다.
+
+    }
+
+    private void requestDataFromFirebase() {
 
 
     }
+
+    private void initAuth() {
+        firebaseAccount = new FirebaseAccount(this);
+    }
+
+    private void initInstances() {
+        uid = getIntent().getStringExtra("uid");
+        backButtonHandler = new BackButtonHandler(this);
+    }
+
+
 
     private void initView() {
 
@@ -56,7 +84,27 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         mainViewPager.setCurrentItem(0);
 
-
-
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        firebaseAccount.mAuth.addAuthStateListener(firebaseAccount.mAuthListener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (firebaseAccount.mAuthListener != null) {
+            firebaseAccount.mAuth.removeAuthStateListener(firebaseAccount.mAuthListener);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backButtonHandler.onBackPressed(); //두 번 눌렀을 때 종료되도록
+    }
+
 }

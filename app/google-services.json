@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "245806530095",
+    "firebase_url": "https://homecareproject-15094.firebaseio.com",
+    "project_id": "homecareproject-15094",
+    "storage_bucket": "homecareproject-15094.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245806530095:android:53a94e279ae753e2",
+        "android_client_info": {
+          "package_name": "org.androidtown.homecare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245806530095-2l9u7jkes1pkp9bvff36nsgmtoccgf5b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.androidtown.homecare",
+            "certificate_hash": "b0a7b16e446ef1ebd24686a11fbac06b98749fcc"
+          }
+        },
+        {
+          "client_id": "245806530095-887u66bdocn7c2ejfs4c1gss5tc26gou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdbGulAnkQsloH_Zsa579ix0w2wv_847w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245806530095-887u66bdocn7c2ejfs4c1gss5tc26gou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

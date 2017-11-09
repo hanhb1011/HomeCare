@@ -6,21 +6,12 @@ package org.androidtown.homecare.Models;
 
 public class User {
 
-    private String uid;
-    private String name;
-    private int age;
+    private String name = ""; //temp ""
+    private Object birthday;
     private double star; //평점
 
 
     public User() {
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 
     public String getName() {
@@ -31,12 +22,12 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public Object getBirthday() {
+        return birthday;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setBirthday(Object birthday) {
+        this.birthday = birthday;
     }
 
     public double getStar() {
