@@ -1,7 +1,6 @@
 package org.androidtown.homecare.Fragments;
 
 
-import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -15,8 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.androidtown.homecare.Activities.HomeCareAdditionActivity;
-import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.R;
@@ -78,14 +75,15 @@ public class HiringFragment extends Fragment {
 
     private void initButtons(View view) {
 
-        //이미 추가되어있으면 체크 버튼, 추가되어있지 않으면 추가 버튼으로 전환하기
+        //TODO 이미 추가되어있으면 체크 버튼, 추가되어있지 않으면 추가 버튼으로 전환하기
+        //카드 추가, 또는 체크 버튼
         addOrCheckHomeCareButton = view.findViewById(R.id.home_care_add_or_check_button);
         addOrCheckHomeCareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //임시
-                Intent intent = new Intent(HiringFragment.this.getContext(), HomeCareAdditionActivity.class);
-                startActivityForResult(intent, MainActivity.HOMECARE_ADDITION_REQUEST);
+            HomeCareCreationFragment homeCareCreationFragment = new HomeCareCreationFragment();
+            homeCareCreationFragment.setCancelable(false);
+            homeCareCreationFragment.show(HiringFragment.this.getActivity().getFragmentManager(), "");
             }
         });
 

@@ -18,7 +18,6 @@
         </activity>
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.HomeCareActivity" />
-        <activity android:name=".Activities.HomeCareAdditionActivity"></activity>
     </application>
 
 </manifest>

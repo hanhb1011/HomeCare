@@ -16,10 +16,6 @@ import org.androidtown.homecare.Utils.BackButtonHandler;
 
 public class MainActivity extends AppCompatActivity {
 
-    //request & result codes
-    public static final int HOMECARE_ADDITION_REQUEST = 1000;
-    public static final int HOMECARE_ADDITION_RESULT = 1001;
-
     Button hiringButton, messageButton, myPageButton;
     ViewPager mainViewPager;
     BackButtonHandler backButtonHandler;
