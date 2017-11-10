@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         initView(); //뷰 초기화
         getDataFromFirebase(); //파이어베이스로부터 유저 정보와 구인 정보를 받는다.
 
+        //TODO : 유저의 상태에 따라 적절한 메시지 띄움. (지원자가 있다던지, 새 메시지가 있다던지 등등)
+
     }
 
     private void getDataFromFirebase() {
@@ -99,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == RESULT_REFRESH){ //리프레쉬가 필요한 경우
-            if(firebaseHomeCare != null && firebaseHomeCare.getRecyclerView()!=null){
+            if(firebaseHomeCare != null && firebaseHomeCare.getHomeCareRecyclerView()!=null){
 
-                firebaseHomeCare.refresh();
+                firebaseHomeCare.refreshHomeCare();
 
             }
         }
@@ -126,5 +128,5 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         backButtonHandler.onBackPressed(); //두 번 눌렀을 때 종료되도록
     }
-
+    
 }

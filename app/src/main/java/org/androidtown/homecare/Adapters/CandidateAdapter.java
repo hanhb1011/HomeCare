@@ -3,6 +3,10 @@ package org.androidtown.homecare.Adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import org.androidtown.homecare.Models.User;
+
+import java.util.List;
+
 /**
  * Created by hanhb on 2017-11-10.
  */
@@ -14,6 +18,7 @@ import android.view.ViewGroup;
  */
 public class CandidateAdapter extends RecyclerView.Adapter {
 
+    List<User> userList; //지원자 리스트
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

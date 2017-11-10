@@ -31,11 +31,26 @@ import java.util.List;
 
 public class FirebaseHomeCare {
 
+    /*
+        홈케어 관련 컨트롤러
+
+        HomeCares 관련 CRUD
+        1. writeHomecare() C
+        2. destroyHomecare() D
+        3. refreshHomeCare() R
+        4. updateHomecare() U
+
+        Candidates 관련
+        1. requestHomeCare C / D
+        2. initTextOfRequestButton : 요청 상태에 따라 뷰 초기화
+        3. getCandidates : R
+
+     */
     private FirebaseDatabase database;
     private final DatabaseReference homeCareRef;
     private final DatabaseReference userRef;
     private Context context;
-    private RecyclerView recyclerView;
+    private RecyclerView homeCareRecyclerView, candidatesRecyclerView;
     private final static List<HomeCare> homeCareList = new ArrayList<>();
 
     public FirebaseHomeCare(Context context) {
@@ -60,12 +75,20 @@ public class FirebaseHomeCare {
         return null;
     }
 
-    public void setRecyclerView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
+    public void setHomeCareRecyclerView(RecyclerView homeCareRecyclerView) {
+        this.homeCareRecyclerView = homeCareRecyclerView;
     }
 
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
+    public RecyclerView getHomeCareRecyclerView() {
+        return homeCareRecyclerView;
+    }
+
+    public RecyclerView getCandidatesRecyclerView() {
+        return candidatesRecyclerView;
+    }
+
+    public void setCandidatesRecyclerView(RecyclerView candidatesRecyclerView) {
+        this.candidatesRecyclerView = candidatesRecyclerView;
     }
 
     //CREATE HOME CARE
@@ -96,7 +119,7 @@ public class FirebaseHomeCare {
                             ProgressDialogHelper.dismiss();
                             MessageDialogFragment.setHomeCareCreationFragment(fragment);
                             MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CREATION_SUCCESS,context);
-                            refresh(); //리프레쉬
+                            refreshHomeCare(); //리프레쉬
                         }
                     });
                     userRef.child(uid).child("current_homecare").setValue(specificHomeCareRef.getKey());
@@ -118,7 +141,55 @@ public class FirebaseHomeCare {
     }
 
 
+    //DESTROY HOME CARE
+    public void destroyHomeCare(){
 
+        //TODO 상대방과 서로 동의가 있어야 삭제 가능
+
+        /*
+            상황
+            1. 상대방과 매칭이 되지 않은 경우
+                -> 그냥 삭제한다 (db의 user와 homecare에서 삭제하고 finish and refresh)
+            2. 상대방과 매칭이 이미 된 경우
+                ->
+         */
+
+
+    }
+
+    //READ HOME CARES
+    public void refreshHomeCare(){
+        if(homeCareRecyclerView == null)
+            return;
+
+        homeCareRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                homeCareList.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    homeCareList.add(ds.getValue(HomeCare.class));
+                }
+
+                HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, context);
+                homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                homeCareRecyclerView.setAdapter(homeCareAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /* 여기서부터 Candidates 관련 */
+
+    public void getCandidates(){
+
+
+
+    }
 
     public void requestHomeCare(final String key, final String uid, final Button requestButton){
         /*
@@ -164,48 +235,7 @@ public class FirebaseHomeCare {
 
     }
 
-    //DESTROY HOME CARE
-    public void destroyHomeCare(){
 
-        //TODO 상대방과 서로 동의가 있어야 삭제 가능
-
-        /*
-            상황
-            1. 상대방과 매칭이 되지 않은 경우
-                -> 그냥 삭제한다 (db의 user와 homecare에서 삭제하고 finish and refresh)
-            2. 상대방과 매칭이 이미 된 경우
-                ->
-         */
-
-
-    }
-
-    //READ HOME CARES
-    public void refresh(){
-        if(recyclerView == null)
-            return;
-
-        homeCareRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                homeCareList.clear();
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    homeCareList.add(ds.getValue(HomeCare.class));
-                }
-
-                HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, context);
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-                recyclerView.setAdapter(homeCareAdapter);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    
     public void initTextOfRequestButton(final String key, final String uid, final Button requestButton){
 
         //신청했으면 "신청하기", 신청하지 않으면 "신청취소"로 텍스트 바꾸기

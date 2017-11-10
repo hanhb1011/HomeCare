@@ -45,8 +45,8 @@ public class HiringFragment extends Fragment {
     private void initViews(View view) {
 
         recyclerView = view.findViewById(R.id.recycler_view_in_hiring);
-        ((MainActivity)getActivity()).firebaseHomeCare.setRecyclerView(recyclerView);
-        ((MainActivity)getActivity()).firebaseHomeCare.refresh();
+        ((MainActivity)getActivity()).firebaseHomeCare.setHomeCareRecyclerView(recyclerView);
+        ((MainActivity)getActivity()).firebaseHomeCare.refreshHomeCare();
 
         profileImageView = view.findViewById(R.id.profile_image_view_in_hiring_fragment);
         profileImageView.setBackground(new ShapeDrawable(new OvalShape()));

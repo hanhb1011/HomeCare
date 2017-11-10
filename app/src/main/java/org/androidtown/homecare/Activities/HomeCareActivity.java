@@ -37,7 +37,8 @@ public class HomeCareActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_care);
 
         key = getIntent().getStringExtra("key");
-        uid = getIntent().getStringExtra("uid");
+        uid = MainActivity.uid;
+
         initView();
         getData();
 
@@ -73,7 +74,6 @@ public class HomeCareActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     firebaseHomeCare.requestHomeCare(key, uid, contactButton);
-
                 }
             });
 
