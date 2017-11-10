@@ -101,6 +101,9 @@ public class CandidateAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK, context);
+                    //TODO ㄱㄱㄱㄱㄱㄱ
+
+
                 }
             });
         }

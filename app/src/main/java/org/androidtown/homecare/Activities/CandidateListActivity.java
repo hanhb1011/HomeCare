@@ -37,8 +37,7 @@ public class CandidateListActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(MainActivity.RESULT_REFRESH_IN_HOME_CARE_ACTIVITY);
-                finish();
+                onBackPressed();
             }
         });
 

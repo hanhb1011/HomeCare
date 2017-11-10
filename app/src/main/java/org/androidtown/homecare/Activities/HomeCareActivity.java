@@ -130,4 +130,15 @@ public class HomeCareActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == MainActivity.RESULT_REFRESH_IN_HOME_CARE_ACTIVITY){
+            titleText.setTextColor(getResources().getColor(R.color.colorAccent));
+            titleText.setText("( 마감된 홈케어입니다. )");
+            contactButton.setVisibility(View.GONE);
+        }
+
+    }
 }

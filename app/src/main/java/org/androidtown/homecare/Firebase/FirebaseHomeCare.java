@@ -57,7 +57,8 @@ public class FirebaseHomeCare {
     private final static List<User> userList = new ArrayList<>();
 
     private static final String CANDIDATES = "candidates";
-    private static final String CURRENT_HOME_CARE = "";
+    private static final String CURRENT_HOME_CARE = "current_homecare";
+    private static final String UID_OF_CARETAKER = "uidOfCareTaker";
 
     public FirebaseHomeCare(Context context) {
 
@@ -193,7 +194,7 @@ public class FirebaseHomeCare {
     //////////////////////////////////////////////////////////////////////////////////////////////
     /* 여기서부터 Candidates 관련 */
 
-    public void pickCandidate(String key, String uidOfCareTaker){
+    public void pickCandidate(final String key, final String uidOfCareTaker){
 
         /*
             0. 프로그레스바 띄움
@@ -202,8 +203,31 @@ public class FirebaseHomeCare {
             3. TODO : 메시지 갱신
             4. request code를 포함하여 finish (갱신되게)
          */
+        ProgressDialogHelper.show(context, "등록 중입니다...");
+        homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProgressDialogHelper.dismiss(); //임시
 
-        
+                if(dataSnapshot.child("uidOfCareTaker").getValue(String.class) != null){
+                    Toast.makeText(context, "이미 홈케어 서비스가 진행 중입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCareTaker);
+
+                //메시지 생성
+
+                //생성 후 성공 메시지 띄움
+                MessageDialogFragment.setContext(context);
+                MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK_SUCCESS, context);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

@@ -28,6 +28,14 @@ public class ProgressDialogHelper {
         progressDialog.show();
     }
 
+    public static void setMessage(String message){
+        if(progressDialog == null)
+            return;
+
+        progressDialog.setMessage(message);
+
+    }
+
     public static void dismiss(){
         if(progressDialog !=null)
             progressDialog.dismiss();

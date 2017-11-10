@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.R;
 
 /**
@@ -42,6 +43,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int HOME_CARE_ALREADY_EXISTS = 10;
     public final static int HOMECARE_CREATION_SUCCESS = 11;
     public final static int CANDIDATE_PICK = 12;
+    public final static int CANDIDATE_PICK_SUCCESS = 13;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -53,6 +55,7 @@ public class MessageDialogFragment extends DialogFragment {
     static MessageDialogFragment md;
 
     private static HomeCareCreationFragment homeCareCreationFragment;
+    private static Context context;
 
     @SuppressLint("ValidFragment")
     private MessageDialogFragment(){}
@@ -150,6 +153,18 @@ public class MessageDialogFragment extends DialogFragment {
                 });
                 rightButton.setText("아니오");
                 break;
+            case CANDIDATE_PICK_SUCCESS :
+                titleText.setText("등록 성공!");
+                contentText.setText("수락되었습니다.\n메시지 탭에서 메시지를 보내보세요!");
+                rightButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((Activity)context).setResult(MainActivity.RESULT_REFRESH_IN_HOME_CARE_ACTIVITY);
+                        ((Activity) context).finish();
+                        dismiss();
+                    }
+                });
+                break;
             default:
                 titleText.setText("에러");
                 break;
@@ -176,5 +191,9 @@ public class MessageDialogFragment extends DialogFragment {
 
     public static void setHomeCareCreationFragment(HomeCareCreationFragment fragment) {
         homeCareCreationFragment = fragment;
+    }
+
+    public static void setContext(Context context) {
+        MessageDialogFragment.context = context;
     }
 }
