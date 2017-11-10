@@ -8,10 +8,19 @@ public class User {
 
     private String name = ""; //temp ""
     private Object birthday;
+    private String uid;
     private double star; //평점
 
 
     public User() {
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {

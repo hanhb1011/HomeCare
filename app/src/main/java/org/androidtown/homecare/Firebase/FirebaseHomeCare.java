@@ -148,7 +148,7 @@ public class FirebaseHomeCare {
 
 
     //DESTROY HOME CARE
-    public void destroyHomeCare(){
+    public void destroyHomeCare(String key, String uid){
 
         //TODO 상대방과 서로 동의가 있어야 삭제 가능
 
@@ -192,6 +192,20 @@ public class FirebaseHomeCare {
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     /* 여기서부터 Candidates 관련 */
+
+    public void pickCandidate(String key, String uidOfCareTaker){
+
+        /*
+            0. 프로그레스바 띄움
+            1. 이미 케어하는 사람이 존재할 경우 리턴
+            2. homecare/key/uidOfCareTaker 에 uid 갱신
+            3. TODO : 메시지 갱신
+            4. request code를 포함하여 finish (갱신되게)
+         */
+
+        
+
+    }
 
     public void refreshCandidates(String key){
         if(candidatesRecyclerView==null)

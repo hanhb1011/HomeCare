@@ -18,10 +18,18 @@ public class HomeCare {
     private String careType;
     private Long startPeriod;
     private Long endPeriod;
-
+    private String uidOfCareTaker;
 
 
     public HomeCare(){
+    }
+
+    public String getUidOfCareTaker() {
+        return uidOfCareTaker;
+    }
+
+    public void setUidOfCareTaker(String uidOfCareTaker) {
+        this.uidOfCareTaker = uidOfCareTaker;
     }
 
     public String getKey() {
