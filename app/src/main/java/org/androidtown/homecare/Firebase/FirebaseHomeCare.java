@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.androidtown.homecare.Adapters.CandidateAdapter;
 import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
@@ -156,7 +157,8 @@ public class FirebaseHomeCare {
             1. 상대방과 매칭이 되지 않은 경우
                 -> 그냥 삭제한다 (db의 user와 homecare에서 삭제하고 finish and refresh)
             2. 상대방과 매칭이 이미 된 경우
-                ->
+                -> 상대방도 삭제 신청을 한 경우 삭제
+                -> 그렇지 않을 경우 삭제 신청 상태로 전환
          */
 
 
@@ -213,16 +215,18 @@ public class FirebaseHomeCare {
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        userList.clear(); //리스트 클리어
+                        userList.clear();
 
-                        Iterator<String> it = uidOfCandidates.iterator(); //유저 리스트의
+                        Iterator<String> it = uidOfCandidates.iterator(); //유저 리스트로부터
 
                         while (it.hasNext()){
                             String candidateUid = it.next();
                             userList.add(dataSnapshot.child(candidateUid).getValue(User.class));
 
-                            //TODO 리사이클러뷰 ㄱㄱㄱㄱ
                         }
+                        CandidateAdapter candidateAdapter = new CandidateAdapter(userList, context);
+                        candidatesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        candidatesRecyclerView.setAdapter(candidateAdapter);
                     }
 
                     @Override

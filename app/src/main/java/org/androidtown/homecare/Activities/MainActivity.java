@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     //result Codes
     public static final int RESULT_REFRESH = 1000;
     public static final int REQUEST_HOME_CARE_ACTIVITY = 1001;
+    public static final int RESULT_REFRESH_IN_HOME_CARE_ACTIVITY = 1002;
+    public static final int REQUEST_IN_HOME_CARE_ACTIVITY = 1003;
+
 
     Button hiringButton, messageButton, myPageButton;
     ViewPager mainViewPager;

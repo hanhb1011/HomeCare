@@ -41,6 +41,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int TITLE_INVALID = 9;
     public final static int HOME_CARE_ALREADY_EXISTS = 10;
     public final static int HOMECARE_CREATION_SUCCESS = 11;
+    public final static int CANDIDATE_PICK = 12;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -135,6 +136,19 @@ public class MessageDialogFragment extends DialogFragment {
                         dismiss();
                     }
                 });
+                break;
+            case CANDIDATE_PICK :
+                titleText.setText("신청자 결정");
+                contentText.setText("홈케어 요청을 수락하시겠습니까?");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dismiss();
+                    }
+                });
+                rightButton.setText("아니오");
                 break;
             default:
                 titleText.setText("에러");

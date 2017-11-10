@@ -1,5 +1,6 @@
 package org.androidtown.homecare.Activities;
 
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -61,8 +62,9 @@ public class HomeCareActivity extends AppCompatActivity {
             contactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO 홈케어 신청이 아닌, 신청자들을 보는 버튼으로 변경?
-
+                    Intent intent = new Intent(HomeCareActivity.this, CandidateListActivity.class);
+                    intent.putExtra("key", key);
+                    startActivityForResult(intent, MainActivity.REQUEST_IN_HOME_CARE_ACTIVITY);
                 }
             });
 
