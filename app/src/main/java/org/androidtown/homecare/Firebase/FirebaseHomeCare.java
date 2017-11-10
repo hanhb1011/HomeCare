@@ -19,6 +19,7 @@ import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.HomeCare;
+import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import java.util.List;
 public class FirebaseHomeCare {
 
     /*
-        홈케어 관련 컨트롤러
+        FirebaseHomeCare : 홈케어 관련 컨트롤러
 
         HomeCares 관련 CRUD
         1. writeHomecare() C
@@ -41,9 +42,9 @@ public class FirebaseHomeCare {
         4. updateHomecare() U
 
         Candidates 관련
-        1. requestHomeCare C / D
-        2. initTextOfRequestButton : 요청 상태에 따라 뷰 초기화
-        3. getCandidates : R
+        1. requestHomeCare() C / D
+        2. initTextOfRequestButton() : 요청 상태에 따라 뷰 초기화
+        3. refreshCandidates() : R
 
      */
     private FirebaseDatabase database;
@@ -52,6 +53,10 @@ public class FirebaseHomeCare {
     private Context context;
     private RecyclerView homeCareRecyclerView, candidatesRecyclerView;
     private final static List<HomeCare> homeCareList = new ArrayList<>();
+    private final static List<User> userList = new ArrayList<>();
+
+    private static final String CANDIDATES = "candidates";
+    private static final String CURRENT_HOME_CARE = "";
 
     public FirebaseHomeCare(Context context) {
 
@@ -105,7 +110,7 @@ public class FirebaseHomeCare {
             5. 프로그레스 다이얼로그 dismiss
          */
 
-        userRef.child(uid).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(uid).child(CURRENT_HOME_CARE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -122,7 +127,7 @@ public class FirebaseHomeCare {
                             refreshHomeCare(); //리프레쉬
                         }
                     });
-                    userRef.child(uid).child("current_homecare").setValue(specificHomeCareRef.getKey());
+                    userRef.child(uid).child(CURRENT_HOME_CARE).setValue(specificHomeCareRef.getKey());
 
                 } else {
                     ProgressDialogHelper.dismiss();
@@ -183,9 +188,56 @@ public class FirebaseHomeCare {
         });
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////
     /* 여기서부터 Candidates 관련 */
 
-    public void getCandidates(){
+    public void refreshCandidates(String key){
+        if(candidatesRecyclerView==null)
+            return;
+        /*
+            1. key에 해당하는 homecare의 candidates uid를 불러온다.
+            2. 불러오면 List에 넣는다
+            3. List의 uid에 해당되는 User를 userList에 추가한다.
+         */
+
+        homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                final List<String> uidOfCandidates = new ArrayList<>();
+                for(DataSnapshot ds : dataSnapshot.child(CANDIDATES).getChildren()){
+                    uidOfCandidates.add(ds.getValue(String.class)); //후보자의 키를 넣음
+                }
+
+                //유저 데이터스냅샷을 불러온 다음, 리스트에 해당하는 객체만 넣는다.
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        userList.clear(); //리스트 클리어
+
+                        Iterator<String> it = uidOfCandidates.iterator(); //유저 리스트의
+
+                        while (it.hasNext()){
+                            String candidateUid = it.next();
+                            userList.add(dataSnapshot.child(candidateUid).getValue(User.class));
+
+                            //TODO 리사이클러뷰 ㄱㄱㄱㄱ
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -212,9 +264,9 @@ public class FirebaseHomeCare {
                     return;
                 }
                 //자신이 있는지 탐색하기
-                for(DataSnapshot ds : dataSnapshot.child("candidates").getChildren()) {
+                for(DataSnapshot ds : dataSnapshot.child(CANDIDATES).getChildren()) {
                     if(ds.getValue(String.class).equals(uid)) {
-                        homeCareRef.child(key).child("candidates").child(ds.getKey()).removeValue();
+                        homeCareRef.child(key).child(CANDIDATES).child(ds.getKey()).removeValue();
                         requestButton.setText("신청하기");
                         Toast.makeText(context, "신청이 취소되었습니다.", Toast.LENGTH_SHORT).show();
                         return;
@@ -222,7 +274,7 @@ public class FirebaseHomeCare {
                 }
 
                 //신청 기록이 없을 경우 신청
-                homeCareRef.child(key).child("candidates").push().setValue(uid);
+                homeCareRef.child(key).child(CANDIDATES).push().setValue(uid);
                 requestButton.setText("신청취소");
                 Toast.makeText(context, "신청이 완료되었습니다!", Toast.LENGTH_SHORT).show();
             }
