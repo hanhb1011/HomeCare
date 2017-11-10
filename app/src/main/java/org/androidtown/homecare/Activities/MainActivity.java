@@ -1,5 +1,6 @@
 package org.androidtown.homecare.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,10 @@ import org.androidtown.homecare.Utils.BackButtonHandler;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    //result Codes
+    public static final int RESULT_REFRESH = 1000;
+    public static final int REQUEST_HOME_CARE_ACTIVITY = 1001;
 
     Button hiringButton, messageButton, myPageButton;
     ViewPager mainViewPager;
@@ -89,6 +94,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_REFRESH){ //리프레쉬가 필요한 경우
+            if(firebaseHomeCare != null && firebaseHomeCare.getRecyclerView()!=null){
+
+                firebaseHomeCare.refresh();
+
+            }
+        }
+    }
 
     @Override
     public void onStart() {

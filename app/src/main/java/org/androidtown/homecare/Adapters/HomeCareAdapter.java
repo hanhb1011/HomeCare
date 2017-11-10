@@ -71,7 +71,7 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
                 intent.putExtra("key", homeCare.getKey());
                 intent.putExtra("uid", MainActivity.uid);
 
-                context.startActivity(intent, options.toBundle());
+                ((Activity) context).startActivityForResult(intent, MainActivity.REQUEST_HOME_CARE_ACTIVITY ,options.toBundle());
 
             }
         });

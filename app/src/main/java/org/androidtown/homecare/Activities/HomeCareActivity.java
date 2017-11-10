@@ -25,7 +25,7 @@ public class HomeCareActivity extends AppCompatActivity {
     ImageView profileImageView;
     TextView titleText, dateText, payText, periodText, careTypeText, locationText, commentText;
     HomeCare homeCare;
-    Button editButton, deleteButton;
+    Button contactButton, editButton, deleteButton;
     FirebaseHomeCare firebaseHomeCare;
     String key;
     String uid;
@@ -52,10 +52,31 @@ public class HomeCareActivity extends AppCompatActivity {
             finish();
         }
 
-        //자신이 작성한 글일 경우
+        //자신이 작성한 글일 경우 수정 삭제 버튼 띄움.
         if(uid.equals(homeCare.getUid())){
             editButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.VISIBLE);
+            contactButton.setText("신청자 보기");
+            contactButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO 홈케어 신청이 아닌, 신청자들을 보는 버튼으로 변경?
+
+                }
+            });
+
+        } else {
+            //자신이 아닐 경우 "신청하기" 또는 "신청 취소"
+            firebaseHomeCare.initTextOfRequestButton(key, uid, contactButton);
+
+            contactButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    firebaseHomeCare.requestHomeCare(key, uid, contactButton);
+
+                }
+            });
+
         }
 
         titleText.setText(homeCare.getTitle());
@@ -93,6 +114,7 @@ public class HomeCareActivity extends AppCompatActivity {
         locationText = findViewById(R.id.home_care_location_text_view_in_activity_home_care);
         commentText = findViewById(R.id.comment_text_view_in_activity_home_care);
 
+        contactButton = findViewById(R.id.contact_button_in_activity_home_care);
         editButton = findViewById(R.id.edit_button_in_activity_home_care);
         deleteButton = findViewById(R.id.delete_button_in_activity_home_care);
 

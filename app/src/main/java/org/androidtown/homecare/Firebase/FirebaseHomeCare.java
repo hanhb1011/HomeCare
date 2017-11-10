@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,12 +29,11 @@ import java.util.List;
  * Created by hanhb on 2017-11-09.
  */
 
-//싱글톤 클래스
 public class FirebaseHomeCare {
 
     private FirebaseDatabase database;
-    private DatabaseReference homeCareRef;
-    private DatabaseReference userRef;
+    private final DatabaseReference homeCareRef;
+    private final DatabaseReference userRef;
     private Context context;
     private RecyclerView recyclerView;
     private final static List<HomeCare> homeCareList = new ArrayList<>();
@@ -63,10 +64,16 @@ public class FirebaseHomeCare {
         this.recyclerView = recyclerView;
     }
 
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    //CREATE HOME CARE
     public void writeHomeCare(final String uid, final HomeCare homeCare, final HomeCareCreationFragment fragment){
         ProgressDialogHelper.show(context);
 
         /*
+            Process
             0. 프로그레스 다이얼로그 띄움
             1. root/user/uid/current_homcare이 null인지 아닌지 확인 (이미 올린 홈케어가 있는지 없는지 확인)
             2. null이면 생성, 이미 존재할 경우 생성하지 않음
@@ -110,6 +117,70 @@ public class FirebaseHomeCare {
 
     }
 
+
+
+
+    public void requestHomeCare(final String key, final String uid, final Button requestButton){
+        /*
+            requestHomeCare : 홈케어 신청 기능
+            1. ProgressDialog를 띄움
+            2. 신청 내역이 없다면 신청자 목록에 자신의 정보(uid)를 추가한다.
+            3. 신청 내역이 있다면 신청자 목록에서 자신의 정보를 제거한다.
+            4. 1이나 3의 결과에 따라 request Button의 text를 수정한다, (신청하기 <-> 신청 취소)
+            5. 자신에게 신청했을 경우 토스트 띄우고 리턴
+         */
+
+        ProgressDialogHelper.show(context, "홈케어 요청 중입니다.");
+
+        homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProgressDialogHelper.dismiss();
+                if(dataSnapshot.child("uid").getValue(String.class).equals(uid)){
+                    Toast.makeText(context, "자신에게 신청할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //자신이 있는지 탐색하기
+                for(DataSnapshot ds : dataSnapshot.child("candidates").getChildren()) {
+                    if(ds.getValue(String.class).equals(uid)) {
+                        homeCareRef.child(key).child("candidates").child(ds.getKey()).removeValue();
+                        requestButton.setText("신청하기");
+                        Toast.makeText(context, "신청이 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                //신청 기록이 없을 경우 신청
+                homeCareRef.child(key).child("candidates").push().setValue(uid);
+                requestButton.setText("신청취소");
+                Toast.makeText(context, "신청이 완료되었습니다!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    //DESTROY HOME CARE
+    public void destroyHomeCare(){
+
+        //TODO 상대방과 서로 동의가 있어야 삭제 가능
+
+        /*
+            상황
+            1. 상대방과 매칭이 되지 않은 경우
+                -> 그냥 삭제한다 (db의 user와 homecare에서 삭제하고 finish and refresh)
+            2. 상대방과 매칭이 이미 된 경우
+                ->
+         */
+
+
+    }
+
+    //READ HOME CARES
     public void refresh(){
         if(recyclerView == null)
             return;
@@ -134,6 +205,31 @@ public class FirebaseHomeCare {
             }
         });
     }
+    
+    public void initTextOfRequestButton(final String key, final String uid, final Button requestButton){
 
+        //신청했으면 "신청하기", 신청하지 않으면 "신청취소"로 텍스트 바꾸기
+        homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ProgressDialogHelper.dismiss();
+                //자신이 있는지 탐색하기
+                for(DataSnapshot ds : dataSnapshot.child("candidates").getChildren()) {
+                    if(ds.getValue(String.class).equals(uid)) {
+                        //신청 기록이 있으면 신청 취소로
+                        requestButton.setText("신청취소");
+                        return;
+                    }
+                }
+                //신청 기록이 없을 경우 신청
+                requestButton.setText("신청하기");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

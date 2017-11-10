@@ -12,6 +12,7 @@ import org.androidtown.homecare.Fragments.HiringFragment;
  * Created by hanhb on 2017-11-07.
  */
 
+
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     HiringFragment hiringFragment;

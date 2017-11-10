@@ -37,7 +37,7 @@ public class HiringFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_hiring, container, false);
         initViews(view);
         initButtons(view);
-
+        //TODO 리프레쉬 버튼 만들기
 
         return view;
     }
