@@ -29,13 +29,14 @@
             android:id="@+id/left_button_message_dialog"
             android:background="@android:color/transparent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <Button
             android:id="@+id/right_button_message_dialog"
             android:background="@android:color/transparent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </LinearLayout>

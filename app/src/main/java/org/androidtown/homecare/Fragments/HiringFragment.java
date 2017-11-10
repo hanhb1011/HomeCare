@@ -5,7 +5,6 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.androidtown.homecare.Adapters.HomeCareAdapter;
-import org.androidtown.homecare.Models.HomeCare;
+import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,25 +39,14 @@ public class HiringFragment extends Fragment {
         initButtons(view);
 
 
-        //임시로 리스트 아이템 추가
-        List<HomeCare> list = new ArrayList<>();
-        list.add(new HomeCare()); //필수
-        list.add(new HomeCare());
-        list.add(new HomeCare());
-        list.add(new HomeCare());
-        list.add(new HomeCare());
-        list.add(new HomeCare());
-        recyclerView.setLayoutManager(new LinearLayoutManager(HiringFragment.this.getContext()));
-        recyclerView.setAdapter(new HomeCareAdapter(list, getContext()));
-
-
-
         return view;
     }
 
     private void initViews(View view) {
 
         recyclerView = view.findViewById(R.id.recycler_view_in_hiring);
+        ((MainActivity)getActivity()).firebaseHomeCare.setRecyclerView(recyclerView);
+        ((MainActivity)getActivity()).firebaseHomeCare.refresh();
 
         profileImageView = view.findViewById(R.id.profile_image_view_in_hiring_fragment);
         profileImageView.setBackground(new ShapeDrawable(new OvalShape()));

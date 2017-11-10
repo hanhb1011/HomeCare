@@ -16,9 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.androidtown.homecare.Activities.HomeCareActivity;
+import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -55,7 +58,6 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final HomeCare homeCare = list.get(position);
 
-
         ((HomeCareViewHolder)holder).bind(homeCare);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +68,8 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
                 Pair<View, String> cardViewPair = Pair.create((View)((HomeCareViewHolder)holder).homeCareCardView,"card_view_transition");
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, profileImagePair, cardViewPair);
 
-                //인텐트에 key 넣기
+                intent.putExtra("key", homeCare.getKey());
+                intent.putExtra("uid", MainActivity.uid);
 
                 context.startActivity(intent, options.toBundle());
 
@@ -104,7 +107,23 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
         }
 
         void bind(HomeCare homeCare){
+            titleText.setText(homeCare.getTitle());
 
+            //시간 관련 텍스트뷰 (Period, Date)
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat fmt2 = new SimpleDateFormat("MM/dd");
+            SimpleDateFormat fmt3 = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(homeCare.getStartPeriod());
+            periodText.setText(fmt.format(cal.getTime()));
+            cal.setTimeInMillis(homeCare.getEndPeriod());
+            periodText.append(" - "+ fmt2.format(cal.getTime()));
+            cal.setTimeInMillis((long)homeCare.getTimestamp());
+            dateText.setText(fmt3.format(cal.getTime()));
+
+            payText.setText(String.valueOf(homeCare.getPay()));
+            careTypeText.setText(homeCare.getCareType());
+            locationText.setText(homeCare.getLocation());
         }
     }
 

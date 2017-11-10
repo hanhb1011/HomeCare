@@ -1,7 +1,6 @@
 package org.androidtown.homecare.Firebase;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -18,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.User;
+import org.androidtown.homecare.Utils.ProgressDialogHelper;
 import org.androidtown.homecare.Utils.SharedPreferenceHelper;
 
 /**
@@ -43,7 +43,6 @@ public class FirebaseAccount {
 
     private static final String TAG = "Firebase Authentication"; //인증 로깅에 사용될 태그
     private Context context;
-    private ProgressDialog progressDialog;
 
 
     public FirebaseAccount(Context context) {
@@ -51,16 +50,8 @@ public class FirebaseAccount {
         this.context = context;
         mAuth = FirebaseAuth.getInstance();
 
-        initProgressDialog(); //Progress dialog 초기화
         setDefaultAuthListener(); //기본 리스너 생성 (uid 값만 할당시킴)
 
-    }
-
-    private void initProgressDialog() {
-        progressDialog = new ProgressDialog(context);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("잠시만 기다려주세요...");
-        progressDialog.setCanceledOnTouchOutside(false);
     }
 
     private void setDefaultAuthListener() {
@@ -97,13 +88,13 @@ public class FirebaseAccount {
             return;
         }
 
-        progressDialog.show(); //프로그래스바 띄우기
+        ProgressDialogHelper.show(context); //프로그래스바 띄우기
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity)context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+                        ProgressDialogHelper.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
@@ -133,13 +124,13 @@ public class FirebaseAccount {
             return;
         }
 
-        progressDialog.show(); //프로그래스바 띄우기
+        ProgressDialogHelper.show(context); //프로그래스바 띄우기
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity)context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+                        ProgressDialogHelper.dismiss();
 
                         if (task.isSuccessful()) {
                             //성공 시 입력값을 저장하고 다음 액티비티로 이동

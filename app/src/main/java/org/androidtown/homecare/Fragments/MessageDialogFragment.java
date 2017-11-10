@@ -1,5 +1,6 @@
 package org.androidtown.homecare.Fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -33,6 +34,13 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int SIGN_IN_FAILED = 2;
     public final static int GOOGLE_PLAY_SERVICE_NOT_FOUND = 3;
     public final static int SIGN_UP_SUCCESS = 4;
+    public final static int CANCEL_ASKING = 5;
+    public final static int PAY_INVALID = 6;
+    public final static int COMMENT_INVALID = 7;
+    public final static int DATE_INVALID = 8;
+    public final static int TITLE_INVALID = 9;
+    public final static int HOME_CARE_ALREADY_EXISTS = 10;
+    public final static int HOMECARE_CREATION_SUCCESS = 11;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -43,6 +51,9 @@ public class MessageDialogFragment extends DialogFragment {
     //싱글톤
     static MessageDialogFragment md;
 
+    private static HomeCareCreationFragment homeCareCreationFragment;
+
+    @SuppressLint("ValidFragment")
     private MessageDialogFragment(){}
 
     public static void showDialog(int code, Context context){
@@ -57,7 +68,6 @@ public class MessageDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_messagedialog, container);
 
         initView(view); //뷰 인스턴스 연결
-
         switch (code){
 
             case INVALID_EMAIL_OR_PASSWORD :
@@ -80,6 +90,52 @@ public class MessageDialogFragment extends DialogFragment {
                 titleText.setText("회원가입");
                 contentText.setText("회원가입에 성공하였습니다!");
                 break;
+            case CANCEL_ASKING :
+                titleText.setText("알림");
+                contentText.setText("홈케어 등록을 취소하시겠습니까?");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        homeCareCreationFragment.dismiss();
+                        dismiss();
+                    }
+                });
+                rightButton.setText("아니오");
+
+                break;
+            case PAY_INVALID :
+                titleText.setText("등록 실패!");
+                contentText.setText("급여를 입력해 주십시오.");
+                break;
+            case COMMENT_INVALID :
+                titleText.setText("등록 실패!");
+                contentText.setText("상세내용을 입력해 주십시오.");
+                break;
+            case DATE_INVALID :
+                titleText.setText("등록 실패!");
+                contentText.setText("정확한 날짜를 입력해 주십시오.");
+                break;
+            case TITLE_INVALID :
+                titleText.setText("등록 실패!");
+                contentText.setText("제목을 입력해 주십시오.");
+                break;
+            case HOME_CARE_ALREADY_EXISTS :
+                titleText.setText("등록 실패!");
+                contentText.setText("이미 등록된 홈케어가 존재합니다.");
+                break;
+            case HOMECARE_CREATION_SUCCESS :
+                titleText.setText("완료");
+                contentText.setText("홈케어 등록에 성공했습니다!");
+                rightButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        homeCareCreationFragment.dismiss();
+                        dismiss();
+                    }
+                });
+                break;
             default:
                 titleText.setText("에러");
                 break;
@@ -95,12 +151,16 @@ public class MessageDialogFragment extends DialogFragment {
         contentText = view.findViewById(R.id.content_text_in_message_dialog);
 
         //default initialize
-        leftButton.setText("확인");
-        leftButton.setOnClickListener(new View.OnClickListener() {
+        rightButton.setText("확인");
+        rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dismiss();
             }
         });
+    }
+
+    public static void setHomeCareCreationFragment(HomeCareCreationFragment fragment) {
+        homeCareCreationFragment = fragment;
     }
 }

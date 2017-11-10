@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
+import org.androidtown.homecare.Firebase.FirebaseHomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 import org.androidtown.homecare.Utils.BackButtonHandler;
@@ -20,9 +21,13 @@ public class MainActivity extends AppCompatActivity {
     ViewPager mainViewPager;
     BackButtonHandler backButtonHandler;
 
-    FirebaseAccount firebaseAccount;
-    User user;
-    String uid;
+    public FirebaseAccount firebaseAccount;
+    public FirebaseHomeCare firebaseHomeCare;
+
+
+    public static User user;
+    public static String uid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +38,19 @@ public class MainActivity extends AppCompatActivity {
         initInstances(); //인스턴스 생성 및 초기화
         initAuth(); //파이어베이스 관련 객체 초기화
         initView(); //뷰 초기화
-        requestDataFromFirebase(); //파이어베이스로부터 유저 정보와 구인 정보를 받는다.
+        getDataFromFirebase(); //파이어베이스로부터 유저 정보와 구인 정보를 받는다.
 
     }
 
-    private void requestDataFromFirebase() {
+    private void getDataFromFirebase() {
+
 
 
     }
 
     private void initAuth() {
         firebaseAccount = new FirebaseAccount(this);
+        firebaseHomeCare = new FirebaseHomeCare(this);
     }
 
     private void initInstances() {

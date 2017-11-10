@@ -1,11 +1,14 @@
 package org.androidtown.homecare.Models;
 
+import com.google.firebase.database.ServerValue;
+
 /**
  * Created by hanhb on 2017-11-07.
  */
 
 
 public class HomeCare {
+    private String key;
     private String title;
     private Object timestamp; //게시일
     private String uid;
@@ -13,12 +16,20 @@ public class HomeCare {
     private String location;
     private String comment;
     private String careType;
-    private Object startPeriod;
-    private Object endPeriod;
+    private Long startPeriod;
+    private Long endPeriod;
+
 
 
     public HomeCare(){
-        //timestamp = ServerValue.TIMESTAMP; //파이어베이스 서버에서 시간 불러오기
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getTitle() {
@@ -35,6 +46,10 @@ public class HomeCare {
 
     public void setTimestamp(Object timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public void setTimestamp(){
+        timestamp = ServerValue.TIMESTAMP;
     }
 
     public String getUid() {
@@ -77,19 +92,19 @@ public class HomeCare {
         this.careType = careType;
     }
 
-    public Object getStartPeriod() {
+    public Long getStartPeriod() {
         return startPeriod;
     }
 
-    public void setStartPeriod(Object startPeriod) {
+    public void setStartPeriod(Long startPeriod) {
         this.startPeriod = startPeriod;
     }
 
-    public Object getEndPeriod() {
+    public Long getEndPeriod() {
         return endPeriod;
     }
 
-    public void setEndPeriod(Object endPeriod) {
+    public void setEndPeriod(Long endPeriod) {
         this.endPeriod = endPeriod;
     }
 }
