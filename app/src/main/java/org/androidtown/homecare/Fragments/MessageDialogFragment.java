@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.androidtown.homecare.Activities.CandidateListActivity;
 import org.androidtown.homecare.Activities.HomeCareActivity;
@@ -47,6 +48,8 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int CANDIDATE_PICK = 12;
     public final static int CANDIDATE_PICK_SUCCESS = 13;
     public final static int HOMECARE_DELETION = 14;
+    public final static int DELETION_WAITING = 15;
+    public final static int DELETION_CHECK = 16;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -186,6 +189,32 @@ public class MessageDialogFragment extends DialogFragment {
                 });
                 rightButton.setText("아니오");
 
+                break;
+            case DELETION_WAITING :
+                titleText.setText("알림");
+                contentText.setText("상대방에게 삭제 요청을 보냈습니다.");
+                break;
+            case DELETION_CHECK :
+                titleText.setText("홈케어 중단 요청");
+                contentText.setText("상대방이 홈케어 중단 요청을 하셨습니다.\n수락하시겠습니까?");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //key와 uid를 받은 상태.
+                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid);
+                        dismiss();
+                    }
+                });
+                rightButton.setText("보류");
+                rightButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(context, "다음 로그인 시 다시 알립니다.", Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
+                });
 
                 break;
             default:

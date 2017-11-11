@@ -51,9 +51,9 @@ public class FirebaseHomeCare {
         4.
      */
 
-    private FirebaseDatabase database;
-    private final DatabaseReference homeCareRef;
-    private final DatabaseReference userRef;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final DatabaseReference homeCareRef = database.getReference().child("homecare");
+    private final DatabaseReference userRef = database.getReference().child("user");
     private Context context;
     private RecyclerView homeCareRecyclerView, candidatesRecyclerView;
     private final static List<HomeCare> homeCareList = new ArrayList<>();
@@ -69,9 +69,6 @@ public class FirebaseHomeCare {
 
     public FirebaseHomeCare(Context context) {
 
-        database = FirebaseDatabase.getInstance();
-        homeCareRef = database.getReference().child("homecare");
-        userRef = database.getReference().child("user");
         this.context = context;
 
     }
@@ -173,8 +170,9 @@ public class FirebaseHomeCare {
         homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                HomeCare homeCare = dataSnapshot.getValue(HomeCare.class);
 
-                if(dataSnapshot.child(UID_OF_CARETAKER).getValue(String.class) == null){
+                if(homeCare.getUidOfCareTaker() == null){
                     userRef.child(uid).child(CURRENT_HOME_CARE).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -189,9 +187,29 @@ public class FirebaseHomeCare {
                             });
                         }
                     });
+                } else if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uid)){
+                    //신청은 됐지만 current user가 아닌 경우 (상대방이 요청한 경우)
+
+                    userRef.child(uid).child(CURRENT_HOME_CARE).removeValue();
+                    userRef.child(homeCare.getWaitingForDeletion()).child(CURRENT_HOME_CARE).removeValue();
+                    homeCareRef.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            ProgressDialogHelper.dismiss();
+                            Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            refreshHomeCare();
+                        }
+                    });
+
                 } else {
 
-                    
+                    homeCareRef.child(key).child(WAITING_FOR_DELETION).setValue(uid).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            ProgressDialogHelper.dismiss();
+                            MessageDialogFragment.showDialog(MessageDialogFragment.DELETION_WAITING,context);
+                        }
+                    });
 
 
 
@@ -224,20 +242,8 @@ public class FirebaseHomeCare {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    homeCareList.add(ds.getValue(HomeCare.class));
-
-                    userRef.child(ds.child("uid").getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
+                    HomeCare homeCare = ds.getValue(HomeCare.class);
+                    homeCareList.add(homeCare);
                 }
 
             }

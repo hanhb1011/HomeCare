@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         initAuth(); //파이어베이스 관련 객체 초기화
         initView(); //뷰 초기화
         initButtons(); //삭제, 필터 버튼 초기화
-        getDataFromFirebase(); //파이어베이스로부터 유저 정보와 구인 정보를 받는다.
+        getDataFromFirebase(); //파이어베이스로부터 유저 정보를 받고 ui를 업데이트한다.
 
         //TODO : 유저의 상태에 따라 적절한 메시지 띄움. (지원자가 있다던지, 새 메시지가 있다던지 등등)
 
@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDataFromFirebase() {
         //TODO currenUser에 정보를 불러옴
-        firebaseProfile.getUserInMainActivity(uidOfCurrentUser, profileNameText);
-
+        firebaseProfile.getCurrentUserAndHomecareInMainActivity(uidOfCurrentUser, profileNameText);
     }
 
     private void initAuth() {
@@ -203,5 +202,13 @@ public class MainActivity extends AppCompatActivity {
 
     public Button getFilterButton() {
         return filterButton;
+    }
+
+    public static HomeCare getHomeCareOfCurrentUser() {
+        return homeCareOfCurrentUser;
+    }
+
+    public static void setHomeCareOfCurrentUser(HomeCare homeCareOfCurrentUser) {
+        MainActivity.homeCareOfCurrentUser = homeCareOfCurrentUser;
     }
 }

@@ -171,6 +171,7 @@ public class HomeCareActivity extends AppCompatActivity {
         if(resultCode == MainActivity.RESULT_REFRESH_IN_HOME_CARE_ACTIVITY){
             titleText.setTextColor(getResources().getColor(R.color.colorAccent));
             titleText.setText("( 마감된 홈케어입니다. )");
+            setResult(MainActivity.RESULT_REFRESH);
             contactButton.setVisibility(View.GONE);
         }
 
