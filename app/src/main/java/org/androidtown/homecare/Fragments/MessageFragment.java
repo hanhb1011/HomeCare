@@ -15,6 +15,7 @@ import org.androidtown.homecare.R;
  */
 public class MessageFragment extends Fragment {
 
+    //TODO 뷰 연결, 메시지 테스트
 
     public MessageFragment() {
         // Required empty public constructor

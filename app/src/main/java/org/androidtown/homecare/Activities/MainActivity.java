@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private static User currentUser;
     private static HomeCare homeCareOfCurrentUser;
     private static Bitmap profileImageOfCurrentUser;
-    private static String uidOfCurrentUser;
+    private static String uidOfCurrentUser, uidOfOpponentUser; //uidOfOpponentUser : 홈케어가 진행중일 때, 상대방의 uid
 
 
     @Override
@@ -210,5 +210,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setHomeCareOfCurrentUser(HomeCare homeCareOfCurrentUser) {
         MainActivity.homeCareOfCurrentUser = homeCareOfCurrentUser;
+    }
+
+    public static String getUidOfOpponentUser() {
+        return uidOfOpponentUser;
+    }
+
+    public static void setUidOfOpponentUser(String uidOfOpponentUser) {
+        MainActivity.uidOfOpponentUser = uidOfOpponentUser;
     }
 }

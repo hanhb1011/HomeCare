@@ -33,9 +33,9 @@ public class FirebaseProfile {
     }
 
 
-    public void getCurrentUserAndHomecareInMainActivity(final String uid, final TextView nameText){
+    public void getCurrentUserAndHomecareInMainActivity(final String uidOfCurrentUser, final TextView nameText){
 
-        userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(uidOfCurrentUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final User user = dataSnapshot.getValue(User.class);
@@ -48,11 +48,21 @@ public class FirebaseProfile {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             HomeCare homeCare = dataSnapshot.getValue(HomeCare.class);
 
-                            if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uid)){
+                            if(homeCare.getUidOfCareTaker()!=null){
+                                //케어가 진행 중일 때
+                                if(homeCare.getUidOfCareTaker().equals(uidOfCurrentUser)){
+                                    MainActivity.setUidOfOpponentUser(homeCare.getUid()); //내가(current user가) 케어테이커일 경우 상대방은 uid
+                                } else {
+                                    MainActivity.setUidOfOpponentUser(homeCare.getUidOfCareTaker()); //내가 작성자인 경우
+                                }
+
+                            }
+
+                            if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uidOfCurrentUser)){
                                 //상대방이 삭제 요청을 보낸 경우
                                 MainActivity.setHomeCareOfCurrentUser(homeCare);
                                 MessageDialogFragment.setContext(context);
-                                MessageDialogFragment.setKeyAndUid(homeCare.getKey(), uid);
+                                MessageDialogFragment.setKeyAndUid(homeCare.getKey(), uidOfCurrentUser);
                                 MessageDialogFragment.showDialog(MessageDialogFragment.DELETION_CHECK, context);
 
                             }
