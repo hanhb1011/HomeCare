@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
+import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Fragments.FilterFragment;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
 import org.androidtown.homecare.Models.User;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAccount firebaseAccount;
     private FirebaseHomeCare firebaseHomeCare;
+    private FirebaseProfile firebaseProfile;
 
 
     private static User currentUser;
@@ -64,13 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void getDataFromFirebase() {
         //TODO currenUser에 정보를 불러옴
-
+        firebaseProfile.getUserInMainActivity(uidOfCurrentUser, profileNameText);
 
     }
 
     private void initAuth() {
         firebaseAccount = new FirebaseAccount(this);
         firebaseHomeCare = new FirebaseHomeCare(this);
+        firebaseProfile = new FirebaseProfile(this);
     }
 
     private void initInstances() {
@@ -182,6 +185,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static User getCurrentUser() {
         return currentUser;
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        MainActivity.currentUser = currentUser;
     }
 
     public static String getUidOfCurrentUser() {

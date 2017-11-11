@@ -37,5 +37,26 @@ public class SharedPreferenceHelper {
         editor.commit();
 
     }
+    public static long getLong(Context context, String key) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getLong(key, 0);
+    }
+
+    public static void putLong(Context context, String key, long value){
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putLong(key, value);
+        editor.commit();
+
+    }
+
+    public static int getInt(Context context, String key) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(key, 0);
+    }
+
+    public static void putInt(Context context, String key, int value){
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+
 
 }

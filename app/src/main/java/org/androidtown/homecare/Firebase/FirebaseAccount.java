@@ -100,7 +100,7 @@ public class FirebaseAccount {
                             Log.d(TAG, "createUserWithEmail:success");
                             MessageDialogFragment.showDialog(MessageDialogFragment.SIGN_UP_SUCCESS, context);
                             DatabaseReference specificUser = userRef.child(mAuth.getCurrentUser().getUid());
-                            user.setUid(mAuth.getCurrentUser().getUid());
+
                             specificUser.setValue(user);
 
                         } else {
