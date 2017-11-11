@@ -1,16 +1,23 @@
 package org.androidtown.homecare.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
+import org.androidtown.homecare.Fragments.FilterFragment;
+import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 import org.androidtown.homecare.Utils.BackButtonHandler;
@@ -18,23 +25,25 @@ import org.androidtown.homecare.Utils.BackButtonHandler;
 
 public class MainActivity extends AppCompatActivity {
 
-    //result Codes
+    //result & request codes
     public static final int RESULT_REFRESH = 1000;
     public static final int REQUEST_HOME_CARE_ACTIVITY = 1001;
     public static final int RESULT_REFRESH_IN_HOME_CARE_ACTIVITY = 1002;
     public static final int REQUEST_IN_HOME_CARE_ACTIVITY = 1003;
 
+    private Button hiringButton, messageButton, myPageButton, addOrCheckHomeCareButton, filterButton;
+    private ViewPager mainViewPager;
+    private BackButtonHandler backButtonHandler;
+    private ImageView profileImageView;
+    private TextView profileNameText;
 
-    Button hiringButton, messageButton, myPageButton;
-    ViewPager mainViewPager;
-    BackButtonHandler backButtonHandler;
-
-    public FirebaseAccount firebaseAccount;
-    public FirebaseHomeCare firebaseHomeCare;
+    private FirebaseAccount firebaseAccount;
+    private FirebaseHomeCare firebaseHomeCare;
 
 
-    public static User user;
-    public static String uid;
+    private static User currentUser;
+    private static Bitmap profileImageOfCurrentUser;
+    private static String uidOfCurrentUser;
 
 
     @Override
@@ -46,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         initInstances(); //인스턴스 생성 및 초기화
         initAuth(); //파이어베이스 관련 객체 초기화
         initView(); //뷰 초기화
+        initButtons(); //삭제, 필터 버튼 초기화
         getDataFromFirebase(); //파이어베이스로부터 유저 정보와 구인 정보를 받는다.
 
         //TODO : 유저의 상태에 따라 적절한 메시지 띄움. (지원자가 있다던지, 새 메시지가 있다던지 등등)
@@ -53,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDataFromFirebase() {
-
+        //TODO currenUser에 정보를 불러옴
 
 
     }
@@ -64,11 +74,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initInstances() {
-        uid = getIntent().getStringExtra("uid");
+        uidOfCurrentUser = getIntent().getStringExtra("uid");
         backButtonHandler = new BackButtonHandler(this);
     }
 
+    private void initButtons() {
+        //카드 추가, 또는 체크 버튼
+        addOrCheckHomeCareButton = findViewById(R.id.home_care_add_or_check_button);
+        addOrCheckHomeCareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeCareCreationFragment homeCareCreationFragment = new HomeCareCreationFragment();
+                homeCareCreationFragment.setCancelable(false);
+                homeCareCreationFragment.show(getFragmentManager(), "");
+            }
+        });
 
+        //필터링 버튼
+        filterButton = findViewById(R.id.filter_button);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilterFragment filterFragment = new FilterFragment();
+                filterFragment.setCancelable(false);
+                filterFragment.show(getFragmentManager(), "");
+            }
+        });
+    }
 
     private void initView() {
 
@@ -94,9 +126,16 @@ public class MainActivity extends AppCompatActivity {
 
         //뷰페이저
         mainViewPager = findViewById(R.id.main_view_pager);
-        mainViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+        mainViewPager.setAdapter(new ViewPagerAdapter(this, getSupportFragmentManager()));
         mainViewPager.setCurrentItem(0);
 
+        //프로필 관련
+        profileImageView = findViewById(R.id.profile_image_view_in_main_activity);
+        profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+        profileImageView.setClipToOutline(true);
+        profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        profileNameText = findViewById(R.id.name_text_view_in_main_activity);
     }
 
     @Override
@@ -132,4 +171,28 @@ public class MainActivity extends AppCompatActivity {
         backButtonHandler.onBackPressed(); //두 번 눌렀을 때 종료되도록
     }
 
+
+    public FirebaseAccount getFirebaseAccount() {
+        return firebaseAccount;
+    }
+
+    public FirebaseHomeCare getFirebaseHomeCare() {
+        return firebaseHomeCare;
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
+    }
+
+    public static String getUidOfCurrentUser() {
+        return uidOfCurrentUser;
+    }
+
+    public Button getAddOrCheckHomeCareButton() {
+        return addOrCheckHomeCareButton;
+    }
+
+    public Button getFilterButton() {
+        return filterButton;
+    }
 }

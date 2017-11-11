@@ -19,7 +19,7 @@ public class HomeCare {
     private Long startPeriod;
     private Long endPeriod;
     private String uidOfCareTaker;
-
+    private String waitingForDeletion; //삭제대기 상태
 
     public HomeCare(){
     }
@@ -114,5 +114,13 @@ public class HomeCare {
 
     public void setEndPeriod(Long endPeriod) {
         this.endPeriod = endPeriod;
+    }
+
+    public String getWaitingForDeletion() {
+        return waitingForDeletion;
+    }
+
+    public void setWaitingForDeletion(String waitingForDeletion) {
+        this.waitingForDeletion = waitingForDeletion;
     }
 }

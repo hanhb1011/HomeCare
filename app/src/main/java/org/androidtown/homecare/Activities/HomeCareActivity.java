@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
 import org.androidtown.homecare.Models.HomeCare;
+import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 
 import java.text.SimpleDateFormat;
@@ -23,13 +24,14 @@ import java.util.Calendar;
 //게시글을 자세히 보여주는 액티비티
 public class HomeCareActivity extends AppCompatActivity {
 
-    ImageView profileImageView;
-    TextView titleText, dateText, payText, periodText, careTypeText, locationText, commentText;
-    HomeCare homeCare;
-    Button contactButton, editButton, deleteButton;
-    FirebaseHomeCare firebaseHomeCare;
-    String key;
-    String uid;
+    private ImageView profileImageView;
+    private TextView titleText, dateText, payText, periodText, careTypeText, locationText, commentText
+            , nameText, starText;
+    private HomeCare homeCare;
+    private Button contactButton, editButton, deleteButton;
+    private FirebaseHomeCare firebaseHomeCare;
+    private String key;
+    private User user;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +40,17 @@ public class HomeCareActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_care);
 
         key = getIntent().getStringExtra("key");
-        uid = MainActivity.uid;
-
         initView();
-        getData();
+        initViewFromHomeCareInstance();
+        getDataAndUpdateUI(); //서버로부터 데이터를 받아서 뷰 처리.
 
     }
 
-    private void getData() {
-        firebaseHomeCare = new FirebaseHomeCare(this);
-        homeCare = firebaseHomeCare.searchHomeCare(key);
-
-        if(homeCare == null){
-            Toast.makeText(this, "존재하지 않는 홈케어입니다.", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+    private void getDataAndUpdateUI() {
 
         //자신이 작성한 글일 경우 수정 삭제 버튼 띄움.
-        if(uid.equals(homeCare.getUid())){
-            editButton.setVisibility(View.VISIBLE);
+        if(MainActivity.getUidOfCurrentUser().equals(homeCare.getUid())){
+            //editButton.setVisibility(View.VISIBLE); //TODO 메시지 구현 후 구현 예정.
             deleteButton.setVisibility(View.VISIBLE);
             contactButton.setText("신청자 보기");
             contactButton.setOnClickListener(new View.OnClickListener() {
@@ -67,21 +61,44 @@ public class HomeCareActivity extends AppCompatActivity {
                     startActivityForResult(intent, MainActivity.REQUEST_IN_HOME_CARE_ACTIVITY);
                 }
             });
-
         } else {
-            //자신이 아닐 경우 "신청하기" 또는 "신청 취소"
-            firebaseHomeCare.initTextOfRequestButton(key, uid, contactButton);
-
+            //자신이 작성하지 않았으면, 신청 상태에 따라 "신청취소" 또는 "신청하기"로 텍스트 변경
+            firebaseHomeCare.initTextOfRequestButton(key, MainActivity.getUidOfCurrentUser(), contactButton);
             contactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    firebaseHomeCare.requestHomeCare(key, uid, contactButton);
+                    firebaseHomeCare.requestHomeCare(key, MainActivity.getUidOfCurrentUser(), contactButton);
                 }
             });
 
         }
 
-        titleText.setText(homeCare.getTitle());
+
+
+    }
+
+    private void initViewFromHomeCareInstance() {
+        firebaseHomeCare = new FirebaseHomeCare(this);
+        homeCare = firebaseHomeCare.searchHomeCare(key); //메인에서 서버로부터 받은 홈케어 리스트에서 해당 key에 맞는 홈케어를 탐색.
+        user = firebaseHomeCare.searchUser(key); //작성자 정보를 불러온다.
+
+        if(homeCare == null){
+            Toast.makeText(this, "존재하지 않는 홈케어입니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        //마감 상태에 따라 버튼과 타이틀의 상태를 바꿈
+        if(homeCare.getUidOfCareTaker() !=null){
+            //마감된 경우 타이틀 변경
+            titleText.setTextColor(getResources().getColor(R.color.colorAccent));
+            titleText.setText("( 마감된 홈케어입니다. )");
+
+        } else {
+            //마감되지 않은 경우 버튼 신청 버튼 띄움
+            contactButton.setVisibility(View.VISIBLE);
+            titleText.setText(homeCare.getTitle());
+
+        }
 
         //시간 관련 텍스트뷰 (Period, Date)
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
@@ -95,11 +112,17 @@ public class HomeCareActivity extends AppCompatActivity {
         cal.setTimeInMillis((long)homeCare.getTimestamp());
         dateText.setText(fmt3.format(cal.getTime()));
 
+        //나머지
         payText.setText(String.valueOf(homeCare.getPay()));
         careTypeText.setText(homeCare.getCareType());
         locationText.setText(homeCare.getLocation());
         commentText.setText(homeCare.getComment());
+
+        //유저 정보를 띄움
+        starText.setText("★ " + user.getStar());
+        nameText.setText(user.getName());
     }
+
 
     private void initView() {
 
@@ -115,6 +138,8 @@ public class HomeCareActivity extends AppCompatActivity {
         careTypeText = findViewById(R.id.home_care_care_type_text_view_in_activity_home_care);
         locationText = findViewById(R.id.home_care_location_text_view_in_activity_home_care);
         commentText = findViewById(R.id.comment_text_view_in_activity_home_care);
+        nameText = findViewById(R.id.name_text_view_in_activity_home_care);
+        starText = findViewById(R.id.star_text_view_in_activity_home_care);
 
         contactButton = findViewById(R.id.contact_button_in_activity_home_care);
         editButton = findViewById(R.id.edit_button_in_activity_home_care);

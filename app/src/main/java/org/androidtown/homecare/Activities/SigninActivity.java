@@ -20,9 +20,9 @@ import org.androidtown.homecare.Utils.SharedPreferenceHelper;
 
 public class SigninActivity extends AppCompatActivity {
 
-    FirebaseAccount firebaseAccount;
-    EditText emailEdit, passwordEdit;
-    BackButtonHandler backButtonHandler;
+    private FirebaseAccount firebaseAccount;
+    private EditText emailEdit, passwordEdit;
+    private BackButtonHandler backButtonHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

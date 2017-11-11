@@ -31,8 +31,13 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp" />
                 <TextView
+                    android:id="@+id/home_care_name_text_view"
                     android:textAlignment="center"
-                    android:text="★ 4.5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/home_care_star_text_view"
+                    android:textAlignment="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>

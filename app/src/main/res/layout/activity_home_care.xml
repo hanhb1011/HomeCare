@@ -74,6 +74,7 @@
                 android:layout_height="100dp" />
 
             <TextView
+                android:id="@+id/name_text_view_in_activity_home_care"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="이름"
@@ -82,13 +83,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/name_text_view_in_activity_home_care"
+                android:id="@+id/star_text_view_in_activity_home_care"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="★ 4.5"
                 android:textAlignment="center"
                 android:textSize="16dp"
                 android:textStyle="bold" />
+
             <TextView
                 android:layout_marginTop="10dp"
                 android:background="#222222"
@@ -205,6 +207,7 @@
                 android:maxLines="4"/>
 
             <Button
+                android:visibility="gone"
                 android:layout_marginTop="5dp"
                 android:id="@+id/contact_button_in_activity_home_care"
                 android:background="@android:color/transparent"

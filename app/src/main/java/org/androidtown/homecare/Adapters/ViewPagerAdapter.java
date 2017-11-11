@@ -1,12 +1,13 @@
 package org.androidtown.homecare.Adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import org.androidtown.homecare.Fragments.HiringFragment;
 import org.androidtown.homecare.Fragments.MessageFragment;
 import org.androidtown.homecare.Fragments.MyPageFragment;
-import org.androidtown.homecare.Fragments.HiringFragment;
 
 /**
  * Created by hanhb on 2017-11-07.
@@ -18,12 +19,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     HiringFragment hiringFragment;
     MessageFragment messageFragment;
     MyPageFragment myPageFragment;
+    Context context;
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         hiringFragment = new HiringFragment();
         messageFragment = new MessageFragment();
         myPageFragment = new MyPageFragment();
+        this.context = context;
     }
 
     @Override
@@ -40,6 +43,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
                 return null;
 
         }
+    }
+
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 
     @Override

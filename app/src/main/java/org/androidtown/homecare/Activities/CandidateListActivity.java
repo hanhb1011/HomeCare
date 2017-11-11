@@ -11,9 +11,10 @@ import org.androidtown.homecare.R;
 
 public class CandidateListActivity extends AppCompatActivity {
 
-    Button backButton;
-    RecyclerView recyclerView;
-    String key;
+    private Button backButton;
+    private RecyclerView recyclerView;
+    private FirebaseHomeCare firebaseHomeCare;
+    private String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class CandidateListActivity extends AppCompatActivity {
     }
 
     private void initFirebase() {
-        FirebaseHomeCare firebaseHomeCare = new FirebaseHomeCare(this);
+        firebaseHomeCare = new FirebaseHomeCare(this);
         firebaseHomeCare.setCandidatesRecyclerView(recyclerView);
         firebaseHomeCare.refreshCandidates(key);
     }
@@ -41,5 +42,13 @@ public class CandidateListActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public FirebaseHomeCare getFirebaseHomeCare() {
+        return firebaseHomeCare;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

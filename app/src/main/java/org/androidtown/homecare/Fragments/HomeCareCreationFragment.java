@@ -78,11 +78,11 @@ public class HomeCareCreationFragment extends DialogFragment {
 
                 homeCare.setComment(commentEdit.getText().toString());
                 homeCare.setPay(Integer.valueOf(payEdit.getText().toString()));
-                homeCare.setUid((MainActivity.uid));
+                homeCare.setUid((MainActivity.getUidOfCurrentUser()));
                 homeCare.setTimestamp();
                 homeCare.setTitle(titleEdit.getText().toString().trim());
 
-                ((MainActivity)getActivity()).firebaseHomeCare.writeHomeCare(MainActivity.uid, homeCare, HomeCareCreationFragment.this);
+                ((MainActivity)getActivity()).getFirebaseHomeCare().writeHomeCare(MainActivity.getUidOfCurrentUser(), homeCare, HomeCareCreationFragment.this);
 
             }
         });

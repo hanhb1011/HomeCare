@@ -18,6 +18,7 @@ import android.widget.TextView;
 import org.androidtown.homecare.Activities.HomeCareActivity;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Models.HomeCare;
+import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 
 import java.text.SimpleDateFormat;
@@ -36,11 +37,13 @@ import java.util.List;
 public class HomeCareAdapter extends RecyclerView.Adapter {
 
     private List<HomeCare> list;
+    private List<User> users;
     private Context context;
 
-    public HomeCareAdapter(List<HomeCare> list, Context context) {
+    public HomeCareAdapter(List<HomeCare> list, List<User> users, Context context) {
         this.list = list;
         this.context = context;
+        this.users = users;
 
     }
 
@@ -57,8 +60,9 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final HomeCare homeCare = list.get(position);
+        final User user = users.get(position);
 
-        ((HomeCareViewHolder)holder).bind(homeCare);
+        ((HomeCareViewHolder)holder).bind(homeCare, user);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +88,7 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
     private class HomeCareViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         ImageView profileImageView;
-        TextView titleText, dateText, payText, periodText, careTypeText, locationText;
+        TextView titleText, dateText, payText, periodText, careTypeText, locationText, nameText, starText;
         CardView homeCareCardView;
 
         public HomeCareViewHolder(View itemView) {
@@ -100,10 +104,12 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             payText = itemView.findViewById(R.id.home_care_pay_text_view);
             careTypeText = itemView.findViewById(R.id.home_care_care_type_text_view);
             locationText = itemView.findViewById(R.id.home_care_location_text_view);
+            nameText = itemView.findViewById(R.id.home_care_name_text_view);
+            starText = itemView.findViewById(R.id.home_care_star_text_view);
 
         }
 
-        void bind(HomeCare homeCare){
+        void bind(HomeCare homeCare, User user){
             titleText.setText(homeCare.getTitle());
 
             //시간 관련 텍스트뷰 (Period, Date)
@@ -121,6 +127,9 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             payText.setText(String.valueOf(homeCare.getPay()));
             careTypeText.setText(homeCare.getCareType());
             locationText.setText(homeCare.getLocation());
+
+            starText.setText("★ " + user.getStar());
+            nameText.setText(user.getName());
         }
     }
 

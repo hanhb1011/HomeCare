@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.androidtown.homecare.Activities.CandidateListActivity;
+import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
@@ -92,7 +95,7 @@ public class CandidateAdapter extends RecyclerView.Adapter {
             acceptButton = itemView.findViewById(R.id.accept_button_in_candidate_item);
         }
 
-        void bind(User user){
+        void bind(final User user){
 
             nameText.setText(user.getName());
             starText.setText("★ "+user.getStar());
@@ -100,10 +103,21 @@ public class CandidateAdapter extends RecyclerView.Adapter {
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    /*
+                        1. 자신의 uid와 상대방 uid 비교 후 같으면 x
+                        2. MessageDialogFragment에서 사용자 의견을 묻는다.
+                        3. FirevaseHomeCare 내의 pickCandidate() 콜함
+                     */
+
+                    if(MainActivity.getUidOfCurrentUser().equals(user.getUid()) || ((CandidateListActivity)context).getKey() == null
+                            || ((CandidateListActivity)context).getKey().length() == 0){
+                        Toast.makeText(context, "비정상적인 접근입니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    MessageDialogFragment.setContext(context);
+                    MessageDialogFragment.setKeyAndUidOfCandidate(((CandidateListActivity)context).getKey(), user.getUid());
                     MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK, context);
-                    //TODO ㄱㄱㄱㄱㄱㄱ
-
-
                 }
             });
         }

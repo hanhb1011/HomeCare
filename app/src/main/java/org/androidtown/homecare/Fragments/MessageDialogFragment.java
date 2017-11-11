@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.androidtown.homecare.Activities.CandidateListActivity;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.R;
 
@@ -56,6 +57,7 @@ public class MessageDialogFragment extends DialogFragment {
 
     private static HomeCareCreationFragment homeCareCreationFragment;
     private static Context context;
+    private static String key, uidOfCandidate; //home care의 key와, candidate의 uid
 
     @SuppressLint("ValidFragment")
     private MessageDialogFragment(){}
@@ -68,7 +70,7 @@ public class MessageDialogFragment extends DialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_messagedialog, container);
 
         initView(view); //뷰 인스턴스 연결
@@ -148,6 +150,8 @@ public class MessageDialogFragment extends DialogFragment {
                 leftButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //key와 uidOfCandidate를 받은 상태.
+                        ((CandidateListActivity)context).getFirebaseHomeCare().pickCandidate(key, uidOfCandidate);
                         dismiss();
                     }
                 });
@@ -195,5 +199,12 @@ public class MessageDialogFragment extends DialogFragment {
 
     public static void setContext(Context context) {
         MessageDialogFragment.context = context;
+    }
+
+    public static void setKeyAndUidOfCandidate(String key, String uidOfCandidate){
+
+        MessageDialogFragment.key = key;
+        MessageDialogFragment.uidOfCandidate = uidOfCandidate;
+
     }
 }

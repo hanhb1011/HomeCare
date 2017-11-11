@@ -46,8 +46,9 @@ public class FirebaseHomeCare {
         1. requestHomeCare() C / D
         2. initTextOfRequestButton() : 요청 상태에 따라 뷰 초기화
         3. refreshCandidates() : R
-
+        4.
      */
+
     private FirebaseDatabase database;
     private final DatabaseReference homeCareRef;
     private final DatabaseReference userRef;
@@ -55,10 +56,14 @@ public class FirebaseHomeCare {
     private RecyclerView homeCareRecyclerView, candidatesRecyclerView;
     private final static List<HomeCare> homeCareList = new ArrayList<>();
     private final static List<User> userList = new ArrayList<>();
+    private final static List<User> candidateList = new ArrayList<>();
+    private final static List<HomeCare> filteredHomeCareList = new ArrayList<>();
+    private final static List<User> filteredUserList = new ArrayList<>();
 
     private static final String CANDIDATES = "candidates";
     private static final String CURRENT_HOME_CARE = "current_homecare";
     private static final String UID_OF_CARETAKER = "uidOfCareTaker";
+    private static final String WAITING_FOR_DELETION = "waitingForDeletion";
 
     public FirebaseHomeCare(Context context) {
 
@@ -156,7 +161,7 @@ public class FirebaseHomeCare {
         /*
             상황
             1. 상대방과 매칭이 되지 않은 경우
-                -> 그냥 삭제한다 (db의 user와 homecare에서 삭제하고 finish and refresh)
+                -> 걍 삭제 (db의 user와 homecare에서 삭제하고 finish and refresh)
             2. 상대방과 매칭이 이미 된 경우
                 -> 상대방도 삭제 신청을 한 경우 삭제
                 -> 그렇지 않을 경우 삭제 신청 상태로 전환
@@ -167,20 +172,38 @@ public class FirebaseHomeCare {
 
     //READ HOME CARES
     public void refreshHomeCare(){
+        /*
+            1. 홈케어 리스트를 갱신한다.
+            2. 갱신된 홈케어의 작성자 uid 정보로부터 유저 리스트(writers)를 갱신한다.
+            3. 리사이클러뷰에 적용
+         */
         if(homeCareRecyclerView == null)
             return;
 
+        homeCareList.clear();
+        userList.clear();
+
+        //TODO 홈케어 역순으로 불러야됨
         homeCareRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                homeCareList.clear();
+
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     homeCareList.add(ds.getValue(HomeCare.class));
-                }
 
-                HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, context);
-                homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-                homeCareRecyclerView.setAdapter(homeCareAdapter);
+                    userRef.child(ds.child("uid").getValue(String.class)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                }
 
             }
 
@@ -189,12 +212,43 @@ public class FirebaseHomeCare {
 
             }
         });
+
+        //작성된 홈케어 리스트로부터 유저 리스트도 갱신
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Iterator<HomeCare> it = homeCareList.iterator();
+                while (it.hasNext()){
+                    HomeCare homeCare = it.next();
+                    userList.add(dataSnapshot.child(homeCare.getUid()).getValue(User.class));
+                }
+
+                HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, userList, context);
+                homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                homeCareRecyclerView.setAdapter(homeCareAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+    public void filter(){
+
+        HomeCareAdapter homeCareAdapter = new HomeCareAdapter(filteredHomeCareList, filteredUserList, context);
+        homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        homeCareRecyclerView.setAdapter(homeCareAdapter);
+
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     /* 여기서부터 Candidates 관련 */
 
-    public void pickCandidate(final String key, final String uidOfCareTaker){
+    public void pickCandidate(final String key, final String uidOfCandidate){
 
         /*
             0. 프로그레스바 띄움
@@ -203,6 +257,7 @@ public class FirebaseHomeCare {
             3. TODO : 메시지 갱신
             4. request code를 포함하여 finish (갱신되게)
          */
+
         ProgressDialogHelper.show(context, "등록 중입니다...");
         homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -214,9 +269,12 @@ public class FirebaseHomeCare {
                     return;
                 }
 
-                homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCareTaker);
+                //홈케어의 케어테이커에 케어테이커의 uid 추가
+                //케어테이커의 현재 홈케어에 key 추가
+                homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCandidate);
+                userRef.child(uidOfCandidate).child(CURRENT_HOME_CARE).setValue(key);
 
-                //메시지 생성
+                //TODO 메시지 생성
 
                 //생성 후 성공 메시지 띄움
                 MessageDialogFragment.setContext(context);
@@ -253,16 +311,16 @@ public class FirebaseHomeCare {
                 userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        userList.clear();
+                        candidateList.clear();
 
                         Iterator<String> it = uidOfCandidates.iterator(); //유저 리스트로부터
 
                         while (it.hasNext()){
                             String candidateUid = it.next();
-                            userList.add(dataSnapshot.child(candidateUid).getValue(User.class));
+                            candidateList.add(dataSnapshot.child(candidateUid).getValue(User.class));
 
                         }
-                        CandidateAdapter candidateAdapter = new CandidateAdapter(userList, context);
+                        CandidateAdapter candidateAdapter = new CandidateAdapter(candidateList, context);
                         candidatesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
                         candidatesRecyclerView.setAdapter(candidateAdapter);
                     }
@@ -305,6 +363,7 @@ public class FirebaseHomeCare {
                     Toast.makeText(context, "자신에게 신청할 수 없습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 //자신이 있는지 탐색하기
                 for(DataSnapshot ds : dataSnapshot.child(CANDIDATES).getChildren()) {
                     if(ds.getValue(String.class).equals(uid)) {
@@ -330,24 +389,28 @@ public class FirebaseHomeCare {
     }
 
 
-    public void initTextOfRequestButton(final String key, final String uid, final Button requestButton){
+    public void initTextOfRequestButton(final String key, final String uid, final Button contactButton){
+        /*
+            1. 홈케어 마감 상태에 따라 버튼의 visibility와 title 설정
+            2. 신청했으면 "신청하기", 신청하지 않으면 "신청취소"로 텍스트 바꾸기
+         */
 
-        //신청했으면 "신청하기", 신청하지 않으면 "신청취소"로 텍스트 바꾸기
         homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ProgressDialogHelper.dismiss();
+
                 //자신이 있는지 탐색하기
-                for(DataSnapshot ds : dataSnapshot.child("candidates").getChildren()) {
-                    if(ds.getValue(String.class).equals(uid)) {
+                for (DataSnapshot ds : dataSnapshot.child(CANDIDATES).getChildren()) {
+                    if (ds.getValue(String.class).equals(uid)) {
                         //신청 기록이 있으면 신청 취소로
-                        requestButton.setText("신청취소");
+                        contactButton.setText("신청취소");
                         return;
                     }
                 }
                 //신청 기록이 없을 경우 신청
-                requestButton.setText("신청하기");
+                contactButton.setText("신청하기");
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -355,5 +418,26 @@ public class FirebaseHomeCare {
             }
         });
     }
+
+    public User searchUser(String key) {
+
+        Iterator<User> it = userList.iterator();
+        while (it.hasNext()){
+            User user = it.next();
+            if(key.equals(user.getCurrent_homecare())){
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public static List<HomeCare> getFilteredHomeCareList() {
+        return filteredHomeCareList;
+    }
+
+    public static List<User> getFilteredUserList() {
+        return filteredUserList;
+    }
+
 
 }
