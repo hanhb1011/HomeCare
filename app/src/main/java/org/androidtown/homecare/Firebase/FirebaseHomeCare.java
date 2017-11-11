@@ -439,5 +439,11 @@ public class FirebaseHomeCare {
         return filteredUserList;
     }
 
+    public static List<HomeCare> getHomeCareList() {
+        return homeCareList;
+    }
 
+    public static List<User> getUserList() {
+        return userList;
+    }
 }

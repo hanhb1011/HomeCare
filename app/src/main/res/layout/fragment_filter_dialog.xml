@@ -96,6 +96,7 @@
                 android:textSize="15dp"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
+                android:nextFocusDown="@id/cancel_button_in_filter"
                 android:layout_marginRight="5dp" />
             <TextView
                 android:text="이하"
