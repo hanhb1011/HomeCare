@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.androidtown.homecare.Activities.CandidateListActivity;
+import org.androidtown.homecare.Activities.HomeCareActivity;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.R;
 
@@ -45,6 +46,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int HOMECARE_CREATION_SUCCESS = 11;
     public final static int CANDIDATE_PICK = 12;
     public final static int CANDIDATE_PICK_SUCCESS = 13;
+    public final static int HOMECARE_DELETION = 14;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -57,7 +59,7 @@ public class MessageDialogFragment extends DialogFragment {
 
     private static HomeCareCreationFragment homeCareCreationFragment;
     private static Context context;
-    private static String key, uidOfCandidate; //home care의 key와, candidate의 uid
+    private static String key, uid; //home care의 key와, candidate의 uid
 
     @SuppressLint("ValidFragment")
     private MessageDialogFragment(){}
@@ -143,7 +145,7 @@ public class MessageDialogFragment extends DialogFragment {
                 });
                 break;
             case CANDIDATE_PICK :
-                titleText.setText("신청자 결정");
+                titleText.setText("알림");
                 contentText.setText("홈케어 요청을 수락하시겠습니까?");
                 leftButton.setText("네");
                 leftButton.setVisibility(View.VISIBLE);
@@ -151,7 +153,7 @@ public class MessageDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         //key와 uidOfCandidate를 받은 상태.
-                        ((CandidateListActivity)context).getFirebaseHomeCare().pickCandidate(key, uidOfCandidate);
+                        ((CandidateListActivity)context).getFirebaseHomeCare().pickCandidate(key, uid);
                         dismiss();
                     }
                 });
@@ -168,6 +170,23 @@ public class MessageDialogFragment extends DialogFragment {
                         dismiss();
                     }
                 });
+                break;
+            case HOMECARE_DELETION :
+                titleText.setText("홈케어 삭제");
+                contentText.setText("삭제하시겠습니까?\n\n홈 케어가 이미 진행중이라면 \n상대방도 수락해야 삭제됩니다.\n\n하지만 진행중인 홈케어가 아닐 경우\n바로 삭제됩니다.");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //key와 uid를 받은 상태.
+                        ((HomeCareActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid);
+                        dismiss();
+                    }
+                });
+                rightButton.setText("아니오");
+
+
                 break;
             default:
                 titleText.setText("에러");
@@ -201,10 +220,10 @@ public class MessageDialogFragment extends DialogFragment {
         MessageDialogFragment.context = context;
     }
 
-    public static void setKeyAndUidOfCandidate(String key, String uidOfCandidate){
+    public static void setKeyAndUid(String key, String uid){
 
         MessageDialogFragment.key = key;
-        MessageDialogFragment.uidOfCandidate = uidOfCandidate;
+        MessageDialogFragment.uid = uid;
 
     }
 }

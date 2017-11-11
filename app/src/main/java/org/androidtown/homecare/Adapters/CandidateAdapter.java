@@ -116,7 +116,7 @@ public class CandidateAdapter extends RecyclerView.Adapter {
                     }
 
                     MessageDialogFragment.setContext(context);
-                    MessageDialogFragment.setKeyAndUidOfCandidate(((CandidateListActivity)context).getKey(), user.getUid());
+                    MessageDialogFragment.setKeyAndUid(((CandidateListActivity)context).getKey(), user.getUid());
                     MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK, context);
                 }
             });

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
+import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
@@ -52,6 +53,15 @@ public class HomeCareActivity extends AppCompatActivity {
         if(MainActivity.getUidOfCurrentUser().equals(homeCare.getUid())){
             //editButton.setVisibility(View.VISIBLE); //TODO 메시지 구현 후 구현 예정.
             deleteButton.setVisibility(View.VISIBLE);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MessageDialogFragment.setContext(HomeCareActivity.this);
+                    MessageDialogFragment.setKeyAndUid(key, MainActivity.getUidOfCurrentUser());
+                    MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_DELETION, HomeCareActivity.this);
+                }
+            });
+
             contactButton.setText("신청자 보기");
             contactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -164,5 +174,9 @@ public class HomeCareActivity extends AppCompatActivity {
             contactButton.setVisibility(View.GONE);
         }
 
+    }
+
+    public FirebaseHomeCare getFirebaseHomeCare() {
+        return firebaseHomeCare;
     }
 }

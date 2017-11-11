@@ -19,6 +19,7 @@ import org.androidtown.homecare.Firebase.FirebaseHomeCare;
 import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Fragments.FilterFragment;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
+import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 import org.androidtown.homecare.Utils.BackButtonHandler;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private static User currentUser;
+    private static HomeCare homeCareOfCurrentUser;
     private static Bitmap profileImageOfCurrentUser;
     private static String uidOfCurrentUser;
 

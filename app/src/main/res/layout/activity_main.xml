@@ -23,7 +23,6 @@
             android:id="@+id/name_text_view_in_main_activity"
             android:layout_margin="5dp"
             android:textSize="18dp"
-            android:text="이름"
             android:gravity="center_vertical"
             android:layout_weight="1"
             android:layout_width="match_parent"

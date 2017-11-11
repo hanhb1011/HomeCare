@@ -1,5 +1,6 @@
 package org.androidtown.homecare.Firebase;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Adapters.CandidateAdapter;
 import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
@@ -63,7 +65,7 @@ public class FirebaseHomeCare {
     private static final String CANDIDATES = "candidates";
     private static final String CURRENT_HOME_CARE = "current_homecare";
     private static final String UID_OF_CARETAKER = "uidOfCareTaker";
-    private static final String WAITING_FOR_DELETION = "waitingForDeletion";
+    private static final String WAITING_FOR_DELETION = "waitingForDeletion"; //삭제 시도한 uid 저장
 
     public FirebaseHomeCare(Context context) {
 
@@ -154,7 +156,7 @@ public class FirebaseHomeCare {
 
 
     //DESTROY HOME CARE
-    public void destroyHomeCare(String key, String uid){
+    public void destroyHomeCare(final String key, final String uid){
 
         //TODO 상대방과 서로 동의가 있어야 삭제 가능
 
@@ -167,7 +169,40 @@ public class FirebaseHomeCare {
                 -> 그렇지 않을 경우 삭제 신청 상태로 전환
          */
 
+        ProgressDialogHelper.show(context);
+        homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
+                if(dataSnapshot.child(UID_OF_CARETAKER).getValue(String.class) == null){
+                    userRef.child(uid).child(CURRENT_HOME_CARE).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            homeCareRef.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    ProgressDialogHelper.dismiss();
+                                    Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                    ((Activity)context).setResult(MainActivity.RESULT_REFRESH);
+                                    ((Activity)context).finish();
+                                }
+                            });
+                        }
+                    });
+                } else {
+
+                    
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     //READ HOME CARES
