@@ -54,6 +54,7 @@ public class FirebaseHomeCare {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private final DatabaseReference homeCareRef = database.getReference().child("homecare");
     private final DatabaseReference userRef = database.getReference().child("user");
+
     private Context context;
     private RecyclerView homeCareRecyclerView, candidatesRecyclerView;
     private final static List<HomeCare> homeCareList = new ArrayList<>();

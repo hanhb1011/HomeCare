@@ -62,12 +62,11 @@ public class MainActivity extends AppCompatActivity {
         initButtons(); //삭제, 필터 버튼 초기화
         getDataFromFirebase(); //파이어베이스로부터 유저 정보를 받고 ui를 업데이트한다.
 
-        //TODO : 유저의 상태에 따라 적절한 메시지 띄움. (지원자가 있다던지, 새 메시지가 있다던지 등등)
 
     }
 
     private void getDataFromFirebase() {
-        //TODO currenUser에 정보를 불러옴
+        //TODO 메시지 받아오기
         firebaseProfile.getCurrentUserAndHomecareInMainActivity(uidOfCurrentUser, profileNameText);
     }
 

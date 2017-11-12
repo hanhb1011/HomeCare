@@ -1,5 +1,7 @@
 package org.androidtown.homecare.Models;
 
+import com.google.firebase.database.ServerValue;
+
 /**
  * Created by hanhb on 2017-11-12.
  */
@@ -12,6 +14,7 @@ public class Message {
 
 
     public Message() {
+        timestamp = ServerValue.TIMESTAMP;
     }
 
     public String getUid() {
