@@ -17,6 +17,7 @@ import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
 import org.androidtown.homecare.Firebase.FirebaseMessenger;
+import org.androidtown.homecare.Firebase.FirebasePicture;
 import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Fragments.FilterFragment;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private static FirebaseHomeCare firebaseHomeCare;
     private static FirebaseProfile firebaseProfile;
     private static FirebaseMessenger firebaseMessenger;
+    private static FirebasePicture firebasePicture;
 
     private static User currentUser;
     private static HomeCare homeCareOfCurrentUser;
@@ -69,12 +71,14 @@ public class MainActivity extends AppCompatActivity {
     private void getDataFromFirebase() {
         //TODO 메시지 받아오기
         firebaseProfile.getCurrentUserAndHomecareInMainActivity(uidOfCurrentUser, profileNameText);
+        firebasePicture.downloadImage(uidOfCurrentUser, profileImageView);
     }
 
     private void initAuth() {
         firebaseAccount = new FirebaseAccount(this);
         firebaseHomeCare = new FirebaseHomeCare(this);
         firebaseProfile = new FirebaseProfile(this);
+        firebasePicture = new FirebasePicture(this);
     }
 
     private void initInstances() {
@@ -226,5 +230,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setFirebaseMessenger(FirebaseMessenger firebaseMessenger) {
         MainActivity.firebaseMessenger = firebaseMessenger;
+    }
+
+    public static FirebasePicture getFirebasePicture() {
+        return firebasePicture;
     }
 }

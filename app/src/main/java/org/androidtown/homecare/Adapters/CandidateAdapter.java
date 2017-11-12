@@ -120,6 +120,8 @@ public class CandidateAdapter extends RecyclerView.Adapter {
                     MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK, context);
                 }
             });
+
+            CandidateListActivity.getFirebasePicture().downloadImage(user.getUid(), profileImageView);
         }
     }
 

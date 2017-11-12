@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
+import org.androidtown.homecare.Firebase.FirebasePicture;
 import org.androidtown.homecare.R;
 
 public class CandidateListActivity extends AppCompatActivity {
@@ -14,6 +15,7 @@ public class CandidateListActivity extends AppCompatActivity {
     private Button backButton;
     private RecyclerView recyclerView;
     private FirebaseHomeCare firebaseHomeCare;
+    private static FirebasePicture firebasePicture;
     private String key;
 
     @Override
@@ -26,6 +28,7 @@ public class CandidateListActivity extends AppCompatActivity {
     }
 
     private void initFirebase() {
+        firebasePicture = new FirebasePicture(this);
         firebaseHomeCare = new FirebaseHomeCare(this);
         firebaseHomeCare.setCandidatesRecyclerView(recyclerView);
         firebaseHomeCare.refreshCandidates(key);
@@ -50,5 +53,9 @@ public class CandidateListActivity extends AppCompatActivity {
 
     public String getKey() {
         return key;
+    }
+
+    public static FirebasePicture getFirebasePicture() {
+        return firebasePicture;
     }
 }

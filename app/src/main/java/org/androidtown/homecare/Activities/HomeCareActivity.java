@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
+import org.androidtown.homecare.Firebase.FirebasePicture;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
@@ -31,6 +32,7 @@ public class HomeCareActivity extends AppCompatActivity {
     private HomeCare homeCare;
     private Button contactButton, editButton, deleteButton;
     private FirebaseHomeCare firebaseHomeCare;
+    private FirebasePicture firebasePicture;
     private String key;
     private User user;
     
@@ -89,6 +91,7 @@ public class HomeCareActivity extends AppCompatActivity {
 
     private void initViewFromHomeCareInstance() {
         firebaseHomeCare = new FirebaseHomeCare(this);
+        firebasePicture = new FirebasePicture(this);
         homeCare = firebaseHomeCare.searchHomeCare(key); //메인에서 서버로부터 받은 홈케어 리스트에서 해당 key에 맞는 홈케어를 탐색.
         user = firebaseHomeCare.searchUser(key); //작성자 정보를 불러온다.
 
@@ -96,6 +99,9 @@ public class HomeCareActivity extends AppCompatActivity {
             Toast.makeText(this, "존재하지 않는 홈케어입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+        //사진을 띄움
+        firebasePicture.downloadImage(homeCare.getUid(), profileImageView);
 
         //마감 상태에 따라 버튼과 타이틀의 상태를 바꿈
         if(homeCare.getUidOfCareTaker() !=null){
@@ -130,6 +136,8 @@ public class HomeCareActivity extends AppCompatActivity {
         //유저 정보를 띄움
         starText.setText("★ " + user.getStar());
         nameText.setText(user.getName());
+
+
     }
 
 

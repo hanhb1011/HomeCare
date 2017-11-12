@@ -127,6 +127,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             profileImage.setClipToOutline(true);
             profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+            //TODO 하나의 자원만 사용하게 바꾸기
+            MainActivity.getFirebasePicture().downloadImage(MainActivity.getUidOfOpponentUser(), profileImage);
+
         }
 
         void bind(Message message){
