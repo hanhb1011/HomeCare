@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
+import org.androidtown.homecare.Firebase.FirebaseMessenger;
 import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Fragments.FilterFragment;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
@@ -39,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageView profileImageView;
     private TextView profileNameText;
 
-    private FirebaseAccount firebaseAccount;
-    private FirebaseHomeCare firebaseHomeCare;
-    private FirebaseProfile firebaseProfile;
-
+    private static FirebaseAccount firebaseAccount;
+    private static FirebaseHomeCare firebaseHomeCare;
+    private static FirebaseProfile firebaseProfile;
+    private static FirebaseMessenger firebaseMessenger;
 
     private static User currentUser;
     private static HomeCare homeCareOfCurrentUser;
@@ -217,5 +218,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setUidOfOpponentUser(String uidOfOpponentUser) {
         MainActivity.uidOfOpponentUser = uidOfOpponentUser;
+    }
+
+    public static FirebaseMessenger getFirebaseMessenger() {
+        return firebaseMessenger;
+    }
+
+    public static void setFirebaseMessenger(FirebaseMessenger firebaseMessenger) {
+        MainActivity.firebaseMessenger = firebaseMessenger;
     }
 }

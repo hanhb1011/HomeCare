@@ -2,21 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/o_name_text"
         android:layout_marginLeft="12dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
 
     <LinearLayout
+        android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_margin="10dp"
             android:background="#000000"
             android:id="@+id/o_profile_image"
             android:layout_width="40dp"
@@ -25,23 +24,23 @@
             android:scaleType="centerInside" />
 
         <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/o_msg_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_rectangle_blue"
             android:maxWidth="240dp"
-            android:padding="8dp"
-            android:textSize="16dp" />
+            android:padding="8dp"/>
 
         <TextView
             android:id="@+id/o_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="4dp"
             android:layout_marginBottom="3dp"
             android:textColor="#404040"
-            android:textSize="13sp"
-            android:textStyle="bold" />
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

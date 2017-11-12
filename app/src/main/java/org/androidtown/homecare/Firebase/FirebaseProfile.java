@@ -11,6 +11,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
+import org.androidtown.homecare.Fragments.MessageFragment;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 
@@ -33,6 +34,8 @@ public class FirebaseProfile {
     }
 
 
+
+    //서버에서 필요한 데이터를 가져옴 (현재 진행중인 Home care, 상대방 정보(uid) 등
     public void getCurrentUserAndHomecareInMainActivity(final String uidOfCurrentUser, final TextView nameText){
 
         userRef.child(uidOfCurrentUser).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -47,6 +50,7 @@ public class FirebaseProfile {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             HomeCare homeCare = dataSnapshot.getValue(HomeCare.class);
+                            MainActivity.setHomeCareOfCurrentUser(homeCare);
 
                             if(homeCare.getUidOfCareTaker()!=null){
                                 //케어가 진행 중일 때
@@ -56,11 +60,15 @@ public class FirebaseProfile {
                                     MainActivity.setUidOfOpponentUser(homeCare.getUidOfCareTaker()); //내가 작성자인 경우
                                 }
 
+                                FirebaseMessenger firebaseMessenger = new FirebaseMessenger(context, MainActivity.getUidOfOpponentUser());
+                                firebaseMessenger.setRecyclerView(MessageFragment.getMessageRecyclerView());
+                                firebaseMessenger.readMessages(homeCare.getKey());
+                                MainActivity.setFirebaseMessenger(firebaseMessenger);
+
                             }
 
                             if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uidOfCurrentUser)){
                                 //상대방이 삭제 요청을 보낸 경우
-                                MainActivity.setHomeCareOfCurrentUser(homeCare);
                                 MessageDialogFragment.setContext(context);
                                 MessageDialogFragment.setKeyAndUid(homeCare.getKey(), uidOfCurrentUser);
                                 MessageDialogFragment.showDialog(MessageDialogFragment.DELETION_CHECK, context);

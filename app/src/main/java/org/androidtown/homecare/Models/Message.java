@@ -14,7 +14,12 @@ public class Message {
 
 
     public Message() {
+    }
+
+    public Message(String uid, String content) {
         timestamp = ServerValue.TIMESTAMP;
+        this.uid = uid;
+        this.content = content;
     }
 
     public String getUid() {

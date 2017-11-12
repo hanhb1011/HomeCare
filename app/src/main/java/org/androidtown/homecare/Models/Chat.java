@@ -14,6 +14,12 @@ public class Chat {
     public Chat() {
     }
 
+    public Chat(String key, String uid, String uidOfCareTaker) {
+        this.key = key;
+        this.uid = uid;
+        this.uidOfCareTaker = uidOfCareTaker;
+    }
+
     public String getKey() {
         return key;
     }

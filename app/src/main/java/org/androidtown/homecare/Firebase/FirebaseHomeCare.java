@@ -21,6 +21,7 @@ import org.androidtown.homecare.Adapters.CandidateAdapter;
 import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
+import org.androidtown.homecare.Models.Chat;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.Utils.ProgressDialogHelper;
@@ -156,8 +157,6 @@ public class FirebaseHomeCare {
     //DESTROY HOME CARE
     public void destroyHomeCare(final String key, final String uid){
 
-        //TODO 상대방과 서로 동의가 있어야 삭제 가능
-
         /*
             상황
             1. 상대방과 매칭이 되지 않은 경우
@@ -190,6 +189,8 @@ public class FirebaseHomeCare {
                     });
                 } else if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uid)){
                     //신청은 됐지만 current user가 아닌 경우 (상대방이 요청한 경우)
+
+                    FirebaseMessenger.destroyChat(key); //Chat 제거
 
                     userRef.child(uid).child(CURRENT_HOME_CARE).removeValue();
                     userRef.child(homeCare.getWaitingForDeletion()).child(CURRENT_HOME_CARE).removeValue();
@@ -296,7 +297,7 @@ public class FirebaseHomeCare {
             0. 프로그레스바 띄움
             1. 이미 케어하는 사람이 존재할 경우 리턴
             2. homecare/key/uidOfCareTaker 에 uid 갱신
-            3. TODO : 메시지 갱신
+            3. Chat 생성
             4. request code를 포함하여 finish (갱신되게)
          */
 
@@ -313,14 +314,25 @@ public class FirebaseHomeCare {
 
                 //홈케어의 케어테이커에 케어테이커의 uid 추가
                 //케어테이커의 현재 홈케어에 key 추가
-                homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCandidate);
                 userRef.child(uidOfCandidate).child(CURRENT_HOME_CARE).setValue(key);
+                homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCandidate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                //TODO 메시지 생성
+                        //메시지 생성
+                        Chat chat = new Chat(key, MainActivity.getUidOfCurrentUser(), uidOfCandidate);
+                        FirebaseMessenger.writeChat(chat);
 
-                //생성 후 성공 메시지 띄움
-                MessageDialogFragment.setContext(context);
-                MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK_SUCCESS, context);
+                        //생성 후 성공 메시지 띄움
+                        MessageDialogFragment.setContext(context);
+                        MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK_SUCCESS, context);
+
+
+                    }
+                });
+
+
+
             }
 
             @Override

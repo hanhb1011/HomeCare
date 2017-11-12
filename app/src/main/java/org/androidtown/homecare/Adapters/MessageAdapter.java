@@ -1,6 +1,8 @@
 package org.androidtown.homecare.Adapters;
 
 import android.content.Context;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,12 +31,14 @@ public class MessageAdapter extends RecyclerView.Adapter {
     private SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
     //SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private final String oUid;
+    private final String oUid, oName;
 
-    public MessageAdapter(Context context, List<Message> list, String oUid) {
+
+    public MessageAdapter(Context context, List<Message> list, String oUid, String oName) {
         this.context = context;
         this.list = list;
         this.oUid = oUid;
+        this.oName = oName;
     }
 
     public void setList(List<Message> list) {
@@ -110,18 +114,24 @@ public class MessageAdapter extends RecyclerView.Adapter {
     }
 
     private class ReceivedMessageHolder extends RecyclerView.ViewHolder {
-        TextView messageText, timeText;
+        TextView messageText, timeText, nameText;
         ImageView profileImage;
 
         public ReceivedMessageHolder(View itemView) {
             super(itemView);
             messageText = itemView.findViewById(R.id.o_msg_content);
             timeText = itemView.findViewById(R.id.o_time_text);
+            nameText = itemView.findViewById(R.id.o_name_text);
             profileImage = itemView.findViewById(R.id.o_profile_image);
+            profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+            profileImage.setClipToOutline(true);
+            profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
         }
 
         void bind(Message message){
             messageText.setText(message.getContent());
+            nameText.setText(oName);
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis((long)message.getTimestamp());
             timeText.setText(fmt.format(cal.getTime()));
