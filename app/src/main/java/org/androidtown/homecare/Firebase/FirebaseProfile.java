@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Firebase;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -59,6 +60,10 @@ public class FirebaseProfile {
                                 } else {
                                     MainActivity.setUidOfOpponentUser(homeCare.getUidOfCareTaker()); //내가 작성자인 경우
                                 }
+                                if(MessageFragment.getHiddenLayout() != null)
+                                    MessageFragment.getHiddenLayout().setVisibility(View.VISIBLE); //데이터를 받아왔을 때 화면을 띄움
+
+
 
                                 FirebaseMessenger firebaseMessenger = new FirebaseMessenger(context, MainActivity.getUidOfOpponentUser());
                                 firebaseMessenger.setRecyclerView(MessageFragment.getMessageRecyclerView());
@@ -84,6 +89,10 @@ public class FirebaseProfile {
                     });
 
 
+                } else {
+                    if(MessageFragment.getNoneCareLayout() != null){
+                        MessageFragment.getNoneCareLayout().setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

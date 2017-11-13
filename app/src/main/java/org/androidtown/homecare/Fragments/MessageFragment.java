@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.androidtown.homecare.Activities.MainActivity;
@@ -26,6 +27,7 @@ public class MessageFragment extends Fragment {
     private static RecyclerView messageRecyclerView;
     private Button messageSendButton;
     private EditText messageEditText;
+    private static LinearLayout hiddenLayout, noneCareLayout; //진행중인 홈케어의 존재 여부에 따라 레이아웃을 띄운다.
 
 
 
@@ -43,12 +45,14 @@ public class MessageFragment extends Fragment {
         messageEditText = view.findViewById(R.id.message_edit_text);
         messageSendButton = view.findViewById(R.id.message_send_button);
         messageRecyclerView = view.findViewById(R.id.message_recycler_view);
+        hiddenLayout = view.findViewById(R.id.hidden_view_in_message_fragment);
+        noneCareLayout = view.findViewById(R.id.none_care_view_in_message_fragment);
         messageSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String message = messageEditText.getText().toString().trim();
                 messageEditText.setText("");
-                if(message.length()== 0) {
+                if(message.length()== 0 || MainActivity.getUidOfOpponentUser()==null) {
                     return;
                 }
 
@@ -66,6 +70,13 @@ public class MessageFragment extends Fragment {
         return view;
     }
 
+    public static LinearLayout getHiddenLayout() {
+        return hiddenLayout;
+    }
+
+    public static LinearLayout getNoneCareLayout() {
+        return noneCareLayout;
+    }
 
     public static RecyclerView getMessageRecyclerView() {
         return messageRecyclerView;

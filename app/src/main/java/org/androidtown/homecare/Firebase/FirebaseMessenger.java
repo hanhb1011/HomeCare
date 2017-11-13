@@ -75,6 +75,7 @@ public class FirebaseMessenger {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         MessageAdapter messageAdapter = new MessageAdapter(context, messageList, oUid, dataSnapshot.child("name").getValue(String.class));
+
                         recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(messageAdapter);
                         layoutManager.scrollToPosition(messageList.size()-1);
