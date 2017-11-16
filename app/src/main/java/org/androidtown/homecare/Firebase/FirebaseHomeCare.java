@@ -3,6 +3,8 @@ package org.androidtown.homecare.Firebase;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -132,7 +134,7 @@ public class FirebaseHomeCare {
                             ProgressDialogHelper.dismiss();
                             MessageDialogFragment.setHomeCareCreationFragment(fragment);
                             MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CREATION_SUCCESS,context);
-                            refreshHomeCare(); //리프레쉬
+                            refreshHomeCare(null); //리프레쉬
                         }
                     });
                     userRef.child(uid).child(CURRENT_HOME_CARE).setValue(specificHomeCareRef.getKey());
@@ -199,7 +201,7 @@ public class FirebaseHomeCare {
                         public void onComplete(@NonNull Task<Void> task) {
                             ProgressDialogHelper.dismiss();
                             Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                            refreshHomeCare();
+                            refreshHomeCare(null);
                         }
                     });
 
@@ -226,7 +228,7 @@ public class FirebaseHomeCare {
     }
 
     //READ HOME CARES
-    public void refreshHomeCare(){
+    public void refreshHomeCare(@Nullable final SwipeRefreshLayout swipeRefreshLayout){
         /*
             1. 홈케어 리스트를 갱신한다.
             2. 갱신된 홈케어의 작성자 uid 정보로부터 유저 리스트(writers)를 갱신한다.
@@ -260,6 +262,8 @@ public class FirebaseHomeCare {
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if(swipeRefreshLayout!=null)
+                    swipeRefreshLayout.setRefreshing(false);
                 Iterator<HomeCare> it = homeCareList.iterator();
                 while (it.hasNext()){
                     HomeCare homeCare = it.next();

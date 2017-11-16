@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == RESULT_REFRESH){ //리프레쉬가 필요한 경우
             if(firebaseHomeCare != null && firebaseHomeCare.getHomeCareRecyclerView()!=null){
 
-                firebaseHomeCare.refreshHomeCare();
+                firebaseHomeCare.refreshHomeCare(null);
 
             }
         }
