@@ -30,8 +30,6 @@ public class RatingActivity extends AppCompatActivity {
         initInstances();
 
 
-
-
     }
 
     private void initInstances() {
@@ -42,6 +40,8 @@ public class RatingActivity extends AppCompatActivity {
             Toast.makeText(this, "비정상적인 접근입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+
     }
 
     private void initView() {

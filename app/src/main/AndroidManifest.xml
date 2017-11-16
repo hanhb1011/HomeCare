@@ -19,7 +19,12 @@
         <activity android:name=".Activities.MainActivity" />
         <activity android:name=".Activities.HomeCareActivity" />
         <activity android:name=".Activities.CandidateListActivity" />
-        <activity android:name=".Activities.RatingActivity"></activity>
+        <activity android:name=".Activities.RatingActivity" />
+
+        <service
+            android:name=".Services.HomeCareService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

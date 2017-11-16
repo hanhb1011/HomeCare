@@ -73,6 +73,7 @@ public class MessageDialogFragment extends DialogFragment {
     public static void showDialog(int code, Context context){
         MessageDialogFragment.code = code;
         md = new MessageDialogFragment();
+        md.setCancelable(false);
         md.show(((Activity)context).getFragmentManager(), "");
     }
 
@@ -222,8 +223,8 @@ public class MessageDialogFragment extends DialogFragment {
                 break;
             case ESTIMATION_SUCCESS :
                 titleText.setText("평가 완료");
-                String content = "평균 평점 ★" + String.format("%.2f",estimation.getWellness()+estimation.getKindness()+estimation.getFaithfulness()/3)
-                        + "\n평가가 완료되었습니다!\n상대방의 평가에 반영됩니다.";
+                String content = "평균 평점 ★" + String.format("%.2f",(estimation.getWellness()+estimation.getKindness()+estimation.getFaithfulness())/3)
+                        + "\n평가가 완료되었습니다!\n상대방의 평점에 반영됩니다.";
                 contentText.setText(content);
                 rightButton.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -125,16 +125,15 @@ public class FirebaseProfile {
         opponentRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int count = 0;
-                for(DataSnapshot record : dataSnapshot.child("homecareRecords").getChildren()){
-                    count++;
-                }
-
+                ProgressDialogHelper.dismiss();
+                int count = dataSnapshot.child("homecareCount").getValue(Integer.class);
                 double averageScore = dataSnapshot.child("star").getValue(Double.class); //평균 평점을 구한 뒤
                 averageScore = (averageScore*count + (estimation.getFaithfulness()+estimation.getKindness()+estimation.getWellness())/3)/(count+1);
+
+                opponentRef.child("homecareCount").setValue(count+1);
                 opponentRef.child("star").setValue(averageScore);
                 opponentRef.child("homecareRecords").push().setValue(estimation);
-                ProgressDialogHelper.dismiss();
+
                 MessageDialogFragment.setContext(context);
                 MessageDialogFragment.setEstimation(estimation);
                 MessageDialogFragment.showDialog(MessageDialogFragment.ESTIMATION_SUCCESS, context);
@@ -145,7 +144,6 @@ public class FirebaseProfile {
                 ProgressDialogHelper.dismiss();
             }
         });
-
 
     }
 

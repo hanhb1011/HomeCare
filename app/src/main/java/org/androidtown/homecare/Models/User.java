@@ -11,6 +11,8 @@ public class User {
     private String uid;
     private String current_homecare; //현재 진행중인, 또는 등록한 홈케어의 key
     private Double star; //평점
+    private Integer homecareCount;
+    private Integer money; //가상화폐
 
 
     public User() {
@@ -44,9 +46,6 @@ public class User {
         return star;
     }
 
-    public void setStar(double star) {
-        this.star = star;
-    }
 
     public String getCurrent_homecare() {
         return current_homecare;
@@ -54,5 +53,17 @@ public class User {
 
     public void setCurrent_homecare(String current_homecare) {
         this.current_homecare = current_homecare;
+    }
+
+    public void setStar(Double star) {
+        this.star = star;
+    }
+
+    public Integer getHomecareCount() {
+        return homecareCount;
+    }
+
+    public void setHomecareCount(Integer homecareCount) {
+        this.homecareCount = homecareCount;
     }
 }
