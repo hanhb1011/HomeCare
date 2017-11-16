@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Fragments.MessageFragment;
+import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 
@@ -20,6 +21,8 @@ import org.androidtown.homecare.Models.User;
  * Created by hanhb on 2017-11-11.
  *
  */
+
+// 유저 프로필 관련 (점수 매기기 등)
 
 public class FirebaseProfile {
 
@@ -104,5 +107,19 @@ public class FirebaseProfile {
 
     }
 
+    //해당 홈케어에 대한 평가를 내림
+    public void evaluate(String uidOfOpponentUser, String key, Estimation estimation){
+        /*
+            user의 homecareRecords에 homecare의 key로 estimation을 저장한다.
+
+            1.
+            2.
+            3.
+            4.
+         */
+
+
+
+    }
 
 }

@@ -15,10 +15,15 @@
 
     <TextView
         android:textColor="#000000"
-        android:layout_margin="10dp"
-        android:textSize="30sp"
+        android:textSize="32sp"
         android:textAlignment="center"
         android:text="평가를 해주세요!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        android:text="서로에 대한 평가를 남깁니다."
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -95,7 +100,7 @@
         android:gravity="start"
         android:id="@+id/comment_edit_text_in_rating"
         android:textSize="18sp"
-        android:hint="서로에게 한마디 ..."
+        android:hint="한마디"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:maxLength="100"

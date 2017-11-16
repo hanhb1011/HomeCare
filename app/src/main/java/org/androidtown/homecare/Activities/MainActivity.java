@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //getters & setters
     public FirebaseAccount getFirebaseAccount() {
         return firebaseAccount;
     }
@@ -245,5 +246,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static FirebasePicture getFirebasePicture() {
         return firebasePicture;
+    }
+
+    public static FirebaseProfile getFirebaseProfile() {
+        return firebaseProfile;
     }
 }

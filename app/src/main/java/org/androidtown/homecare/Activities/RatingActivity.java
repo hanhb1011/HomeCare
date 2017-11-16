@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.R;
 
 public class RatingActivity extends AppCompatActivity {
@@ -24,11 +25,19 @@ public class RatingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rating);
 
         initView();
+        initInstances();
 
 
 
 
+    }
 
+    private void initInstances() {
+        key = getIntent().getStringExtra("key");
+        if (key == null) {
+            Toast.makeText(this, "비정상적인 접근입니다.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void initView() {
@@ -49,13 +58,9 @@ public class RatingActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String kindVal = String.valueOf(kindnessRating.getRating());
-                String wellVal = String.valueOf(wellnessRting.getRating());
-                String faithVal = String.valueOf(faithRating.getRating());
-                String avg = String.valueOf((kindnessRating.getRating() + wellnessRting.getRating() + faithRating.getRating())/3);
-                String comment = commentEdit.getText().toString();
-                Toast.makeText(RatingActivity.this, "친절함 : " + kindVal + "\n일처리 : "+ wellVal +
-                        "\n성실함 : " + faithVal + "\n평균 : " + avg + "\n한줄평 : " + comment, Toast.LENGTH_SHORT).show();
+                Estimation estimation = new Estimation(commentEdit.getText().toString(),kindnessRating.getRating(), wellnessRting.getRating(), faithRating.getRating());
+                MainActivity.getFirebaseProfile().evaluate(MainActivity.getUidOfOpponentUser(), key, estimation);
+
             }
         });
     }
