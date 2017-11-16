@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private BackButtonHandler backButtonHandler;
     private ImageView profileImageView;
     private TextView profileNameText;
+    private Button testButton;
 
     private static FirebaseAccount firebaseAccount;
     private static FirebaseHomeCare firebaseHomeCare;
@@ -58,6 +59,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_main);
+        /* 임시 */
+        testButton = findViewById(R.id.test_button);
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RatingActivity.class);
+                startActivity(intent);
+            }
+        });
+        /* 임시끝 */
 
         initInstances(); //인스턴스 생성 및 초기화
         initAuth(); //파이어베이스 관련 객체 초기화
