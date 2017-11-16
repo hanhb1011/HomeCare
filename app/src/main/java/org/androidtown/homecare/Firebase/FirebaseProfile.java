@@ -110,10 +110,9 @@ public class FirebaseProfile {
     //해당 홈케어에 대한 평가를 내림
     public void evaluate(String uidOfOpponentUser, String key, Estimation estimation){
         /*
-            user의 homecareRecords에 homecare의 key로 estimation을 저장한다.
 
-            1.
-            2.
+            1. user의 "homecareRecords"에 homecare의 key로 estimation을 push한다.
+            2. (OnCompleteListner) user의
             3.
             4.
          */
