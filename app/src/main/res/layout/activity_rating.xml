@@ -92,6 +92,7 @@
     </LinearLayout>
 
     <EditText
+        android:gravity="start"
         android:id="@+id/comment_edit_text_in_rating"
         android:textSize="18sp"
         android:hint="서로에게 한마디 ..."
