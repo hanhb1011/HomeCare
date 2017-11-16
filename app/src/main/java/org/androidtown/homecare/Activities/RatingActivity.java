@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.R;
 
@@ -18,6 +19,7 @@ public class RatingActivity extends AppCompatActivity {
     private EditText commentEdit;
 
     private String key;
+    private FirebaseProfile firebaseProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +35,10 @@ public class RatingActivity extends AppCompatActivity {
     }
 
     private void initInstances() {
+        firebaseProfile = new FirebaseProfile(RatingActivity.this);
+
         key = getIntent().getStringExtra("key");
-        if (key == null) {
+        if (key == null || MainActivity.getUidOfOpponentUser() == null) {
             Toast.makeText(this, "비정상적인 접근입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -58,8 +62,9 @@ public class RatingActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Estimation estimation = new Estimation(commentEdit.getText().toString(),kindnessRating.getRating(), wellnessRting.getRating(), faithRating.getRating());
-                MainActivity.getFirebaseProfile().evaluate(MainActivity.getUidOfOpponentUser(), key, estimation);
+                Estimation estimation = new Estimation(key, commentEdit.getText().toString(), (double)kindnessRating.getRating(),
+                        (double)wellnessRting.getRating(), (double)faithRating.getRating());
+                firebaseProfile.evaluate(MainActivity.getUidOfOpponentUser(), estimation);
 
             }
         });

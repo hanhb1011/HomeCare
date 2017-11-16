@@ -16,6 +16,7 @@ import org.androidtown.homecare.Fragments.MessageFragment;
 import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
+import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 /**
  * Created by hanhb on 2017-11-11.
@@ -28,7 +29,7 @@ public class FirebaseProfile {
 
     private final static FirebaseDatabase database = FirebaseDatabase.getInstance();;
     private final static DatabaseReference userRef = database.getReference().child("user");;
-    private final DatabaseReference homeCareRef = database.getReference().child("homecare");
+    private final static DatabaseReference homeCareRef = database.getReference().child("homecare");
 
     private Context context;
 
@@ -108,15 +109,42 @@ public class FirebaseProfile {
     }
 
     //해당 홈케어에 대한 평가를 내림
-    public void evaluate(String uidOfOpponentUser, String key, Estimation estimation){
+    public void evaluate(String uidOfOpponentUser, final Estimation estimation){
+        if(uidOfOpponentUser == null || estimation == null)
+            return;
+
+        ProgressDialogHelper.show(context);
+
         /*
-
-            1. user의 "homecareRecords"에 homecare의 key로 estimation을 push한다.
-            2. (OnCompleteListner) user의
-            3.
-            4.
+            1. user의 "homecareRecords"의 values 수를 구함 (평균 평점을 내리기 위함)
+            2. user의 "homecareRecords"에 homecare의 key로 estimation을 push한다.
+            3. (OnCompleteListner) user의 평균 평점을 갱신한다.
          */
+        final DatabaseReference opponentRef = userRef.child(uidOfOpponentUser);
 
+        opponentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int count = 0;
+                for(DataSnapshot record : dataSnapshot.child("homecareRecords").getChildren()){
+                    count++;
+                }
+
+                double averageScore = dataSnapshot.child("star").getValue(Double.class); //평균 평점을 구한 뒤
+                averageScore = (averageScore*count + (estimation.getFaithfulness()+estimation.getKindness()+estimation.getWellness())/3)/(count+1);
+                opponentRef.child("star").setValue(averageScore);
+                opponentRef.child("homecareRecords").push().setValue(estimation);
+                ProgressDialogHelper.dismiss();
+                MessageDialogFragment.setContext(context);
+                MessageDialogFragment.setEstimation(estimation);
+                MessageDialogFragment.showDialog(MessageDialogFragment.ESTIMATION_SUCCESS, context);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                ProgressDialogHelper.dismiss();
+            }
+        });
 
 
     }

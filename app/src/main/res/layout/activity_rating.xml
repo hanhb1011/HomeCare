@@ -30,40 +30,41 @@
     <LinearLayout
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <TextView
             android:textAlignment="center"
             android:text="친절함"
-            android:textSize="23dp"
+            android:textSize="20sp"
             android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <RatingBar
-            android:id="@+id/kindness_rating_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:rating="0" />
+
+            <RatingBar
+                android:id="@+id/kindness_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rating="0" />
+
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:textAlignment="center"
             android:text="일처리"
-            android:textSize="23dp"
+            android:textSize="20sp"
             android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <RatingBar
@@ -76,17 +77,16 @@
     <LinearLayout
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <TextView
             android:textAlignment="center"
             android:text="성실함"
-            android:textSize="23dp"
+            android:textSize="20sp"
             android:layout_weight="1"
-            android:layout_marginRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <RatingBar

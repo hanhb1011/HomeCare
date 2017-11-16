@@ -7,24 +7,17 @@ package org.androidtown.homecare.Models;
 public class Estimation {
 
     private String comment, key;
-    private float kindness, wellness, faithfulness; //친절함, 업무숙련도, 성실함
+    private Double kindness, wellness, faithfulness; //친절함, 업무숙련도, 성실함
 
     public Estimation() {
 
     }
 
-    public Estimation(String comment, String key, float kindness, float wellness, float faithfulness) {
+    public Estimation(String key, String comment, Double kindness, Double wellness, Double faithfulness) {
         this.comment = comment;
         this.kindness = kindness;
         this.wellness = wellness;
         this.faithfulness = faithfulness;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
         this.key = key;
     }
 
@@ -36,27 +29,35 @@ public class Estimation {
         this.comment = comment;
     }
 
-    public float getKindness() {
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public Double getKindness() {
         return kindness;
     }
 
-    public void setKindness(float kindness) {
+    public void setKindness(Double kindness) {
         this.kindness = kindness;
     }
 
-    public float getWellness() {
+    public Double getWellness() {
         return wellness;
     }
 
-    public void setWellness(float wellness) {
+    public void setWellness(Double wellness) {
         this.wellness = wellness;
     }
 
-    public float getFaithfulness() {
+    public Double getFaithfulness() {
         return faithfulness;
     }
 
-    public void setFaithfulness(float faithfulness) {
+    public void setFaithfulness(Double faithfulness) {
         this.faithfulness = faithfulness;
     }
 }

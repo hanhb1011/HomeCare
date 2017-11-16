@@ -10,7 +10,7 @@ public class User {
     private Object birthday;
     private String uid;
     private String current_homecare; //현재 진행중인, 또는 등록한 홈케어의 key
-    private double star; //평점
+    private Double star; //평점
 
 
     public User() {

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import org.androidtown.homecare.Activities.CandidateListActivity;
 import org.androidtown.homecare.Activities.HomeCareActivity;
 import org.androidtown.homecare.Activities.MainActivity;
+import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.R;
 
 /**
@@ -50,6 +51,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int HOMECARE_DELETION = 14;
     public final static int DELETION_WAITING = 15;
     public final static int DELETION_CHECK = 16;
+    public final static int ESTIMATION_SUCCESS = 17;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -63,6 +65,7 @@ public class MessageDialogFragment extends DialogFragment {
     private static HomeCareCreationFragment homeCareCreationFragment;
     private static Context context;
     private static String key, uid; //home care의 key와, candidate의 uid
+    private static Estimation estimation;
 
     @SuppressLint("ValidFragment")
     private MessageDialogFragment(){}
@@ -217,6 +220,19 @@ public class MessageDialogFragment extends DialogFragment {
                 });
 
                 break;
+            case ESTIMATION_SUCCESS :
+                titleText.setText("평가 완료");
+                String content = "평균 평점 ★" + String.format("%.2f",estimation.getWellness()+estimation.getKindness()+estimation.getFaithfulness()/3)
+                        + "\n평가가 완료되었습니다!\n상대방의 평가에 반영됩니다.";
+                contentText.setText(content);
+                rightButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((Activity) context).finish();
+                        dismiss();
+                    }
+                });
+                break;
             default:
                 titleText.setText("에러");
                 break;
@@ -254,5 +270,9 @@ public class MessageDialogFragment extends DialogFragment {
         MessageDialogFragment.key = key;
         MessageDialogFragment.uid = uid;
 
+    }
+
+    public static void setEstimation(Estimation estimation) {
+        MessageDialogFragment.estimation = estimation;
     }
 }
