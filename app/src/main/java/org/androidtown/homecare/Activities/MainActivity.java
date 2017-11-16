@@ -24,6 +24,7 @@ import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
+import org.androidtown.homecare.Services.HomeCareService;
 import org.androidtown.homecare.Utils.BackButtonHandler;
 
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_main);
+
         /* 임시 */
         testButton = findViewById(R.id.test_button);
         testButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Intent intent = new Intent(this, HomeCareService.class);
+        startService(intent);
         /* 임시끝 */
 
         initInstances(); //인스턴스 생성 및 초기화
