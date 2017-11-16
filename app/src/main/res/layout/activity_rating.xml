@@ -90,9 +90,20 @@
             android:layout_height="wrap_content"
             android:rating="0" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/comment_edit_text_in_rating"
+        android:textSize="18sp"
+        android:hint="서로에게 한마디 ..."
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:maxLength="100"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
     <Button
-        android:id="@+id/submit_button_in_rating"
         android:layout_margin="10dp"
+        android:id="@+id/submit_button_in_rating"
         android:textSize="20dp"
         android:text="제출하기"
         android:background="@android:color/transparent"
