@@ -18,7 +18,6 @@ public class RatingActivity extends AppCompatActivity {
     private RatingBar kindnessRating, wellnessRting, faithRating;
     private EditText commentEdit;
 
-    private String key;
     private FirebaseProfile firebaseProfile;
 
     @Override
@@ -35,8 +34,7 @@ public class RatingActivity extends AppCompatActivity {
     private void initInstances() {
         firebaseProfile = new FirebaseProfile(RatingActivity.this);
 
-        key = getIntent().getStringExtra("key");
-        if (key == null || MainActivity.getUidOfOpponentUser() == null) {
+        if (MainActivity.getHomeCareOfCurrentUser() == null || MainActivity.getUidOfOpponentUser() == null) {
             Toast.makeText(this, "비정상적인 접근입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
@@ -62,7 +60,7 @@ public class RatingActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Estimation estimation = new Estimation(key, commentEdit.getText().toString(), (double)kindnessRating.getRating(),
+                Estimation estimation = new Estimation(MainActivity.getHomeCareOfCurrentUser().getKey(), commentEdit.getText().toString(), (double)kindnessRating.getRating(),
                         (double)wellnessRting.getRating(), (double)faithRating.getRating());
                 firebaseProfile.evaluate(MainActivity.getUidOfOpponentUser(), estimation);
 

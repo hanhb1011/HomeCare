@@ -12,7 +12,9 @@ public class User {
     private String current_homecare; //현재 진행중인, 또는 등록한 홈케어의 key
     private Double star; //평점
     private Integer homecareCount;
+    private String phoneNumber;
     private Integer money; //가상화폐
+
 
 
     public User() {
@@ -65,5 +67,13 @@ public class User {
 
     public void setHomecareCount(Integer homecareCount) {
         this.homecareCount = homecareCount;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

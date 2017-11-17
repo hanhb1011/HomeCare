@@ -24,7 +24,9 @@
         <service
             android:name=".Services.HomeCareService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".Activities.MessageActivity"></activity>
     </application>
 
 </manifest>

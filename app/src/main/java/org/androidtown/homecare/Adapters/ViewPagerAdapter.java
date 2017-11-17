@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.androidtown.homecare.Fragments.HiringFragment;
-import org.androidtown.homecare.Fragments.MessageFragment;
+import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MyPageFragment;
 
 /**
@@ -17,14 +17,14 @@ import org.androidtown.homecare.Fragments.MyPageFragment;
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     HiringFragment hiringFragment;
-    MessageFragment messageFragment;
+    HomeCareFragment homeCareFragment;
     MyPageFragment myPageFragment;
     Context context;
 
     public ViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         hiringFragment = new HiringFragment();
-        messageFragment = new MessageFragment();
+        homeCareFragment = new HomeCareFragment();
         myPageFragment = new MyPageFragment();
         this.context = context;
     }
@@ -36,7 +36,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0 :
                 return hiringFragment;
             case 1 :
-                return messageFragment;
+                return homeCareFragment;
             case 2 :
                 return myPageFragment;
             default:

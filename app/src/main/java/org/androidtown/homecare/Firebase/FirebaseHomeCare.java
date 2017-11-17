@@ -44,6 +44,7 @@ public class FirebaseHomeCare {
         HomeCares 관련 CRUD
         1. writeHomecare() C
         2. destroyHomecare() D
+            -> 홈케어를 도중에 중단하는 경우. 정상적으로 끝나는 경우는 FirebaseProfile.evaluate()에 정의되어있다.
         3. refreshHomeCare() R
         4. updateHomecare() U
 
@@ -51,7 +52,6 @@ public class FirebaseHomeCare {
         1. requestHomeCare() C / D
         2. initTextOfRequestButton() : 요청 상태에 따라 뷰 초기화
         3. refreshCandidates() : R
-        4.
      */
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();

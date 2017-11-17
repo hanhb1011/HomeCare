@@ -1,7 +1,6 @@
 package org.androidtown.homecare.Activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
-import org.androidtown.homecare.Firebase.FirebaseMessenger;
 import org.androidtown.homecare.Firebase.FirebasePicture;
 import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Fragments.FilterFragment;
@@ -46,12 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private static FirebaseAccount firebaseAccount;
     private static FirebaseHomeCare firebaseHomeCare;
     private static FirebaseProfile firebaseProfile;
-    private static FirebaseMessenger firebaseMessenger;
     private static FirebasePicture firebasePicture;
 
-    private static User currentUser;
+    private static User currentUser, opponentUser;
     private static HomeCare homeCareOfCurrentUser;
-    private static Bitmap profileImageOfCurrentUser;
     private static String uidOfCurrentUser, uidOfOpponentUser; //uidOfOpponentUser : 홈케어가 진행중일 때, 상대방의 uid
 
 
@@ -63,13 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* 임시 */
         testButton = findViewById(R.id.test_button);
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RatingActivity.class);
-                startActivity(intent);
-            }
-        });
+
         Intent intent = new Intent(this, HomeCareService.class);
         startService(intent);
         /* 임시끝 */
@@ -240,19 +230,19 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.uidOfOpponentUser = uidOfOpponentUser;
     }
 
-    public static FirebaseMessenger getFirebaseMessenger() {
-        return firebaseMessenger;
-    }
-
-    public static void setFirebaseMessenger(FirebaseMessenger firebaseMessenger) {
-        MainActivity.firebaseMessenger = firebaseMessenger;
-    }
-
     public static FirebasePicture getFirebasePicture() {
         return firebasePicture;
     }
 
     public static FirebaseProfile getFirebaseProfile() {
         return firebaseProfile;
+    }
+
+    public static User getOpponentUser() {
+        return opponentUser;
+    }
+
+    public static void setOpponentUser(User opponentUser) {
+        MainActivity.opponentUser = opponentUser;
     }
 }

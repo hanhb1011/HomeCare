@@ -52,6 +52,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int DELETION_WAITING = 15;
     public final static int DELETION_CHECK = 16;
     public final static int ESTIMATION_SUCCESS = 17;
+    public final static int HOMECARE_CANCELLATION = 18;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -233,6 +234,22 @@ public class MessageDialogFragment extends DialogFragment {
                         dismiss();
                     }
                 });
+                break;
+            case HOMECARE_CANCELLATION :
+                titleText.setText("홈케어 중단");
+                contentText.setText("상대방에게 홈케어 중단 요청을 하시겠습니까?\n\n상대방이 요청을 수락해야 중단됩니다.");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //key와 uid를 받은 상태.
+                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid);
+                        dismiss();
+                    }
+                });
+                rightButton.setText("아니오");
+
                 break;
             default:
                 titleText.setText("에러");

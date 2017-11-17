@@ -11,8 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Activities.MainActivity;
+import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
-import org.androidtown.homecare.Fragments.MessageFragment;
 import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
@@ -64,15 +64,25 @@ public class FirebaseProfile {
                                 } else {
                                     MainActivity.setUidOfOpponentUser(homeCare.getUidOfCareTaker()); //내가 작성자인 경우
                                 }
-                                if(MessageFragment.getHiddenLayout() != null)
-                                    MessageFragment.getHiddenLayout().setVisibility(View.VISIBLE); //데이터를 받아왔을 때 화면을 띄움
+                                userRef.child(MainActivity.getUidOfOpponentUser()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        User opponentUser = dataSnapshot.getValue(User.class);
+                                        MainActivity.setOpponentUser(opponentUser);
+
+                                        HomeCareFragment.setViews();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
 
 
+                                if(HomeCareFragment.getHiddenLayout() != null)
+                                    HomeCareFragment.getHiddenLayout().setVisibility(View.VISIBLE); //데이터를 받아왔을 때 화면을 띄움
 
-                                FirebaseMessenger firebaseMessenger = new FirebaseMessenger(context, MainActivity.getUidOfOpponentUser());
-                                firebaseMessenger.setRecyclerView(MessageFragment.getMessageRecyclerView());
-                                firebaseMessenger.readMessages(homeCare.getKey());
-                                MainActivity.setFirebaseMessenger(firebaseMessenger);
 
                             }
 
@@ -94,8 +104,8 @@ public class FirebaseProfile {
 
 
                 } else {
-                    if(MessageFragment.getNoneCareLayout() != null){
-                        MessageFragment.getNoneCareLayout().setVisibility(View.VISIBLE);
+                    if(HomeCareFragment.getNoneCareLayout() != null){
+                        HomeCareFragment.getNoneCareLayout().setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -133,6 +143,7 @@ public class FirebaseProfile {
                 opponentRef.child("homecareCount").setValue(count+1);
                 opponentRef.child("star").setValue(averageScore);
                 opponentRef.child("homecareRecords").push().setValue(estimation);
+                //TODO 테스팅 완료되면 현재 진행중인 홈케어를 지워야 함.
 
                 MessageDialogFragment.setContext(context);
                 MessageDialogFragment.setEstimation(estimation);
@@ -146,5 +157,7 @@ public class FirebaseProfile {
         });
 
     }
+
+
 
 }
