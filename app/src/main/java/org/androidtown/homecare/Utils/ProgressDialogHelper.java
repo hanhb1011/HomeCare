@@ -2,6 +2,7 @@ package org.androidtown.homecare.Utils;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.ProgressBar;
 
 /**
  * Created by hanhb on 2017-11-09.
@@ -10,6 +11,7 @@ import android.content.Context;
 public class ProgressDialogHelper {
 
     private static ProgressDialog progressDialog;
+    private static ProgressBar progressBar;
 
     public static void show(Context context){
         progressDialog = new ProgressDialog(context);
@@ -41,4 +43,8 @@ public class ProgressDialogHelper {
             progressDialog.dismiss();
     }
 
+    public static void dismissProgressBarInMainActivity(){
+
+
+    }
 }

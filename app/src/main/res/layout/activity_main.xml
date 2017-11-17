@@ -104,5 +104,20 @@
         </LinearLayout>
     </LinearLayout>
 
-
+    <LinearLayout
+        android:id="@+id/progress_bar_layout"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ProgressBar
+            android:layout_width="70dp"
+            android:layout_height="70dp" />
+        <TextView
+            android:textSize="15sp"
+            android:text="데이터를 불러오는 중입니다 ..."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>

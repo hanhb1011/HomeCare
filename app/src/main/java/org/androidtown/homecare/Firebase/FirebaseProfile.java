@@ -67,6 +67,8 @@ public class FirebaseProfile {
                                 userRef.child(MainActivity.getUidOfOpponentUser()).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
+                                        if(MainActivity.getProgressBarLayout()!=null)
+                                            MainActivity.getProgressBarLayout().setVisibility(View.GONE);
                                         User opponentUser = dataSnapshot.getValue(User.class);
                                         MainActivity.setOpponentUser(opponentUser);
 

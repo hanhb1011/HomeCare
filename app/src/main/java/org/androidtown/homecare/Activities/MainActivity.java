@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private BackButtonHandler backButtonHandler;
     private ImageView profileImageView;
     private TextView profileNameText;
+    private static LinearLayout progressBarLayout;
     private Button testButton;
 
     private static FirebaseAccount firebaseAccount;
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         /* 임시 */
         testButton = findViewById(R.id.test_button);
-
         Intent intent = new Intent(this, HomeCareService.class);
         startService(intent);
         /* 임시끝 */
@@ -149,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
         profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
         profileNameText = findViewById(R.id.name_text_view_in_main_activity);
+
+        //프로그래스바 레이아웃
+        progressBarLayout = findViewById(R.id.progress_bar_layout);
     }
 
     @Override
@@ -244,5 +248,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setOpponentUser(User opponentUser) {
         MainActivity.opponentUser = opponentUser;
+    }
+
+    public static LinearLayout getProgressBarLayout() {
+        return progressBarLayout;
     }
 }
