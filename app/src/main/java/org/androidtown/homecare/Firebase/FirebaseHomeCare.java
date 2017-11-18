@@ -29,6 +29,7 @@ import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,7 +45,6 @@ public class FirebaseHomeCare {
         HomeCares 관련 CRUD
         1. writeHomecare() C
         2. destroyHomecare() D
-            -> 홈케어를 도중에 중단하는 경우. 정상적으로 끝나는 경우는 FirebaseProfile.evaluate()에 정의되어있다.
         3. refreshHomeCare() R
         4. updateHomecare() U
 
@@ -52,6 +52,7 @@ public class FirebaseHomeCare {
         1. requestHomeCare() C / D
         2. initTextOfRequestButton() : 요청 상태에 따라 뷰 초기화
         3. refreshCandidates() : R
+        4.
      */
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -240,7 +241,7 @@ public class FirebaseHomeCare {
         homeCareList.clear();
         userList.clear();
 
-        //TODO 홈케어 역순으로 불러야됨
+
         homeCareRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -250,6 +251,7 @@ public class FirebaseHomeCare {
                     homeCareList.add(homeCare);
                 }
 
+                Collections.reverse(homeCareList);
             }
 
             @Override
