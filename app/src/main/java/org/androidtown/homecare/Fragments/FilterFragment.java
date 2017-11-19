@@ -224,7 +224,7 @@ public class FilterFragment extends DialogFragment {
                     ((MainActivity)getActivity()).getFirebaseHomeCare().filter();
                     saveFilterArgs(); //필터 값 저장
                 } else {
-                    ((MainActivity)getActivity()).getFirebaseHomeCare().refreshHomeCare(null);
+                    ((MainActivity)getActivity()).refresh(true, null);
 
                 }
 

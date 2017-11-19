@@ -103,7 +103,7 @@ public class FirebaseAccount {
                             user.setUid(mAuth.getCurrentUser().getUid());
                             /* 임시 */
                             user.setHomecareCount(0);
-                            user.setName("TEMP" + user.getUid().substring(0,1));
+                            user.setName(user.getUid().substring(0,5));
                             user.setStar(0.0d);
                             user.setMoney(0);
                             user.setNewMessages(0);

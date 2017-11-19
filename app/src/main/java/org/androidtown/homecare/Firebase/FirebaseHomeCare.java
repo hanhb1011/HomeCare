@@ -312,37 +312,54 @@ public class FirebaseHomeCare {
             4. request code를 포함하여 finish (갱신되게)
          */
 
+
         ProgressDialogHelper.show(context, "등록 중입니다...");
-        homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        //상대방이 이미 진행중인 홈케어가 있는지 확인한다.
+        userRef.child(uidOfCandidate).child(CURRENT_HOME_CARE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ProgressDialogHelper.dismiss(); //임시
 
-                if(dataSnapshot.child("uidOfCareTaker").getValue(String.class) != null){
-                    Toast.makeText(context, "이미 홈케어 서비스가 진행 중입니다.", Toast.LENGTH_SHORT).show();
+                if(dataSnapshot.getValue(String.class) != null){
+                    ProgressDialogHelper.dismiss();
+                    Toast.makeText(context, "상대방이 이미 홈케어 서비스를 진행 중입니다.", Toast.LENGTH_SHORT).show();
                     return;
+
+                } else {
+                    homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            ProgressDialogHelper.dismiss(); //임시
+
+                            if(dataSnapshot.child("uidOfCareTaker").getValue(String.class) != null){
+                                Toast.makeText(context, "이미 홈케어 서비스가 진행 중입니다.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                            //홈케어의 케어테이커에 케어테이커의 uid 추가
+                            //케어테이커의 현재 홈케어에 key 추가
+                            userRef.child(uidOfCandidate).child(CURRENT_HOME_CARE).setValue(key);
+                            homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCandidate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    //메시지 생성
+                                    Chat chat = new Chat(key, MainActivity.getUidOfCurrentUser(), uidOfCandidate);
+                                    FirebaseMessenger.writeChat(chat);
+
+                                    //생성 후 성공 메시지 띄움
+                                    MessageDialogFragment.setContext(context);
+                                    MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK_SUCCESS, context);
+
+                                }
+                            });
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
-
-                //홈케어의 케어테이커에 케어테이커의 uid 추가
-                //케어테이커의 현재 홈케어에 key 추가
-                userRef.child(uidOfCandidate).child(CURRENT_HOME_CARE).setValue(key);
-                homeCareRef.child(key).child(UID_OF_CARETAKER).setValue(uidOfCandidate).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-
-                        //메시지 생성
-                        Chat chat = new Chat(key, MainActivity.getUidOfCurrentUser(), uidOfCandidate);
-                        FirebaseMessenger.writeChat(chat);
-
-                        //생성 후 성공 메시지 띄움
-                        MessageDialogFragment.setContext(context);
-                        MessageDialogFragment.showDialog(MessageDialogFragment.CANDIDATE_PICK_SUCCESS, context);
-
-
-                    }
-                });
-
-
 
             }
 
