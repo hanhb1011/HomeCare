@@ -13,11 +13,20 @@ public class User {
     private Double star; //평점
     private Integer homecareCount;
     private String phoneNumber;
+    private Integer newMessages;
     private Integer money; //가상화폐
-
+    private Boolean isOnline;
 
 
     public User() {
+    }
+
+    public User(String uid) {
+        this.uid = uid;
+        star = 0.0d;
+        homecareCount = 0;
+        newMessages = 0;
+        money = 0;
     }
 
     public String getUid() {
@@ -44,10 +53,6 @@ public class User {
         this.birthday = birthday;
     }
 
-    public double getStar() {
-        return star;
-    }
-
 
     public String getCurrent_homecare() {
         return current_homecare;
@@ -57,8 +62,28 @@ public class User {
         this.current_homecare = current_homecare;
     }
 
+    public Integer getNewMessages() {
+        return newMessages;
+    }
+
+    public void setNewMessages(Integer newMessages) {
+        this.newMessages = newMessages;
+    }
+
+    public Double getStar() {
+        return star;
+    }
+
     public void setStar(Double star) {
         this.star = star;
+    }
+
+    public Integer getMoney() {
+        return money;
+    }
+
+    public void setMoney(Integer money) {
+        this.money = money;
     }
 
     public Integer getHomecareCount() {
@@ -75,5 +100,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Boolean getOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(Boolean online) {
+        isOnline = online;
     }
 }

@@ -128,7 +128,7 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             careTypeText.setText(homeCare.getCareType());
             locationText.setText(homeCare.getLocation());
 
-            starText.setText("★ " + user.getStar());
+            starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
             nameText.setText(user.getName());
 
             MainActivity.getFirebasePicture().downloadImage(homeCare.getUid(), profileImageView);

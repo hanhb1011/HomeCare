@@ -101,6 +101,13 @@ public class FirebaseAccount {
                             MessageDialogFragment.showDialog(MessageDialogFragment.SIGN_UP_SUCCESS, context);
                             DatabaseReference specificUser = userRef.child(mAuth.getCurrentUser().getUid());
                             user.setUid(mAuth.getCurrentUser().getUid());
+                            /* 임시 */
+                            user.setHomecareCount(0);
+                            user.setName("TEMP" + user.getUid().substring(0,1));
+                            user.setStar(0.0d);
+                            user.setMoney(0);
+                            user.setNewMessages(0);
+                            /* 임시끝 */
                             specificUser.setValue(user);
 
                         } else {

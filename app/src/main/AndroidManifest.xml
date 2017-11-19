@@ -21,10 +21,7 @@
         <activity android:name=".Activities.CandidateListActivity" />
         <activity android:name=".Activities.RatingActivity" />
 
-        <service
-            android:name=".Services.HomeCareService"
-            android:enabled="true"
-            android:exported="true" />
+        <service android:name=".Services.HomeCareService"/>
 
         <activity android:name=".Activities.MessageActivity"></activity>
     </application>

@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private static HomeCare homeCareOfCurrentUser;
     private static String uidOfCurrentUser, uidOfOpponentUser; //uidOfOpponentUser : 홈케어가 진행중일 때, 상대방의 uid
 
+    private static Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +62,18 @@ public class MainActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
         setContentView(R.layout.activity_main);
 
-        /* 임시 */
-        testButton = findViewById(R.id.test_button);
-        Intent intent = new Intent(this, HomeCareService.class);
-        startService(intent);
-        /* 임시끝 */
-
         initInstances(); //인스턴스 생성 및 초기화
         initAuth(); //파이어베이스 관련 객체 초기화
         initView(); //뷰 초기화
         initButtons(); //삭제, 필터 버튼 초기화
         getDataFromFirebase(); //파이어베이스로부터 유저 정보를 받고 ui를 업데이트한다.
 
-
+        /* 임시 */
+        testButton = findViewById(R.id.test_button);
+        serviceIntent = new Intent(this, HomeCareService.class);
+        serviceIntent.putExtra("uid", uidOfCurrentUser);
+        startService(serviceIntent);
+        /* 임시끝 */
     }
 
     private void getDataFromFirebase() {
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 filterFragment.show(getFragmentManager(), "");
             }
         });
+
     }
 
     private void initView() {
@@ -173,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseAccount.mAuth.addAuthStateListener(firebaseAccount.mAuthListener);
+
+        // 유저 상태를 온라인으로 바꿈
+        FirebaseDatabase.getInstance().getReference().child("user").child(uidOfCurrentUser).child("isOnline").setValue(true);
+
     }
 
     @Override
@@ -181,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
         if (firebaseAccount.mAuthListener != null) {
             firebaseAccount.mAuth.removeAuthStateListener(firebaseAccount.mAuthListener);
         }
+
+        //유저 상태를 오프라인으로 바꿈
+        FirebaseDatabase.getInstance().getReference().child("user").child(uidOfCurrentUser).child("isOnline").setValue(false);
     }
 
     @Override

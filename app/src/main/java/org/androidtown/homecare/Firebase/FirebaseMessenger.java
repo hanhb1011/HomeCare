@@ -100,6 +100,22 @@ public class FirebaseMessenger {
 
     public void sendMessage(String key, Message message){
         chatRef.child(key).child("message").push().setValue(message);
+
+        userRef.child(oUid).child("newMessages").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Integer newMessages = dataSnapshot.getValue(Integer.class) + 1;
+                userRef.child(oUid).child("newMessages").setValue(newMessages);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
 

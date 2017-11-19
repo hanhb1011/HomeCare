@@ -76,7 +76,7 @@ public class HomeCareFragment extends Fragment {
         titleText.setText(homeCare.getTitle());
 
         //유저 정보를 띄움
-        starText.setText("★ " + user.getStar());
+        starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
         nameText.setText(user.getName());
 
     }

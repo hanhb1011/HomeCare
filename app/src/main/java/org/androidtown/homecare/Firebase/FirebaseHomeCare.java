@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Adapters.CandidateAdapter;
 import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
+import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.Chat;
 import org.androidtown.homecare.Models.HomeCare;
@@ -203,6 +205,8 @@ public class FirebaseHomeCare {
                             ProgressDialogHelper.dismiss();
                             Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             refreshHomeCare(null);
+                            HomeCareFragment.getHiddenLayout().setVisibility(View.GONE);
+                            HomeCareFragment.getNoneCareLayout().setVisibility(View.VISIBLE);
                         }
                     });
 
@@ -275,6 +279,8 @@ public class FirebaseHomeCare {
                 HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, userList, context);
                 homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
                 homeCareRecyclerView.setAdapter(homeCareAdapter);
+                if(MainActivity.getProgressBarLayout()!=null && MainActivity.getProgressBarLayout().getVisibility() != View.GONE)
+                    MainActivity.getProgressBarLayout().setVisibility(View.GONE);
             }
 
             @Override
