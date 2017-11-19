@@ -204,7 +204,7 @@ public class FirebaseHomeCare {
                             ProgressDialogHelper.dismiss();
                             Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             refreshHomeCare(null);
-                            ((MainActivity)context).refresh();
+                            ((MainActivity)context).refresh(true, null);
                         }
                     });
 
@@ -254,31 +254,32 @@ public class FirebaseHomeCare {
                 }
 
                 Collections.reverse(homeCareList);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                //작성된 홈케어 리스트로부터 유저 리스트도 갱신
+                userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(swipeRefreshLayout!=null)
+                            swipeRefreshLayout.setRefreshing(false);
+                        Iterator<HomeCare> it = homeCareList.iterator();
+                        while (it.hasNext()){
+                            HomeCare homeCare = it.next();
+                            userList.add(dataSnapshot.child(homeCare.getUid()).getValue(User.class));
+                        }
 
-            }
-        });
+                        HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, userList, context);
+                        homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        homeCareRecyclerView.setAdapter(homeCareAdapter);
+                        if(MainActivity.getProgressBarLayout()!=null && MainActivity.getProgressBarLayout().getVisibility() != View.GONE)
+                            MainActivity.getProgressBarLayout().setVisibility(View.GONE);
+                    }
 
-        //작성된 홈케어 리스트로부터 유저 리스트도 갱신
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(swipeRefreshLayout!=null)
-                    swipeRefreshLayout.setRefreshing(false);
-                Iterator<HomeCare> it = homeCareList.iterator();
-                while (it.hasNext()){
-                    HomeCare homeCare = it.next();
-                    userList.add(dataSnapshot.child(homeCare.getUid()).getValue(User.class));
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, userList, context);
-                homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-                homeCareRecyclerView.setAdapter(homeCareAdapter);
-                if(MainActivity.getProgressBarLayout()!=null && MainActivity.getProgressBarLayout().getVisibility() != View.GONE)
-                    MainActivity.getProgressBarLayout().setVisibility(View.GONE);
+                    }
+                });
+
             }
 
             @Override

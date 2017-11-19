@@ -6,6 +6,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class HomeCareFragment extends Fragment {
     private static TextView titleText, dateText, payText, periodText, careTypeText, locationText, commentText
             , nameText, starText;
     private static Button messageButton, estimationButton, cancelButton;
+    private static SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeCareFragment() {
         // Required empty public constructor
@@ -86,6 +88,8 @@ public class HomeCareFragment extends Fragment {
         starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
         nameText.setText(user.getName());
 
+
+
     }
 
     private void initView(View view) {
@@ -111,6 +115,14 @@ public class HomeCareFragment extends Fragment {
         messageButton = view.findViewById(R.id.message_button_in_fragment_home_care);
         estimationButton = view.findViewById(R.id.estimation_button_in_fragment_home_care);
 
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout_in_home_care_fragment);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                ((MainActivity)getActivity()).refresh(false, swipeRefreshLayout);
+            }
+        });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -121,7 +133,7 @@ public class HomeCareFragment extends Fragment {
                         ProgressDialogHelper.dismiss();
                         if(dataSnapshot.getValue(String.class) == null){
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh();
+                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh(true, null);
                         } else {
                             MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
                             MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
@@ -149,7 +161,7 @@ public class HomeCareFragment extends Fragment {
                         ProgressDialogHelper.dismiss();
                         if(dataSnapshot.getValue(String.class) == null){
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh();
+                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh(true, null);
                         } else {
                             Intent intent = new Intent(HomeCareFragment.this.getActivity(), MessageActivity.class);
                             startActivity(intent);
@@ -175,7 +187,7 @@ public class HomeCareFragment extends Fragment {
                         ProgressDialogHelper.dismiss();
                         if(dataSnapshot.getValue(String.class) == null){
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh();
+                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh(true, null);
                         } else {
                             Intent intent = new Intent(HomeCareFragment.this.getActivity(), RatingActivity.class);
                             startActivity(intent);

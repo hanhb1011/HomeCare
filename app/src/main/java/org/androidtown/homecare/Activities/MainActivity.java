@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -162,11 +164,12 @@ public class MainActivity extends AppCompatActivity {
         progressBarLayout = findViewById(R.id.progress_bar_layout);
     }
 
-    public void refresh(){
+    public void refresh(boolean setProgressBarLayoutVisible, @Nullable SwipeRefreshLayout swipeRefreshLayout){
         if(firebaseHomeCare != null && firebaseHomeCare.getHomeCareRecyclerView()!=null){
-            progressBarLayout.setVisibility(View.VISIBLE);
+            if(setProgressBarLayoutVisible)
+                progressBarLayout.setVisibility(View.VISIBLE);
             firebaseProfile.getCurrentUserAndHomecareInMainActivity(uidOfCurrentUser, profileNameText);
-            firebaseHomeCare.refreshHomeCare(null);
+            firebaseHomeCare.refreshHomeCare(swipeRefreshLayout);
 
         }
     }
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == RESULT_REFRESH){ //리프레쉬가 필요한 경우
-            refresh();
+            refresh(true, null);
         }
     }
 

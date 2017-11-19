@@ -230,6 +230,7 @@ public class MessageDialogFragment extends DialogFragment {
                 rightButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        ((Activity)context).setResult(MainActivity.RESULT_REFRESH_IN_HOME_CARE_ACTIVITY);
                         ((Activity) context).finish();
                         dismiss();
                     }

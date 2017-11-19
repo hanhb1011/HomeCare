@@ -81,10 +81,23 @@ public class HomeCareService extends Service {
 
         if(uid!=null) {
 
-            
+            //초기 user의 값들을 저장시킨다.
+            userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-            BackGroundThread thread = new BackGroundThread();
-            thread.start();
+
+                    BackGroundThread thread = new BackGroundThread();
+                    thread.start();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
 
         }
 

@@ -38,7 +38,7 @@ public class HiringFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ((MainActivity)getActivity()).getFirebaseHomeCare().refreshHomeCare(swipeRefreshLayout);
+                ((MainActivity)getActivity()).refresh(false, swipeRefreshLayout);
             }
         });
 
