@@ -98,7 +98,7 @@ public class CandidateAdapter extends RecyclerView.Adapter {
         void bind(final User user){
 
             nameText.setText(user.getName());
-            starText.setText("★ "+user.getStar());
+            starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
 
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override

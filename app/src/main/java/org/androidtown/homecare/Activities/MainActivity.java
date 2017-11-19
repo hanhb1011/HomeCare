@@ -67,17 +67,21 @@ public class MainActivity extends AppCompatActivity {
         initView(); //뷰 초기화
         initButtons(); //삭제, 필터 버튼 초기화
         getDataFromFirebase(); //파이어베이스로부터 유저 정보를 받고 ui를 업데이트한다.
+        initService(); //서비스 초기화
+
 
         /* 임시 */
         testButton = findViewById(R.id.test_button);
-        serviceIntent = new Intent(this, HomeCareService.class);
-        serviceIntent.putExtra("uid", uidOfCurrentUser);
-        startService(serviceIntent);
         /* 임시끝 */
     }
 
+    private void initService() {
+        serviceIntent = new Intent(this, HomeCareService.class);
+        serviceIntent.putExtra("uid", uidOfCurrentUser);
+        startService(serviceIntent);
+    }
+
     private void getDataFromFirebase() {
-        //TODO 메시지 받아오기
         firebaseProfile.getCurrentUserAndHomecareInMainActivity(uidOfCurrentUser, profileNameText);
         firebasePicture.downloadImage(uidOfCurrentUser, profileImageView);
     }
@@ -158,16 +162,21 @@ public class MainActivity extends AppCompatActivity {
         progressBarLayout = findViewById(R.id.progress_bar_layout);
     }
 
+    public void refresh(){
+        if(firebaseHomeCare != null && firebaseHomeCare.getHomeCareRecyclerView()!=null){
+            progressBarLayout.setVisibility(View.VISIBLE);
+            firebaseProfile.getCurrentUserAndHomecareInMainActivity(uidOfCurrentUser, profileNameText);
+            firebaseHomeCare.refreshHomeCare(null);
+
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == RESULT_REFRESH){ //리프레쉬가 필요한 경우
-            if(firebaseHomeCare != null && firebaseHomeCare.getHomeCareRecyclerView()!=null){
-
-                firebaseHomeCare.refreshHomeCare(null);
-
-            }
+            refresh();
         }
     }
 
@@ -177,9 +186,9 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseAccount.mAuth.addAuthStateListener(firebaseAccount.mAuthListener);
 
-        // 유저 상태를 온라인으로 바꿈
+        // 유저 상태를 온라인으로 바꾸고 메시지를 "읽음"으로 표시
         FirebaseDatabase.getInstance().getReference().child("user").child(uidOfCurrentUser).child("isOnline").setValue(true);
-
+        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
     }
 
     @Override
@@ -189,8 +198,9 @@ public class MainActivity extends AppCompatActivity {
             firebaseAccount.mAuth.removeAuthStateListener(firebaseAccount.mAuthListener);
         }
 
-        //유저 상태를 오프라인으로 바꿈
+        //유저 상태를 오프라인으로 바꾸고 메시지를 "읽음"으로 표시
         FirebaseDatabase.getInstance().getReference().child("user").child(uidOfCurrentUser).child("isOnline").setValue(false);
+        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
     }
 
     @Override

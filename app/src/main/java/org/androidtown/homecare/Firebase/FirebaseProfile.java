@@ -27,8 +27,8 @@ import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 public class FirebaseProfile {
 
-    private final static FirebaseDatabase database = FirebaseDatabase.getInstance();;
-    private final static DatabaseReference userRef = database.getReference().child("user");;
+    private final static FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final static DatabaseReference userRef = database.getReference().child("user");
     private final static DatabaseReference homeCareRef = database.getReference().child("homecare");
 
     private Context context;
@@ -81,10 +81,12 @@ public class FirebaseProfile {
                                 });
 
 
-                                if(HomeCareFragment.getHiddenLayout() != null)
+                                if(HomeCareFragment.getHiddenLayout() != null) {
                                     HomeCareFragment.getHiddenLayout().setVisibility(View.VISIBLE); //데이터를 받아왔을 때 화면을 띄움
-
-
+                                }
+                                if(HomeCareFragment.getNoneCareLayout() != null){
+                                    HomeCareFragment.getNoneCareLayout().setVisibility(View.GONE);
+                                }
                             }
 
                             if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uidOfCurrentUser)){
@@ -107,6 +109,9 @@ public class FirebaseProfile {
                 } else {
                     if(HomeCareFragment.getNoneCareLayout() != null){
                         HomeCareFragment.getNoneCareLayout().setVisibility(View.VISIBLE);
+                    }
+                    if(HomeCareFragment.getHiddenLayout() != null) {
+                        HomeCareFragment.getHiddenLayout().setVisibility(View.GONE);
                     }
                 }
             }
@@ -159,6 +164,7 @@ public class FirebaseProfile {
 
     }
 
-
-
+    public static DatabaseReference getUserRef() {
+        return userRef;
+    }
 }

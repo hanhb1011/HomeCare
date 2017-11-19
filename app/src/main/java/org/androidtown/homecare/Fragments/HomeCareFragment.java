@@ -13,13 +13,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Activities.MessageActivity;
 import org.androidtown.homecare.Activities.RatingActivity;
+import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
+import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -81,7 +88,6 @@ public class HomeCareFragment extends Fragment {
 
     }
 
-
     private void initView(View view) {
 
         hiddenLayout = view.findViewById(R.id.hidden_view_in_message_fragment);
@@ -108,25 +114,80 @@ public class HomeCareFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
-                MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
-                MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CANCELLATION, HomeCareFragment.this.getActivity());
+                ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
+                FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ProgressDialogHelper.dismiss();
+                        if(dataSnapshot.getValue(String.class) == null){
+                            Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
+                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh();
+                        } else {
+                            MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
+                            MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
+                            MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CANCELLATION, HomeCareFragment.this.getActivity());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
             }
         });
 
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeCareFragment.this.getActivity(), MessageActivity.class);
-                startActivity(intent);
+                ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
+                FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ProgressDialogHelper.dismiss();
+                        if(dataSnapshot.getValue(String.class) == null){
+                            Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
+                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh();
+                        } else {
+                            Intent intent = new Intent(HomeCareFragment.this.getActivity(), MessageActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
         estimationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeCareFragment.this.getActivity(), RatingActivity.class);
-                startActivity(intent);
+                ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
+                FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        ProgressDialogHelper.dismiss();
+                        if(dataSnapshot.getValue(String.class) == null){
+                            Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
+                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh();
+                        } else {
+                            Intent intent = new Intent(HomeCareFragment.this.getActivity(), RatingActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 

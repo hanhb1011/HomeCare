@@ -23,7 +23,6 @@ import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Adapters.CandidateAdapter;
 import org.androidtown.homecare.Adapters.HomeCareAdapter;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
-import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.Chat;
 import org.androidtown.homecare.Models.HomeCare;
@@ -205,8 +204,7 @@ public class FirebaseHomeCare {
                             ProgressDialogHelper.dismiss();
                             Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
                             refreshHomeCare(null);
-                            HomeCareFragment.getHiddenLayout().setVisibility(View.GONE);
-                            HomeCareFragment.getNoneCareLayout().setVisibility(View.VISIBLE);
+                            ((MainActivity)context).refresh();
                         }
                     });
 

@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.androidtown.homecare.Firebase.FirebaseMessenger;
 import org.androidtown.homecare.Models.Message;
 import org.androidtown.homecare.R;
@@ -35,17 +33,6 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
-    }
 
     private void initFirebase() {
         firebaseMessenger = new FirebaseMessenger(MessageActivity.this, MainActivity.getUidOfOpponentUser());
