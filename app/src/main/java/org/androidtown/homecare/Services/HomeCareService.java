@@ -3,8 +3,11 @@ package org.androidtown.homecare.Services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +20,9 @@ import org.androidtown.homecare.Utils.HomeCareNotification;
 
     홈케어 서비스(구현 예정)
     1. 메시지 수신 알림
-    TODO 기타 등등 사용자에게 적절한 메시지를 알림
+    2. 홈케어 중단 요청 알림
+
+
  */
 
 public class HomeCareService extends Service {
@@ -26,6 +31,7 @@ public class HomeCareService extends Service {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef = database.getReference().child("user");
     private int previousNumOfMessages = 0;
+    private boolean isAvailable = true;
 
 
     @Nullable
@@ -40,15 +46,21 @@ public class HomeCareService extends Service {
         public void run() {
             super.run();
 
-            while (true){
+            while (true && isAvailable){
                 try {
                     Thread.sleep(1000); //1초마다 진행
 
                     userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot == null){
+                                isAvailable = false;
+                                return;
+                            }
+
                             //애플리케이션을 사용중일 때만
                             if(!dataSnapshot.child("isOnline").getValue(Boolean.class)){
+
 
                                 final Integer newMessages = dataSnapshot.child("newMessages").getValue(Integer.class);
                                 if(newMessages > 0 && previousNumOfMessages!=newMessages){
@@ -56,6 +68,19 @@ public class HomeCareService extends Service {
                                     HomeCareNotification.notifyNewMessage(HomeCareService.this, "새로운 메시지가 "+ newMessages + "건 도착했습니다!");
                                 }
 
+
+
+                            }
+
+                            //애플리케이션 실행 여부에 상관 없이 띄움
+                            if(dataSnapshot.child("waitingForDeletion").getValue(String.class) != null){
+                                userRef.child(uid).child("waitingForDeletion").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        HomeCareNotification.notifyNewMessage(HomeCareService.this, "상대방이 홈케어 중단을 요청했습니다.");
+
+                                    }
+                                });
                             }
                         }
 

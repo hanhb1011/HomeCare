@@ -180,6 +180,7 @@ public class FirebaseHomeCare {
                     Toast.makeText(context, "존재하지 않는 홈케어입니다. ", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 if(homeCare.getUidOfCareTaker() == null){
                     userRef.child(uid).child(CURRENT_HOME_CARE).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -213,6 +214,9 @@ public class FirebaseHomeCare {
                     });
 
                 } else {
+                    //홈케어 도중, 상대방에게 삭제 요청을 해야하는 경우
+                    if(MainActivity.getUidOfOpponentUser()!=null)
+                       userRef.child(MainActivity.getUidOfOpponentUser()).child(WAITING_FOR_DELETION).setValue(uid);
 
                     homeCareRef.child(key).child(WAITING_FOR_DELETION).setValue(uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
