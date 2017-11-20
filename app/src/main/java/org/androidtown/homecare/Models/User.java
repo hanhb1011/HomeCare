@@ -16,6 +16,8 @@ public class User {
     private Integer newMessages;
     private Integer money; //가상화폐
     private Boolean isOnline;
+    private String gender;
+    private String personality;
 
 
     public User() {
@@ -108,5 +110,21 @@ public class User {
 
     public void setOnline(Boolean online) {
         isOnline = online;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(String personality) {
+        this.personality = personality;
     }
 }

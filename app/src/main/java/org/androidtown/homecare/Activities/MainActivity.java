@@ -32,14 +32,17 @@ import org.androidtown.homecare.Utils.BackButtonHandler;
 
 /*
     할 것들
-
+    TODO 홈케어 생성됐을 때 알림
     TODO 평가 완료됐을 때 현재 진행중인 홈케어 비우기
     TODO 테스팅 뒤 ->홈케어 기간이 끝났을 때 평가되게 변경
     TODO 지난 기록을 보여주는 액티비티
     TODO 상대방 프로필을 보여주는 액티비티
     TODO 채팅 상대방 프로필사진 공유 자원으로 변경
+    TODO 액티비티 두 번 실행
     TODO TensorFlow
-bl */
+
+    평가항목 :
+*/
 
 public class MainActivity extends AppCompatActivity {
 

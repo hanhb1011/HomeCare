@@ -31,6 +31,7 @@ public class HomeCareService extends Service {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef = database.getReference().child("user");
     private int previousNumOfMessages = 0;
+    private boolean currentHomeCare;
     private boolean isAvailable = true;
 
 
@@ -61,18 +62,17 @@ public class HomeCareService extends Service {
                             //애플리케이션을 사용중일 때만
                             if(!dataSnapshot.child("isOnline").getValue(Boolean.class)){
 
-
+                                //새 메시지 알림
                                 final Integer newMessages = dataSnapshot.child("newMessages").getValue(Integer.class);
                                 if(newMessages > 0 && previousNumOfMessages!=newMessages){
                                     previousNumOfMessages = newMessages; //계속해서 띄우는 현상을 방지
                                     HomeCareNotification.notifyNewMessage(HomeCareService.this, "새로운 메시지가 "+ newMessages + "건 도착했습니다!");
                                 }
 
-
-
                             }
 
-                            //애플리케이션 실행 여부에 상관 없이 띄움
+                            //애플리케이션 실행 여부에 상관 없이 알림
+                            //홈케어 중단을 요청했을 때 알림
                             if(dataSnapshot.child("waitingForDeletion").getValue(String.class) != null){
                                 userRef.child(uid).child("waitingForDeletion").removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -82,6 +82,16 @@ public class HomeCareService extends Service {
                                     }
                                 });
                             }
+
+                            //현재 진행중인 홈케어가 종료되거나, 새로 생성되었을 때 알림
+                            if(currentHomeCare && dataSnapshot.child("current_homecare").getValue(String.class) == null){
+                                currentHomeCare = false;
+                                HomeCareNotification.notifyNewMessage(HomeCareService.this, "진행 중이던 홈케어가 종료되었습니다.");
+                            } else if(!currentHomeCare && dataSnapshot.child("current_homecare").getValue(String.class) != null){
+                                currentHomeCare = true;
+                                HomeCareNotification.notifyNewMessage(HomeCareService.this, "새로운 홈케어가 생성되었습니다!");
+                            }
+
                         }
 
                         @Override
@@ -110,7 +120,11 @@ public class HomeCareService extends Service {
             userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-
+                    if(dataSnapshot.child("current_homecare").getValue(String.class) == null){
+                        currentHomeCare = false; //홈케어가 존재하지 않음
+                    } else {
+                        currentHomeCare = true; //홈케어가 존재함
+                    }
 
                     BackGroundThread thread = new BackGroundThread();
                     thread.start();
