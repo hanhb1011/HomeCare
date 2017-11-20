@@ -27,6 +27,7 @@ import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.Chat;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
+import org.androidtown.homecare.Utils.MyLinearLayoutManager;
 import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 import java.util.ArrayList;
@@ -175,7 +176,10 @@ public class FirebaseHomeCare {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 HomeCare homeCare = dataSnapshot.getValue(HomeCare.class);
-
+                if(homeCare==null){
+                    Toast.makeText(context, "존재하지 않는 홈케어입니다. ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(homeCare.getUidOfCareTaker() == null){
                     userRef.child(uid).child(CURRENT_HOME_CARE).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -268,7 +272,7 @@ public class FirebaseHomeCare {
                         }
 
                         HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, userList, context);
-                        homeCareRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        homeCareRecyclerView.setLayoutManager(new MyLinearLayoutManager(context));
                         homeCareRecyclerView.setAdapter(homeCareAdapter);
                         if(MainActivity.getProgressBarLayout()!=null && MainActivity.getProgressBarLayout().getVisibility() != View.GONE)
                             MainActivity.getProgressBarLayout().setVisibility(View.GONE);
@@ -315,7 +319,7 @@ public class FirebaseHomeCare {
 
         ProgressDialogHelper.show(context, "등록 중입니다...");
 
-        //상대방이 이미 진행중인 홈케어가 있는지 확인한다.
+        //상대방이 이미 홈케어를 진행 중인지 확인한다.
         userRef.child(uidOfCandidate).child(CURRENT_HOME_CARE).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

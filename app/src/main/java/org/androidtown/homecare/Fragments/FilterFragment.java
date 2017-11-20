@@ -180,9 +180,14 @@ public class FilterFragment extends DialogFragment {
                         Toast.makeText(getActivity(), "다시 시도해 주십시오", Toast.LENGTH_SHORT).show();
                         dismiss();
                     }
-                    minPay = Integer.valueOf(minPayEdit.getText().toString());
-                    maxPay = Integer.valueOf(maxPayEdit.getText().toString());
 
+                    try {
+                        minPay = Integer.valueOf(minPayEdit.getText().toString());
+                        maxPay = Integer.valueOf(maxPayEdit.getText().toString());
+                    } catch (NumberFormatException e){
+                        maxPay = 9999;
+                        minPay = 0;
+                    }
                     //init
                     filteredHomeCareList.clear();
                     filteredUserList.clear();

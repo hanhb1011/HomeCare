@@ -95,7 +95,7 @@ public class HomeCareActivity extends AppCompatActivity {
         homeCare = firebaseHomeCare.searchHomeCare(key); //메인에서 서버로부터 받은 홈케어 리스트에서 해당 key에 맞는 홈케어를 탐색.
         user = firebaseHomeCare.searchUser(key); //작성자 정보를 불러온다.
 
-        if(homeCare == null){
+        if(homeCare == null || user == null){
             Toast.makeText(this, "존재하지 않는 홈케어입니다.", Toast.LENGTH_SHORT).show();
             finish();
         }
