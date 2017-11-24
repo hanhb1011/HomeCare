@@ -55,5 +55,11 @@
 
     </LinearLayout>
 
+    <Button
+        android:text="데이터셋 생성"
+        android:id="@+id/data_generate_button"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

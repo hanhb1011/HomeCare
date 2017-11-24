@@ -68,9 +68,8 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, HomeCareActivity.class);
-                Pair<View, String> profileImagePair = Pair.create((View)((HomeCareViewHolder)holder).profileImageView,"profile_image_transition");
                 Pair<View, String> cardViewPair = Pair.create((View)((HomeCareViewHolder)holder).homeCareCardView,"card_view_transition");
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, profileImagePair, cardViewPair);
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, cardViewPair);
                 intent.putExtra("key", homeCare.getKey());
                 ((Activity) context).startActivityForResult(intent, MainActivity.REQUEST_HOME_CARE_ACTIVITY ,options.toBundle());
 

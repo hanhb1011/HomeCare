@@ -21,7 +21,7 @@ import org.androidtown.homecare.Utils.HomeCareNotification;
     홈케어 서비스(구현 예정)
     1. 메시지 수신 알림
     2. 홈케어 중단 요청 알림
-
+    3. 홈케어 생성/삭제 알림
 
  */
 

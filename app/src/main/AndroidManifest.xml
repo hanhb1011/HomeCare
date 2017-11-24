@@ -21,9 +21,10 @@
         <activity android:name=".Activities.CandidateListActivity" />
         <activity android:name=".Activities.RatingActivity" />
 
-        <service android:name=".Services.HomeCareService"/>
+        <service android:name=".Services.HomeCareService" />
 
-        <activity android:name=".Activities.MessageActivity"></activity>
+        <activity android:name=".Activities.MessageActivity" />
+        <activity android:name=".Activities.DataGeneratorActivity"></activity>
     </application>
 
 </manifest>

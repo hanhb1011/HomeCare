@@ -6,7 +6,7 @@ package org.androidtown.homecare.Models;
 
 public class User {
 
-    private String name = ""; //temp ""
+    private String name; //temp ""
     private Object birthday;
     private String uid;
     private String current_homecare; //현재 진행중인, 또는 등록한 홈케어의 key
@@ -19,7 +19,22 @@ public class User {
     private String gender;
     private String personality;
 
+    /* for machine learning */
+    /* 비정상적인 사용자를 분류 */
+    private Integer suspensions; // 중지 횟수
+    private Integer exceededPayments; //급여 입력 초과 : 과도한 금액을 제안할 경우 increment
+    /* 이미 정의된 것들
+    * star : 평점이 과도하게 낮을 경우
+    *
+    * homecareCount : 중지 횟수와 급여 입력 초과를 홈케어를 한 횟수로 나눈다 (필요?)
+    *
+    */
 
+    /* output of machine learning  */
+    private Integer userType;
+
+
+    /* Constructors, Getters, and Setters */
     public User() {
     }
 
@@ -126,5 +141,29 @@ public class User {
 
     public void setPersonality(String personality) {
         this.personality = personality;
+    }
+
+    public Integer getSuspensions() {
+        return suspensions;
+    }
+
+    public void setSuspensions(Integer suspensions) {
+        this.suspensions = suspensions;
+    }
+
+    public Integer getExceededPayments() {
+        return exceededPayments;
+    }
+
+    public void setExceededPayments(Integer exceededPayments) {
+        this.exceededPayments = exceededPayments;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 }

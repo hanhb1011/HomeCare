@@ -151,6 +151,7 @@ public class HomeCareFragment extends Fragment {
             }
         });
 
+        //TODO 두 번 안 눌리게
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

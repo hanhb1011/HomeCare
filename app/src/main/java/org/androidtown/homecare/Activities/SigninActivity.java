@@ -2,6 +2,7 @@ package org.androidtown.homecare.Activities;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -32,9 +33,14 @@ public class SigninActivity extends AppCompatActivity {
         initInstances(); //인스턴스 생성 및 초기화
         initView(); //뷰 초기화
         checkGooglePlayService(this); //구글 플레이 서비스가 존재하지 않을 경우 다이얼로그 띄우기
-
-
-
+        /* temp */
+        findViewById(R.id.data_generate_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SigninActivity.this, DataGeneratorActivity.class));
+            }
+        });
+        /* temp 끝 */
     }
 
     private void initInstances() {
