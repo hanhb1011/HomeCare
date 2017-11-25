@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import org.androidtown.homecare.Activities.HomeCareActivity;
 import org.androidtown.homecare.Activities.MainActivity;
+import org.androidtown.homecare.Activities.UserProfileActivity;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
@@ -108,7 +109,21 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
 
         }
 
-        void bind(HomeCare homeCare, User user){
+        void bind(HomeCare homeCare, final User user){
+            MainActivity.getFirebasePicture().downloadImage(homeCare.getUid(), profileImageView);
+
+            profileImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(context, UserProfileActivity.class);
+                    intent.putExtra("uid", user.getUid());
+                    intent.putExtra("name", user.getName());
+                    intent.putExtra("star",  "★ "+ String.format("%.2f", user.getStar())+" ("+user.getHomecareCount().toString()+")");
+                    context.startActivity(intent);
+
+                }
+            });
             titleText.setText(homeCare.getTitle());
 
             //시간 관련 텍스트뷰 (Period, Date)
@@ -130,7 +145,7 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
             nameText.setText(user.getName());
 
-            MainActivity.getFirebasePicture().downloadImage(homeCare.getUid(), profileImageView);
+
         }
     }
 

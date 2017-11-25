@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Firebase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Activities.MainActivity;
+import org.androidtown.homecare.Activities.UserProfileActivity;
 import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.Estimation;
@@ -48,6 +50,19 @@ public class FirebaseProfile {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final User user = dataSnapshot.getValue(User.class);
                 MainActivity.setCurrentUser(user);
+                if(((MainActivity)context).getProfileImageView()!=null){
+                    ((MainActivity)context).getProfileImageView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(context, UserProfileActivity.class);
+                            intent.putExtra("uid", uidOfCurrentUser);
+                            intent.putExtra("name", user.getName());
+                            intent.putExtra("star",  "★ "+ String.format("%.2f", user.getStar())+" ("+user.getHomecareCount().toString()+")");
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+
                 nameText.setText(user.getName());
 
 

@@ -100,6 +100,19 @@ public class HomeCareActivity extends AppCompatActivity {
             finish();
         }
 
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(HomeCareActivity.this, UserProfileActivity.class);
+                intent.putExtra("uid", user.getUid());
+                intent.putExtra("name", user.getName());
+                intent.putExtra("star",  "★ "+ String.format("%.2f", user.getStar())+" ("+user.getHomecareCount().toString()+")");
+                startActivity(intent);
+
+            }
+        });
+
         //사진을 띄움
         firebasePicture.downloadImage(homeCare.getUid(), profileImageView);
 
