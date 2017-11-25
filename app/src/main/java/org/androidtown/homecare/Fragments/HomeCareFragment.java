@@ -194,15 +194,11 @@ public class HomeCareFragment extends Fragment {
         estimationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mutex)
-                    return;
-                mutex = true;
-
                 ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
+
                 FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        mutex = false;
                         ProgressDialogHelper.dismiss();
                         if(dataSnapshot.getValue(String.class) == null){
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
@@ -215,7 +211,6 @@ public class HomeCareFragment extends Fragment {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        mutex = false;
                     }
                 });
 
