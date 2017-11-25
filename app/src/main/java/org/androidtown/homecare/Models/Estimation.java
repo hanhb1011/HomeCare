@@ -6,7 +6,7 @@ package org.androidtown.homecare.Models;
 
 public class Estimation {
 
-    private String comment, key;
+    private String comment, key, uid, name;
     private Double kindness, wellness, faithfulness; //친절함, 업무숙련도, 성실함
 
     public Estimation() {

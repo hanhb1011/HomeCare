@@ -57,7 +57,6 @@ public class DataGenerator {
 
             }
         });
-
     }
 
     //실제 유저 데이터로부터 데이터셋을 생성

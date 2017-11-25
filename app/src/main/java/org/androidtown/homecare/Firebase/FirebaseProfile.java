@@ -126,7 +126,7 @@ public class FirebaseProfile {
 
     //해당 홈케어에 대한 평가를 내림
     public void evaluate(String uidOfOpponentUser, final Estimation estimation){
-        if(uidOfOpponentUser == null || estimation == null)
+        if(uidOfOpponentUser == null || estimation == null || MainActivity.getCurrentUser() == null)
             return;
 
         ProgressDialogHelper.show(context);
@@ -149,6 +149,7 @@ public class FirebaseProfile {
                 opponentRef.child("homecareCount").setValue(count+1);
                 opponentRef.child("star").setValue(averageScore);
                 opponentRef.child("homecareRecords").push().setValue(estimation);
+
                 //TODO 테스팅 완료되면 현재 진행중인 홈케어를 지워야 함.
 
                 MessageDialogFragment.setContext(context);
