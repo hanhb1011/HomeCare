@@ -24,7 +24,8 @@
         <service android:name=".Services.HomeCareService" />
 
         <activity android:name=".Activities.MessageActivity" />
-        <activity android:name=".Activities.DataGeneratorActivity"></activity>
+        <activity android:name=".Activities.DataGeneratorActivity" />
+        <activity android:name=".Activities.UserProfileActivity"></activity>
     </application>
 
 </manifest>
