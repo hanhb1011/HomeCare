@@ -44,6 +44,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/hidden_view_in_candidate_item"
             android:layout_margin="10dp"
             android:layout_width="match_parent"

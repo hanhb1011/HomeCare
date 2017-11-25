@@ -18,6 +18,8 @@ public class User {
     private Boolean isOnline;
     private String gender;
     private String personality;
+    private String location;
+
 
     /* for machine learning */
     /* 비정상적인 사용자를 분류 */
@@ -175,5 +177,13 @@ public class User {
 
     public void setType1(Integer type1) {
         this.type1 = type1;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }
