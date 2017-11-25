@@ -102,18 +102,16 @@ public class FirebaseProfile {
                                     }
                                 });
 
-
-                                if(HomeCareFragment.getHiddenLayout() != null) {
-                                    HomeCareFragment.getHiddenLayout().setVisibility(View.VISIBLE); //데이터를 받아왔을 때 화면을 띄움
-                                }
-                                if(HomeCareFragment.getNoneCareLayout() != null){
-                                    HomeCareFragment.getNoneCareLayout().setVisibility(View.GONE);
-                                }
                             } else {
                                 //진행중인 홈케어는 없지만, 홈케어를 등록했을 경우
                                 HomeCareFragment.setViews(false);
+                            }
 
-
+                            if(HomeCareFragment.getHiddenLayout() != null) {
+                                HomeCareFragment.getHiddenLayout().setVisibility(View.VISIBLE); //데이터를 받아왔을 때 화면을 띄움
+                            }
+                            if(HomeCareFragment.getNoneCareLayout() != null){
+                                HomeCareFragment.getNoneCareLayout().setVisibility(View.GONE);
                             }
 
                             if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uidOfCurrentUser)){
