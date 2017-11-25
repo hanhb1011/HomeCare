@@ -2,6 +2,7 @@ package org.androidtown.homecare.Firebase;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
@@ -13,6 +14,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.androidtown.homecare.R;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by hanhb on 2017-11-13.
@@ -51,6 +54,14 @@ public class FirebasePicture {
                 Glide.with(context).load(R.drawable.common_google_signin_btn_icon_light_focused).into(profileImageView);
             }
         });
+
+    }
+
+    public void uploadImage(String uid, Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        storageRef.child(uid).putBytes(data);
 
     }
 

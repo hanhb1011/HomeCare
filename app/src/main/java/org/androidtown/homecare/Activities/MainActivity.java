@@ -48,11 +48,12 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_HOME_CARE_ACTIVITY = 1001;
     public static final int RESULT_REFRESH_IN_HOME_CARE_ACTIVITY = 1002;
     public static final int REQUEST_IN_HOME_CARE_ACTIVITY = 1003;
+    public static final int REQUEST_GALLERY = 1004;
 
     private Button hiringButton, messageButton, myPageButton, addOrCheckHomeCareButton, filterButton;
     private ViewPager mainViewPager;
     private BackButtonHandler backButtonHandler;
-    private ImageView profileImageView;
+    private static ImageView profileImageView;
     private TextView profileNameText;
     private static LinearLayout progressBarLayout;
     private Button testButton;
@@ -287,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
         return progressBarLayout;
     }
 
-    public ImageView getProfileImageView() {
+    public static ImageView getProfileImageView() {
         return profileImageView;
     }
 }
