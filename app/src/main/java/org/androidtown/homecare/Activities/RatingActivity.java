@@ -60,8 +60,16 @@ public class RatingActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Estimation estimation = new Estimation(MainActivity.getHomeCareOfCurrentUser().getKey(), commentEdit.getText().toString(), (double)kindnessRating.getRating(),
-                        (double)wellnessRting.getRating(), (double)faithRating.getRating());
+
+                Estimation estimation = new Estimation(
+                        MainActivity.getHomeCareOfCurrentUser().getKey(),
+                        commentEdit.getText().toString(),
+                        (double)kindnessRating.getRating(),
+                        (double)wellnessRting.getRating(),
+                        (double)faithRating.getRating(),
+                        MainActivity.getCurrentUser().getUid(),
+                        MainActivity.getCurrentUser().getName());
+
                 firebaseProfile.evaluate(MainActivity.getUidOfOpponentUser(), estimation);
 
             }

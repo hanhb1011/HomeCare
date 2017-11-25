@@ -13,12 +13,14 @@ public class Estimation {
 
     }
 
-    public Estimation(String key, String comment, Double kindness, Double wellness, Double faithfulness) {
+    public Estimation(String key, String comment, Double kindness, Double wellness, Double faithfulness, String uid, String name) {
         this.comment = comment;
         this.kindness = kindness;
         this.wellness = wellness;
         this.faithfulness = faithfulness;
         this.key = key;
+        this.uid = uid;
+        this.name = name;
     }
 
     public String getComment() {
@@ -59,5 +61,21 @@ public class Estimation {
 
     public void setFaithfulness(Double faithfulness) {
         this.faithfulness = faithfulness;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
