@@ -2,6 +2,7 @@ package org.androidtown.homecare.Firebase;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,12 +14,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Activities.UserProfileActivity;
+import org.androidtown.homecare.Adapters.EstimationAdapter;
 import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
+import org.androidtown.homecare.Utils.MyLinearLayoutManager;
 import org.androidtown.homecare.Utils.ProgressDialogHelper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by hanhb on 2017-11-11.
@@ -177,6 +184,40 @@ public class FirebaseProfile {
                 ProgressDialogHelper.dismiss();
             }
         });
+
+    }
+
+    public void readEstimations(String uid, final RecyclerView recyclerView){
+        //해당 유저의 평가 기록을 가져옴
+        if(recyclerView ==null || uid == null)
+            return;
+
+        userRef.child(uid).child("homecareRecords").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List list = new ArrayList();
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    list.add(ds.getValue(Estimation.class));
+                }
+
+                if(list.size()==0)
+                    return;
+
+                Collections.reverse(list); //평가를 최신순으로 보여준다.
+
+                EstimationAdapter estimationAdapter = new EstimationAdapter(context, list);
+                recyclerView.setLayoutManager(new MyLinearLayoutManager(context));
+                recyclerView.setAdapter(estimationAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
     }
 
