@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -20,9 +21,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
+import org.androidtown.homecare.Activities.CandidateListActivity;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Activities.MessageActivity;
 import org.androidtown.homecare.Activities.RatingActivity;
+import org.androidtown.homecare.Activities.UserProfileActivity;
 import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
@@ -37,12 +40,13 @@ import java.util.Calendar;
  */
 public class HomeCareFragment extends Fragment {
 
-    private static LinearLayout hiddenLayout, noneCareLayout; //진행중인 홈케어의 존재 여부에 따라 레이아웃을 띄운다.
+    private static LinearLayout hiddenLayout, noneCareLayout, oppUserLayout; //진행중인 홈케어의 존재 여부에 따라 레이아웃을 띄운다.
     private static ImageView profileImageView;
     private static TextView titleText, dateText, payText, periodText, careTypeText, locationText, commentText
             , nameText, starText;
-    private static Button messageButton, estimationButton, cancelButton;
+    private static Button messageButton, estimationButton, cancelButton, contactButton;
     private static SwipeRefreshLayout swipeRefreshLayout;
+    private static Context context;
 
     private static boolean mutex = false; //액티비티가 중첩돼서 실행되지 않게 해줌
 
@@ -55,17 +59,55 @@ public class HomeCareFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_care, container, false);
+        context = getActivity();
         initView(view);
 
         return view;
     }
 
-    public static void setViews() {
-        HomeCare homeCare = MainActivity.getHomeCareOfCurrentUser(); //메인에서 서버로부터 받은 홈케어 리스트에서 해당 key에 맞는 홈케어를 탐색.
-        User user = MainActivity.getOpponentUser(); //작성자 정보를 불러온다.
+    public static void setViews(boolean isOngoing) {
+        //뷰 초기화
+        oppUserLayout.setVisibility(View.GONE);
+        contactButton.setVisibility(View.GONE);
 
-        //사진을 띄움
-        MainActivity.getFirebasePicture().downloadImage(user.getUid(), profileImageView);
+        final HomeCare homeCare = MainActivity.getHomeCareOfCurrentUser(); //메인에서 서버로부터 받은 홈케어 리스트에서 해당 key에 맞는 홈케어를 탐색.
+
+        if(isOngoing) {
+            oppUserLayout.setVisibility(View.VISIBLE);
+
+            final User user = MainActivity.getOpponentUser(); //작성자 정보를 불러온다.
+            //사진을 띄움
+            MainActivity.getFirebasePicture().downloadImage(user.getUid(), profileImageView);
+            profileImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(context, UserProfileActivity.class);
+                    intent.putExtra("uid", user.getUid());
+                    intent.putExtra("name", user.getName());
+                    intent.putExtra("star", "★ " + String.format("%.2f", user.getStar()) + " (" + user.getHomecareCount().toString() + ")");
+                    context.startActivity(intent);
+
+                }
+            });
+
+            //유저 정보를 띄움
+            starText.setText("★ " + String.format("%.2f", user.getStar()) + " (" + user.getHomecareCount() + ")");
+            nameText.setText(user.getName());
+
+        } else {
+
+            contactButton.setVisibility(View.VISIBLE);
+            contactButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CandidateListActivity.class);
+                    intent.putExtra("key", homeCare.getKey());
+                    ((MainActivity)context).startActivityForResult(intent, MainActivity.REQUEST_IN_HOME_CARE_ACTIVITY);
+                }
+            });
+
+        }
 
         //시간 관련 텍스트뷰 (Period, Date)
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
@@ -86,9 +128,7 @@ public class HomeCareFragment extends Fragment {
         commentText.setText(homeCare.getComment());
         titleText.setText(homeCare.getTitle());
 
-        //유저 정보를 띄움
-        starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
-        nameText.setText(user.getName());
+
 
 
 
@@ -98,6 +138,7 @@ public class HomeCareFragment extends Fragment {
 
         hiddenLayout = view.findViewById(R.id.hidden_view_in_message_fragment);
         noneCareLayout = view.findViewById(R.id.none_care_view_in_message_fragment);
+        oppUserLayout = view.findViewById(R.id.opponent_user_layout);
         profileImageView = view.findViewById(R.id.profile_image_view_in_fragment_home_care);
         profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
         profileImageView.setClipToOutline(true);
@@ -116,6 +157,7 @@ public class HomeCareFragment extends Fragment {
         cancelButton = view.findViewById(R.id.cancel_button_in_fragment_home_care);
         messageButton = view.findViewById(R.id.message_button_in_fragment_home_care);
         estimationButton = view.findViewById(R.id.estimation_button_in_fragment_home_care);
+        contactButton = view.findViewById(R.id.contact_button_in_fragment_home_care);
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout_in_home_care_fragment);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

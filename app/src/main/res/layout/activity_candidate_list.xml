@@ -23,7 +23,7 @@
 
     <TextView
         android:textAlignment="center"
-        android:text=" 님의 홈케어 신청자 목록"
+        android:text="홈케어 신청자 목록"
         android:textSize="22dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

@@ -93,7 +93,7 @@ public class FirebaseProfile {
                                         User opponentUser = dataSnapshot.getValue(User.class);
                                         MainActivity.setOpponentUser(opponentUser);
 
-                                        HomeCareFragment.setViews();
+                                        HomeCareFragment.setViews(true);
                                     }
 
                                     @Override
@@ -109,6 +109,11 @@ public class FirebaseProfile {
                                 if(HomeCareFragment.getNoneCareLayout() != null){
                                     HomeCareFragment.getNoneCareLayout().setVisibility(View.GONE);
                                 }
+                            } else {
+                                //진행중인 홈케어는 없지만, 홈케어를 등록했을 경우
+                                HomeCareFragment.setViews(false);
+
+
                             }
 
                             if(homeCare.getWaitingForDeletion() != null && !homeCare.getWaitingForDeletion().equals(uidOfCurrentUser)){
