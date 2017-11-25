@@ -44,11 +44,13 @@ public class HomeCareFragment extends Fragment {
     private static Button messageButton, estimationButton, cancelButton;
     private static SwipeRefreshLayout swipeRefreshLayout;
 
+    private static boolean mutex = false; //액티비티가 중첩돼서 실행되지 않게 해줌
+
     public HomeCareFragment() {
         // Required empty public constructor
     }
 
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,14 +128,19 @@ public class HomeCareFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mutex)
+                    return;
+                mutex = true;
+
                 ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
                 FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        mutex = false;
                         ProgressDialogHelper.dismiss();
-                        if(dataSnapshot.getValue(String.class) == null){
+                        if (dataSnapshot.getValue(String.class) == null) {
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh(true, null);
+                            ((MainActivity) HomeCareFragment.this.getActivity()).refresh(true, null);
                         } else {
                             MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
                             MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
@@ -143,26 +150,32 @@ public class HomeCareFragment extends Fragment {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        mutex = false;
                     }
                 });
+
+
 
 
             }
         });
 
-        //TODO 두 번 안 눌리게
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mutex)
+                    return;
+                mutex = true;
+
                 ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
                 FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        mutex = false;
                         ProgressDialogHelper.dismiss();
-                        if(dataSnapshot.getValue(String.class) == null){
+                        if (dataSnapshot.getValue(String.class) == null) {
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
-                            ((MainActivity)HomeCareFragment.this.getActivity()).refresh(true, null);
+                            ((MainActivity) HomeCareFragment.this.getActivity()).refresh(true, null);
                         } else {
                             Intent intent = new Intent(HomeCareFragment.this.getActivity(), MessageActivity.class);
                             startActivity(intent);
@@ -171,7 +184,7 @@ public class HomeCareFragment extends Fragment {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        mutex = false;
                     }
                 });
 
@@ -181,10 +194,15 @@ public class HomeCareFragment extends Fragment {
         estimationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mutex)
+                    return;
+                mutex = true;
+
                 ProgressDialogHelper.show(HomeCareFragment.this.getActivity());
                 FirebaseProfile.getUserRef().child(MainActivity.getUidOfCurrentUser()).child("current_homecare").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        mutex = false;
                         ProgressDialogHelper.dismiss();
                         if(dataSnapshot.getValue(String.class) == null){
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
@@ -197,7 +215,7 @@ public class HomeCareFragment extends Fragment {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        mutex = false;
                     }
                 });
 
