@@ -169,6 +169,14 @@ public class MainActivity extends AppCompatActivity {
         profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
         profileImageView.setClipToOutline(true);
         profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
+                intent.putExtra("uid", uidOfCurrentUser);
+                startActivity(intent);
+            }
+        });
 
         profileNameText = findViewById(R.id.name_text_view_in_main_activity);
 
