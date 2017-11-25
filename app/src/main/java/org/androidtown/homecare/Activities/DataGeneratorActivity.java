@@ -15,7 +15,7 @@ public class DataGeneratorActivity extends AppCompatActivity {
 
     /*
 
-        Supervised Learning을 위한 데이터셋을 만드는 액티비티
+        Supervised Learning 을 위한 데이터셋을 만드는 액티비티
         TODO 일반 유저는 접근할 수 없게 만들기
 
         features :
@@ -45,7 +45,6 @@ public class DataGeneratorActivity extends AppCompatActivity {
         type = findViewById(R.id.type_edt);
         submitBtn = findViewById(R.id.submt_btn);
 
-
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,7 +54,16 @@ public class DataGeneratorActivity extends AppCompatActivity {
                     user.setHomecareCount(Integer.valueOf(careCount.getText().toString()));
                     user.setSuspensions(Integer.valueOf(suspensions.getText().toString()));
                     user.setExceededPayments(Integer.valueOf(exceededPayments.getText().toString()));
-                    user.setUserType(Integer.valueOf(type.getText().toString()));
+
+                    if(Integer.valueOf(type.getText().toString()) == 0){
+                        //normal user [1 0]
+                        user.setType0(1);
+                        user.setType1(0);
+                    } else {
+                        //abnormal user [0 1]
+                        user.setType0(0);
+                        user.setType1(1);
+                    }
 
                     dataGenerator.generateTrainingData(user);
                     Toast.makeText(DataGeneratorActivity.this, "완료", Toast.LENGTH_SHORT).show();

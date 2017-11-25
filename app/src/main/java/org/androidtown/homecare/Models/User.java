@@ -31,7 +31,10 @@ public class User {
     */
 
     /* output of machine learning  */
-    private Integer userType;
+    // [type0, type1]
+    // [1 0] : normal (0)
+    // [0 1] : abnormal user (1)
+    private Integer type0, type1;
 
 
     /* Constructors, Getters, and Setters */
@@ -44,6 +47,11 @@ public class User {
         homecareCount = 0;
         newMessages = 0;
         money = 0;
+        suspensions = 0;
+        exceededPayments = 0;
+        type0 = 1;
+        type1 = 0; //normal user
+
     }
 
     public String getUid() {
@@ -159,11 +167,19 @@ public class User {
         this.exceededPayments = exceededPayments;
     }
 
-    public Integer getUserType() {
-        return userType;
+    public Integer getType0() {
+        return type0;
     }
 
-    public void setUserType(Integer userType) {
-        this.userType = userType;
+    public void setType0(Integer type0) {
+        this.type0 = type0;
+    }
+
+    public Integer getType1() {
+        return type1;
+    }
+
+    public void setType1(Integer type1) {
+        this.type1 = type1;
     }
 }
