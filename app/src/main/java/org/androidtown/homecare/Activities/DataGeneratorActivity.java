@@ -67,10 +67,26 @@ public class DataGeneratorActivity extends AppCompatActivity {
 
                     dataGenerator.generateTrainingData(user);
                     Toast.makeText(DataGeneratorActivity.this, "완료", Toast.LENGTH_SHORT).show();
+
                 } catch (Exception e){
+
                     Toast.makeText(DataGeneratorActivity.this, "타입 불일치. 인풋을 확인하세요.", Toast.LENGTH_SHORT).show();
 
                 }
+            }
+        });
+
+        findViewById(R.id.clr_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataGenerator.clearUserDataset();
+            }
+        });
+
+        findViewById(R.id.existing_usr_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataGenerator.generateTraningDataFromUsers();
             }
         });
     }

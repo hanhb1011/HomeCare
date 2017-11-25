@@ -52,8 +52,22 @@
 
     <Button
         android:id="@+id/submt_btn"
-        android:text="확인"
+        android:text="등록"
+        android:background="@android:color/transparent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/existing_usr_btn"
+        android:text="기존 유저 데이터넷 생성"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/clr_btn"
+        android:text="초기화"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

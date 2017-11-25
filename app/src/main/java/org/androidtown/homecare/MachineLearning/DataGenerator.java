@@ -22,7 +22,6 @@ import java.util.List;
     generateTrainingData(User user) : Supervised Learning 을 위한 사전 데이터셋 생성
     generateTraningDataFromUsers() : 실제 유저 데이터로부터 파싱 형식에 맞는 데이터셋 추출
     clearDataset() : 유저 데이터셋을 지움 (이미 평가가 완료된 유저들은 제거한다.)
-    updateUsers() : 기존 유저 모델링
 
  */
 public class DataGenerator {
@@ -34,7 +33,6 @@ public class DataGenerator {
     public DataGenerator(){
         database = FirebaseDatabase.getInstance();
     }
-
 
     public void generateTrainingData(final User user){
         //관리자 전용 기능이기 때문에 지역변수로 처리
@@ -80,6 +78,7 @@ public class DataGenerator {
                     User user = ds.getValue(User.class);
 
                     if(user.getHomecareCount() > 0) {
+
                         User userData = new User();
                         userData.setUid(user.getUid());
                         userData.setType0(user.getType0());
@@ -90,6 +89,7 @@ public class DataGenerator {
                         userData.setExceededPayments(user.getExceededPayments());
 
                         userList.add(userData);
+
                     }
                 }
 
@@ -101,16 +101,6 @@ public class DataGenerator {
 
             }
         });
-
-    }
-
-    public void updateUsers(){
-
-
-
-
-
-
 
     }
 
