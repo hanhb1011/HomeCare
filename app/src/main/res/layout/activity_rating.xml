@@ -4,18 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.androidtown.homecare.Activities.RatingActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
     <Button
         android:id="@+id/back_button_in_activity_rating"
-        android:background="@android:color/transparent"
-        android:text="뒤로"
-        android:textSize="15dp"
+        android:background="@drawable/back_button_image1"
         android:layout_width="60dp"
         android:layout_height="50dp" />
 
     <TextView
         android:textColor="#000000"
-        android:textSize="32sp"
+        android:textSize="30sp"
         android:textAlignment="center"
         android:text="평가를 해주세요!"
         android:layout_width="match_parent"
@@ -39,16 +38,16 @@
         <TextView
             android:textAlignment="center"
             android:text="친절함"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-            <RatingBar
-                android:id="@+id/kindness_rating_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rating="0" />
+        <RatingBar
+            android:id="@+id/kindness_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:rating="0" />
 
     </LinearLayout>
 
@@ -63,7 +62,7 @@
         <TextView
             android:textAlignment="center"
             android:text="일처리"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -85,7 +84,7 @@
         <TextView
             android:textAlignment="center"
             android:text="성실함"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -99,7 +98,7 @@
     <EditText
         android:gravity="start"
         android:id="@+id/comment_edit_text_in_rating"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:hint="한마디"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
@@ -110,8 +109,9 @@
     <Button
         android:layout_margin="10dp"
         android:id="@+id/submit_button_in_rating"
-        android:textSize="20dp"
+        android:textSize="18dp"
         android:text="제출하기"
+        android:textColor="@color/colorAccent"
         android:background="@android:color/transparent"
         android:layout_gravity="center"
         android:layout_width="wrap_content"

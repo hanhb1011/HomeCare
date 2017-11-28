@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Bundle;
@@ -63,7 +64,9 @@ public class UserProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(name);
 
         profileImage = findViewById(R.id.profile_image_view_in_profile);
-        profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+        ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
+        shapeDrawable.getPaint().setColor(Color.TRANSPARENT);
+        profileImage.setBackground(shapeDrawable);
         profileImage.setClipToOutline(true);
         profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 

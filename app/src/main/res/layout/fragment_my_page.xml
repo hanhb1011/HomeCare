@@ -7,11 +7,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:layout_margin="5dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp" />
         <Button
-            android:text="사진 업로드"
-            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:text="사진 수정"
             android:id="@+id/profile_image_upload_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

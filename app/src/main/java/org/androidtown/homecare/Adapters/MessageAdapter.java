@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.RecyclerView;
@@ -123,7 +124,9 @@ public class MessageAdapter extends RecyclerView.Adapter {
             timeText = itemView.findViewById(R.id.o_time_text);
             nameText = itemView.findViewById(R.id.o_name_text);
             profileImage = itemView.findViewById(R.id.o_profile_image);
-            profileImage.setBackground(new ShapeDrawable(new OvalShape()));
+            ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
+            shapeDrawable.getPaint().setColor(Color.TRANSPARENT);
+            profileImage.setBackground(shapeDrawable);
             profileImage.setClipToOutline(true);
             profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 

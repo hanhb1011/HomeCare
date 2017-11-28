@@ -6,17 +6,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorbackground">
         <LinearLayout
-            android:layout_margin="5dp"
+            android:layout_margin="0dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <ImageView
                 android:layout_margin="5dp"
                 android:id="@+id/profile_image_view_in_main_activity"
-                android:background="#000000"
+                android:src="@drawable/profile_image_view_in_activity_home_care_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:scaleType="fitXY"/>
@@ -34,31 +36,21 @@
                 android:background="@android:color/transparent"
                 android:text="TEST"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="50dp" />
 
             <Button
                 android:id="@+id/filter_button"
-                android:background="@android:color/transparent"
-                android:text="필터"
+                android:background="@drawable/filter_button_image1"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="50dp" />
             <Button
                 android:id="@+id/home_care_add_or_check_button"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:text="등록" />
+                android:layout_height="50dp"
+                android:background="@drawable/home_care_add_or_check_button_image1" />
 
         </LinearLayout>
 
-
-
-
-        <TextView
-            android:layout_gravity="center"
-            android:background="@color/grey"
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp" />
 
         <android.support.v4.view.ViewPager
             android:layout_weight="1"
@@ -67,40 +59,32 @@
             android:layout_height="match_parent" />
 
 
-        <TextView
-            android:layout_gravity="center"
-            android:background="@color/grey"
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp" />
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:background="@color/white"
+            android:layout_margin="0dp"
             android:gravity="center">
 
             <Button
                 android:id="@+id/hiring_fragment_button"
-                android:text="구인"
-                android:background="@android:color/transparent"
+                android:layout_width="93dp"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:background="@drawable/hiring_fragment_button_image1" />
             <Button
                 android:id="@+id/message_fragment_button"
-                android:text="홈케어"
-                android:background="@android:color/transparent"
+                android:background="@drawable/message_fragment_button_image1"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="93dp"
+                android:layout_height="45dp" />
             <Button
                 android:id="@+id/my_page_fragment_button"
-                android:text="마이페이지"
-                android:background="@android:color/transparent"
+                android:background="@drawable/my_page_fragment_button_image1"
                 android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="93dp"
+                android:layout_height="45dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -116,7 +100,7 @@
             android:layout_height="70dp" />
         <TextView
             android:textSize="15sp"
-            android:text="데이터를 불러오는 중입니다 ..."
+            android:text="데이터를 불러오는 중입니다…"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -21,6 +21,7 @@ public class User {
     private String location;
 
 
+
     /* for machine learning */
     /* 비정상적인 사용자를 분류 */
     private Integer suspensions; // 중지 횟수
@@ -186,4 +187,5 @@ public class User {
     public void setLocation(String location) {
         this.location = location;
     }
+
 }

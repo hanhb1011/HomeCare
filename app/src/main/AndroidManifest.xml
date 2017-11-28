@@ -25,7 +25,8 @@
 
         <activity android:name=".Activities.MessageActivity" />
         <activity android:name=".Activities.DataGeneratorActivity" />
-        <activity android:name=".Activities.UserProfileActivity"></activity>
+        <activity android:name=".Activities.UserProfileActivity" />
+        <activity android:name=".Activities.SignUpActivity"></activity>
     </application>
 
 </manifest>

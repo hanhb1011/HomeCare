@@ -21,6 +21,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="10dp"
+                android:src="@drawable/profile_image_view_in_activity_home_care_image"
                 android:id="@+id/profile_image_view_in_item_estimation"
                 android:layout_width="40dp"
                 android:layout_height="40dp" />

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.CardView;
@@ -95,7 +96,9 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             super(itemView);
             homeCareCardView = itemView.findViewById(R.id.home_care_card_view);
             profileImageView = itemView.findViewById(R.id.profile_image_view);
-            profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+            ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
+            shapeDrawable.getPaint().setColor(Color.TRANSPARENT);
+            profileImageView.setBackground(shapeDrawable);
             profileImageView.setClipToOutline(true);
             profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             titleText = itemView.findViewById(R.id.home_care_title_text_view);

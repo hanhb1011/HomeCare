@@ -2,15 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorbackground">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/back_button_in_activity_home_care"
-            android:background="@android:color/transparent"
-            android:text="뒤로"
-            android:textSize="15dp"
+            android:background="@drawable/back_button_image1"
             android:layout_width="60dp"
             android:layout_height="50dp" />
         <TextView
@@ -66,9 +65,10 @@
 
             <ImageView
                 android:layout_margin="10dp"
+                android:transitionName="profile_image_transition"
                 android:id="@+id/profile_image_view_in_activity_home_care"
                 android:layout_gravity="center"
-                android:background="#000000"
+                android:src="@drawable/profile_image_view_in_activity_home_care_image"
                 android:layout_width="100dp"
                 android:layout_height="100dp" />
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="이름"
                 android:textAlignment="center"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:text="★ 4.5"
                 android:textAlignment="center"
-                android:textSize="16dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -108,14 +108,14 @@
                     android:text="장소"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/home_care_location_text_view_in_activity_home_care"
                     android:textAlignment="center"
                     android:text="서울"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -132,14 +132,14 @@
                     android:text="급여"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/home_care_pay_text_view_in_activity_home_care"
                     android:textAlignment="center"
                     android:text="n만원"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -156,7 +156,7 @@
                     android:text="기간"
                     android:textAlignment="center"
                     android:layout_weight="3"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -164,7 +164,7 @@
                     android:textAlignment="center"
                     android:text="yyyy-mm-dd ~ mm-dd"
                     android:layout_weight="1"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -180,7 +180,7 @@
                     android:textAlignment="center"
                     android:text="홈케어"
                     android:layout_weight="3"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -188,7 +188,7 @@
                     android:text="타입"
                     android:textAlignment="center"
                     android:layout_weight="1"
-                    android:textSize="17dp"
+                    android:textSize="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -212,7 +212,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:textSize="16dp"
-                android:textColor="#cdff6492"
+                android:textColor="@color/colorAccent"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

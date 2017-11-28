@@ -13,8 +13,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.androidtown.homecare.R;
-
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -51,7 +49,7 @@ public class FirebasePicture {
             public void onFailure(@NonNull Exception e) {
                 if(((Activity)context).isFinishing())
                     return;
-                Glide.with(context).load(R.drawable.common_google_signin_btn_icon_light_focused).into(profileImageView);
+
             }
         });
 

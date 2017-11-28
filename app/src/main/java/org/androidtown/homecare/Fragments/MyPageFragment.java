@@ -63,7 +63,8 @@ public class MyPageFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MainActivity.REQUEST_GALLERY) {
+        if (requestCode == MainActivity.REQUEST_GALLERY && data!=null) {
+
             final Bundle extras = data.getExtras();
             if (extras != null) {
                 //Get image

@@ -73,7 +73,9 @@ public class SigninActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = emailEdit.getText().toString().trim();
                 String password = passwordEdit.getText().toString();
-                //TODO User 정보 입력해야함
+
+
+
                 firebaseAccount.attemptSignup(email, password, new User());
             }
         });

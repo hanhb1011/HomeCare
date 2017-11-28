@@ -26,7 +26,8 @@
                 android:orientation="vertical">
                 <ImageView
                     android:id="@+id/profile_image_view"
-                    android:background="#000000"
+                    android:src="@drawable/profile_image_view_in_activity_home_care_image"
+                    android:scaleType="fitCenter"
                     android:layout_width="70dp"
                     android:layout_height="70dp" />
                 <TextView

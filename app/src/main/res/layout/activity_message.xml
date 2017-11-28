@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="org.androidtown.homecare.Activities.MessageActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,9 +13,7 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/back_button_in_activity_message"
-            android:background="@android:color/transparent"
-            android:text="뒤로"
-            android:textSize="15dp"
+            android:background="@drawable/back_button_image1"
             android:layout_width="60dp"
             android:layout_height="50dp" />
 

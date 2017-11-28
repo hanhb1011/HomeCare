@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.RecyclerView;
@@ -58,7 +59,9 @@ public class EstimationAdapter extends RecyclerView.Adapter{
         public EstimationViewHolder(View itemView) {
             super(itemView);
             profileImageView = itemView.findViewById(R.id.profile_image_view_in_item_estimation);
-            profileImageView.setBackground(new ShapeDrawable(new OvalShape()));
+            ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
+            shapeDrawable.getPaint().setColor(Color.TRANSPARENT);
+            profileImageView.setBackground(shapeDrawable);
             profileImageView.setClipToOutline(true);
             profileImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 

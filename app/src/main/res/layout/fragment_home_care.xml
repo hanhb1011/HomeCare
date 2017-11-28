@@ -54,7 +54,7 @@
                                 android:transitionName="profile_image_transition"
                                 android:id="@+id/profile_image_view_in_fragment_home_care"
                                 android:layout_gravity="center"
-                                android:background="#000000"
+                                android:src="@drawable/profile_image_view_in_activity_home_care_image"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp" />
 
@@ -62,7 +62,6 @@
                                 android:id="@+id/name_text_view_in_fragment_home_care"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="이름"
                                 android:textAlignment="center"
                                 android:textSize="18sp" />
 
@@ -70,7 +69,6 @@
                                 android:id="@+id/star_text_view_in_fragment_home_care"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="★ 4.5"
                                 android:textAlignment="center"
                                 android:textSize="15sp" />
 
@@ -87,7 +85,6 @@
                                 android:id="@+id/title_text_view_in_fragment_home_care"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="타이틀"
                                 android:textAlignment="center"
                                 android:textSize="20sp" />
 
@@ -96,7 +93,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textSize="12dp"
-                                android:text="2017-11-08 17:24"
                                 android:textAlignment="center" />
 
                             <TextView
@@ -104,7 +100,6 @@
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:textAlignment="center"
-                                android:text="010-9099-3984"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 

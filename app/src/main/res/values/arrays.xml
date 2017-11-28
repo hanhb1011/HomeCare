@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="home_care_types">
-        <item >청소</item>
+        <item>청소</item>
+        <item>카풀</item>
+        <item>병원 동행</item>
+        <item>간병</item>
+        <item>애완동물 케어</item>
     </string-array>
 
     <string-array name="locations">
@@ -15,6 +19,14 @@
         <item >전라도</item>
         <item >강원도</item>
         <item >충청도</item>
+    </string-array>
+
+    <string-array name="personalities">
+        <item >외향적</item>
+        <item >내향적</item>
+        <item >사교적</item>
+        <item >까칠함</item>
+        <item >친절함</item>
     </string-array>
 
 </resources>

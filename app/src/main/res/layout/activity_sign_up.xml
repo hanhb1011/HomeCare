@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="org.androidtown.homecare.Activities.SignUpActivity">
+
+    <ImageView
+        android:layout_margin="10dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/profile_image_view_in_activity_home_care_image" />
+    <EditText
+        android:id="@+id/email_text_view_in_activity_sign_up"
+        android:hint="이메일"
+        android:maxLength="30"
+        android:inputType="textEmailAddress"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/password_text_view_in_activity_sign_up"
+        android:hint="패스워드"
+        android:maxLength="30"
+        android:inputType="textPassword"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/name_text_view_in_activity_sign_up"
+        android:hint="이름"
+        android:maxLength="30"
+        android:inputType="textPersonName"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/gender_text_view_in_activity_sign_up"
+        android:hint="성별"
+        android:maxLength="2"
+        android:inputType="textShortMessage"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:id="@+id/phone_text_view_in_activity_sign_up"
+        android:hint="전화번호"
+        android:maxLength="30"
+        android:inputType="numberDecimal"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:text="생년월일"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:id="@+id/birthday_text_view_in_activity_sign_up"
+            android:text="2017-11-09"
+            android:layout_width="80dp"
+            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"/>
+        <Button
+            android:id="@+id/date_pick_button_in_sign_up"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="65dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="지역"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"/>
+        <Spinner
+            android:entries="@array/locations"
+            android:id="@+id/location_spinner_in_sign_up"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="성격"
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"/>
+
+        <Spinner
+            android:entries="@array/personalities"
+            android:id="@+id/personalities_spinner_in_sign_up"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_button_in_sign_up"
+        android:background="@android:color/transparent"
+        android:text="등록"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
