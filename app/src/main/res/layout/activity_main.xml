@@ -31,24 +31,26 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <Button
-                android:id="@+id/test_button"
-                android:background="@android:color/transparent"
-                android:text="TEST"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
 
             <Button
+                android:visibility="gone"
                 android:id="@+id/filter_button"
                 android:background="@drawable/filter_button_image1"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <Button
+                android:visibility="gone"
                 android:id="@+id/home_care_add_or_check_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@drawable/home_care_add_or_check_button_image1" />
-
+            <Button
+                android:visibility="gone"
+                android:id="@+id/logout_button"
+                android:background="@android:color/transparent"
+                android:text="X"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
         </LinearLayout>
 
 

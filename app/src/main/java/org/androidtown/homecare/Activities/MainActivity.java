@@ -30,6 +30,7 @@ import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 import org.androidtown.homecare.Services.HomeCareService;
 import org.androidtown.homecare.Utils.BackButtonHandler;
+import org.androidtown.homecare.Utils.PageChangeListener;
 
 /*
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_IN_HOME_CARE_ACTIVITY = 1003;
     public static final int REQUEST_GALLERY = 1004;
 
-    private Button hiringButton, messageButton, myPageButton, addOrCheckHomeCareButton, filterButton;
+    private Button hiringButton, messageButton, myPageButton, addOrCheckHomeCareButton, filterButton ,logOutButton;
     private ViewPager mainViewPager;
     private BackButtonHandler backButtonHandler;
     private static ImageView profileImageView;
@@ -77,16 +78,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initInstances(); //인스턴스 생성 및 초기화
+        initButtons(); //삭제, 필터 버튼 초기화
         initAuth(); //파이어베이스 관련 객체 초기화
         initView(); //뷰 초기화
-        initButtons(); //삭제, 필터 버튼 초기화
         getDataFromFirebase(); //파이어베이스로부터 유저 정보를 받고 ui를 업데이트한다.
         initService(); //서비스 초기화
 
 
-        /* 임시 */
-        testButton = findViewById(R.id.test_button);
-        /* 임시끝 */
+
     }
 
     private void initService() {
@@ -135,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        
     }
 
     private void initView() {
@@ -161,7 +161,11 @@ public class MainActivity extends AppCompatActivity {
 
         //뷰페이저
         mainViewPager = findViewById(R.id.main_view_pager);
+        mainViewPager.setOffscreenPageLimit(3);
         mainViewPager.setAdapter(new ViewPagerAdapter(this, getSupportFragmentManager()));
+        PageChangeListener pageChangeListener = new PageChangeListener(hiringButton, messageButton, myPageButton, addOrCheckHomeCareButton, filterButton ,logOutButton);
+        pageChangeListener.onPageSelected(0);
+        mainViewPager.setOnPageChangeListener(pageChangeListener);
         mainViewPager.setCurrentItem(0);
 
         //프로필 관련
