@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_REFRESH){ //리프레쉬가 필요한 경우
+        if(resultCode == RESULT_REFRESH || resultCode == RESULT_REFRESH_IN_HOME_CARE_ACTIVITY){ //리프레쉬가 필요한 경우
             refresh(true, null);
         }
     }

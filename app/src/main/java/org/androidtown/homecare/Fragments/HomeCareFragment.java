@@ -47,6 +47,7 @@ public class HomeCareFragment extends Fragment {
     private static Button messageButton, estimationButton, cancelButton, contactButton;
     private static SwipeRefreshLayout swipeRefreshLayout;
     private static Context context;
+    private static boolean isOngoing;
 
     private static boolean mutex = false; //액티비티가 중첩돼서 실행되지 않게 해줌
 
@@ -65,15 +66,19 @@ public class HomeCareFragment extends Fragment {
         return view;
     }
 
-    public static void setViews(boolean isOngoing) {
+    public static void setViews(boolean onGoing) {
+        isOngoing = onGoing;
+
         //뷰 초기화
         oppUserLayout.setVisibility(View.GONE);
         contactButton.setVisibility(View.GONE);
+        messageButton.setVisibility(View.GONE);
 
         final HomeCare homeCare = MainActivity.getHomeCareOfCurrentUser(); //메인에서 서버로부터 받은 홈케어 리스트에서 해당 key에 맞는 홈케어를 탐색.
 
         if(isOngoing) {
             oppUserLayout.setVisibility(View.VISIBLE);
+            messageButton.setVisibility(View.VISIBLE);
 
             final User user = MainActivity.getOpponentUser(); //작성자 정보를 불러온다.
             //사진을 띄움
@@ -184,9 +189,15 @@ public class HomeCareFragment extends Fragment {
                             Toast.makeText(HomeCareFragment.this.getContext(), "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
                             ((MainActivity) HomeCareFragment.this.getActivity()).refresh(true, null);
                         } else {
-                            MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
-                            MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
-                            MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CANCELLATION, HomeCareFragment.this.getActivity());
+                            if(isOngoing) {
+                                MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
+                                MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
+                                MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CANCELLATION, HomeCareFragment.this.getActivity());
+                            } else {
+                                MessageDialogFragment.setContext(HomeCareFragment.this.getActivity());
+                                MessageDialogFragment.setKeyAndUid(MainActivity.getHomeCareOfCurrentUser().getKey(), MainActivity.getUidOfCurrentUser());
+                                MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_DELETION_IN_MAIN, HomeCareFragment.this.getActivity());
+                            }
                         }
                     }
 
@@ -261,6 +272,9 @@ public class HomeCareFragment extends Fragment {
 
     }
 
+    public static Button getMessageButton() {
+        return messageButton;
+    }
 
     public static LinearLayout getHiddenLayout() {
         return hiddenLayout;

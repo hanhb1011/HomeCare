@@ -137,7 +137,8 @@ public class FirebaseHomeCare {
                             ProgressDialogHelper.dismiss();
                             MessageDialogFragment.setHomeCareCreationFragment(fragment);
                             MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_CREATION_SUCCESS,context);
-                            refreshHomeCare(null); //리프레쉬
+//                            refreshHomeCare(null); //리프레쉬
+                            ((MainActivity)context).refresh(true, null); //리프레쉬
                         }
                     });
                     userRef.child(uid).child(CURRENT_HOME_CARE).setValue(specificHomeCareRef.getKey());
@@ -160,7 +161,7 @@ public class FirebaseHomeCare {
 
 
     //DESTROY HOME CARE
-    public void destroyHomeCare(final String key, final String uid){
+    public void destroyHomeCare(final String key, final String uid, final boolean calledByMain){
 
         /*
             상황
@@ -190,8 +191,14 @@ public class FirebaseHomeCare {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     ProgressDialogHelper.dismiss();
                                     Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                    ((Activity)context).setResult(MainActivity.RESULT_REFRESH);
-                                    ((Activity)context).finish();
+
+                                    if(!calledByMain) {
+                                        ((Activity) context).setResult(MainActivity.RESULT_REFRESH);
+                                        ((Activity) context).finish();
+                                    } else {
+                                        ((MainActivity)context).refresh(true, null);
+                                    }
+
                                 }
                             });
                         }

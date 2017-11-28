@@ -59,6 +59,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int HOMECARE_CANCELLATION = 18;
     public final static int LOG_OUT = 19;
     public final static int SIGN_UP_INVALID = 20;
+    public final static int HOMECARE_DELETION_IN_MAIN = 21;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -163,6 +164,7 @@ public class MessageDialogFragment extends DialogFragment {
                 rightButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         homeCareCreationFragment.dismiss();
                         dismiss();
                     }
@@ -204,7 +206,7 @@ public class MessageDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         //key와 uid를 받은 상태.
-                        ((HomeCareActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid);
+                        ((HomeCareActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid, false);
                         dismiss();
                     }
                 });
@@ -224,7 +226,7 @@ public class MessageDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         //key와 uid를 받은 상태.
-                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid);
+                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid, false);
                         dismiss();
                     }
                 });
@@ -261,7 +263,7 @@ public class MessageDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View view) {
                         //key와 uid를 받은 상태.
-                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid);
+                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid, false);
                         dismiss();
                     }
                 });
@@ -286,6 +288,21 @@ public class MessageDialogFragment extends DialogFragment {
             case SIGN_UP_INVALID :
                 titleText.setText("회원가입 실패");
                 contentText.setText(contentOfDialog);
+                break;
+            case HOMECARE_DELETION_IN_MAIN :
+                titleText.setText("홈케어 삭제");
+                contentText.setText("삭제하시겠습니까?\n홈케어가 진행중이 아니기 때문에\n바로 삭제됩니다.");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //key와 uid를 받은 상태.
+                        ((MainActivity)context).getFirebaseHomeCare().destroyHomeCare(key, uid, true);
+                        dismiss();
+                    }
+                });
+                rightButton.setText("아니오");
                 break;
             default:
                 titleText.setText("에러");

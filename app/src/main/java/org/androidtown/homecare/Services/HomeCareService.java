@@ -86,7 +86,7 @@ public class HomeCareService extends Service {
                             //현재 진행중인 홈케어가 종료되거나, 새로 생성되었을 때 알림
                             if(currentHomeCare && dataSnapshot.child("current_homecare").getValue(String.class) == null){
                                 currentHomeCare = false;
-                                HomeCareNotification.notifyNewMessage(HomeCareService.this, "진행 중이던 홈케어가 종료되었습니다.");
+                                HomeCareNotification.notifyNewMessage(HomeCareService.this, "홈케어가 종료되었습니다.");
                             } else if(!currentHomeCare && dataSnapshot.child("current_homecare").getValue(String.class) != null){
                                 currentHomeCare = true;
                                 HomeCareNotification.notifyNewMessage(HomeCareService.this, "새로운 홈케어가 생성되었습니다!");
