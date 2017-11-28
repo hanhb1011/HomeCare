@@ -16,7 +16,8 @@
                 android:id="@+id/title_text_view_in_main"
                 android:layout_centerInParent="true"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textColor="#0d0e2e"
+                android:textSize="17sp"
                 android:textAlignment="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -27,14 +28,17 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
                 <ImageView
-                    android:layout_margin="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:id="@+id/profile_image_view_in_main_activity"
                     android:src="@drawable/profile_image_view_in_activity_home_care_image"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
                     android:scaleType="fitXY"/>
 
                 <TextView
+                    android:visibility="invisible"
                     android:id="@+id/name_text_view_in_main_activity"
                     android:layout_margin="5dp"
                     android:textSize="13sp"

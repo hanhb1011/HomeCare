@@ -13,7 +13,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
-import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
 import org.androidtown.homecare.Utils.BackButtonHandler;
 import org.androidtown.homecare.Utils.SharedPreferenceHelper;
@@ -71,12 +70,7 @@ public class SigninActivity extends AppCompatActivity {
         findViewById(R.id.signup_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = emailEdit.getText().toString().trim();
-                String password = passwordEdit.getText().toString();
-
-
-
-                firebaseAccount.attemptSignup(email, password, new User());
+                startActivity(new Intent(SigninActivity.this, SignUpActivity.class));
             }
         });
 

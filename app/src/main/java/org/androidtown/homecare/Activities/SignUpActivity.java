@@ -25,7 +25,6 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView BirthdayText;
     private Spinner locationSpinner, personalitiesSpinner;
     private Button submitButton;
-
     private Calendar cal;
     private int year, day, month;
 
@@ -46,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
         user.setName(NameEdit.getText().toString());
-        user.setName(GenderEdit.getText().toString());
+//        user.setName(GenderEdit.getText().toString());
         user.setName(PhoneEdit.getText().toString());
         //user.setName(locationSpinner.getItemAtPosition(position).toString());
 
@@ -85,13 +84,11 @@ public class SignUpActivity extends AppCompatActivity {
         BirthdayText.setText(fmt.format(cal.getTime()));
 
 
-        user.setBirthday(cal.getTimeInMillis());
-
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(SignUpActivity.this, startDateSetListener, year, month, day).show();
+                new DatePickerDialog(SignUpActivity.this, android.app.AlertDialog.THEME_HOLO_LIGHT,startDateSetListener, year, month, day).show();
             }
         });
 
@@ -99,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void initEditTexts() {
         NameEdit = findViewById(R.id.name_text_view_in_activity_sign_up);
-        GenderEdit = findViewById(R.id.gender_text_view_in_activity_sign_up);
+//        GenderEdit = findViewById(R.id.gender_text_view_in_activity_sign_up);
         PhoneEdit = findViewById(R.id.phone_text_view_in_activity_sign_up);
     }
 
