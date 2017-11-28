@@ -8,52 +8,62 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@color/colorbackground">
-        <LinearLayout
-            android:layout_margin="0dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <ImageView
-                android:layout_margin="5dp"
-                android:id="@+id/profile_image_view_in_main_activity"
-                android:src="@drawable/profile_image_view_in_activity_home_care_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitXY"/>
-
+        <RelativeLayout
+            android:background="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/name_text_view_in_main_activity"
-                android:layout_margin="5dp"
-                android:textSize="18dp"
-                android:gravity="center_vertical"
-                android:layout_weight="1"
+                android:id="@+id/title_text_view_in_main"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_margin="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_margin="5dp"
+                    android:id="@+id/profile_image_view_in_main_activity"
+                    android:src="@drawable/profile_image_view_in_activity_home_care_image"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:scaleType="fitXY"/>
 
-            <Button
-                android:visibility="gone"
-                android:id="@+id/filter_button"
-                android:background="@drawable/filter_button_image1"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-            <Button
-                android:visibility="gone"
-                android:id="@+id/home_care_add_or_check_button"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/home_care_add_or_check_button_image1" />
-            <Button
-                android:visibility="gone"
-                android:id="@+id/logout_button"
-                android:background="@android:color/transparent"
-                android:text="X"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/name_text_view_in_main_activity"
+                    android:layout_margin="5dp"
+                    android:textSize="13sp"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/filter_button"
+                    android:background="@drawable/filter_button_image1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/home_care_add_or_check_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/home_care_add_or_check_button_image1" />
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/logout_button"
+                    android:background="@android:color/transparent"
+                    android:text="X"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+            </LinearLayout>
+        </RelativeLayout>
         <android.support.v4.view.ViewPager
             android:layout_weight="1"
             android:id="@+id/main_view_pager"

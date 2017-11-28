@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -13,9 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.androidtown.homecare.Activities.CandidateListActivity;
 import org.androidtown.homecare.Activities.HomeCareActivity;
 import org.androidtown.homecare.Activities.MainActivity;
+import org.androidtown.homecare.Activities.SigninActivity;
 import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.R;
 
@@ -53,6 +57,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int DELETION_CHECK = 16;
     public final static int ESTIMATION_SUCCESS = 17;
     public final static int HOMECARE_CANCELLATION = 18;
+    public final static int LOG_OUT = 19;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -251,6 +256,21 @@ public class MessageDialogFragment extends DialogFragment {
                 });
                 rightButton.setText("아니오");
 
+                break;
+            case LOG_OUT :
+                titleText.setText("로그아웃");
+                contentText.setText("로그아웃 하시겠습니까?");
+                leftButton.setText("네");
+                leftButton.setVisibility(View.VISIBLE);
+                leftButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(context, SigninActivity.class));
+                        FirebaseAuth.getInstance().signOut();
+                        ((Activity)context).finish();
+                    }
+                });
+                rightButton.setText("아니오");
                 break;
             default:
                 titleText.setText("에러");

@@ -55,6 +55,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
+
+    }
+
+    private void initButtons() {
         findViewById(R.id.submit_button_in_sign_up).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,11 +68,6 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void initButtons() {
-
     }
 
     private void initDatePickersAndViews() {

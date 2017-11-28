@@ -25,6 +25,7 @@ import org.androidtown.homecare.Firebase.FirebasePicture;
 import org.androidtown.homecare.Firebase.FirebaseProfile;
 import org.androidtown.homecare.Fragments.FilterFragment;
 import org.androidtown.homecare.Fragments.HomeCareCreationFragment;
+import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mainViewPager;
     private BackButtonHandler backButtonHandler;
     private static ImageView profileImageView;
-    private TextView profileNameText;
+    private TextView profileNameText, titleText;
     private static LinearLayout progressBarLayout;
     private Button testButton;
 
@@ -134,10 +135,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        
+        //로그아웃 버튼
+        logOutButton = findViewById(R.id.logout_button);
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MessageDialogFragment.setContext(MainActivity.this);
+                MessageDialogFragment.showDialog(MessageDialogFragment.LOG_OUT, MainActivity.this);
+            }
+        });
     }
 
     private void initView() {
+        //타이틀
+        titleText = findViewById(R.id.title_text_view_in_main);
+
 
         //버튼
         hiringButton = findViewById(R.id.hiring_fragment_button);
@@ -163,7 +175,8 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager = findViewById(R.id.main_view_pager);
         mainViewPager.setOffscreenPageLimit(3);
         mainViewPager.setAdapter(new ViewPagerAdapter(this, getSupportFragmentManager()));
-        PageChangeListener pageChangeListener = new PageChangeListener(hiringButton, messageButton, myPageButton, addOrCheckHomeCareButton, filterButton ,logOutButton);
+        PageChangeListener pageChangeListener = new PageChangeListener(hiringButton, messageButton,
+                myPageButton, addOrCheckHomeCareButton, filterButton ,logOutButton, titleText);
         pageChangeListener.onPageSelected(0);
         mainViewPager.setOnPageChangeListener(pageChangeListener);
         mainViewPager.setCurrentItem(0);
