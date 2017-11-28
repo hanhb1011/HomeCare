@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/profile_image_view_in_candidate_item"
                 android:layout_margin="10dp"
-                android:background="@drawable/profile_image_view_in_activity_home_care_image"
+                android:src="@drawable/profile_image_view_in_activity_home_care_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp" />
 
@@ -142,6 +142,7 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorAccent"
                 android:text="수락하기"
+                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -7,7 +7,7 @@ package org.androidtown.homecare.Models;
 public class User {
 
     private String name; //temp ""
-    private Object birthday;
+    private String birthday;
     private String uid;
     private String current_homecare; //현재 진행중인, 또는 등록한 홈케어의 key
     private Double star; //평점
@@ -19,8 +19,7 @@ public class User {
     private String gender;
     private String personality;
     private String location;
-
-
+    private String email;
 
     /* for machine learning */
     /* 비정상적인 사용자를 분류 */
@@ -36,9 +35,10 @@ public class User {
 
     /* Constructors, Getters, and Setters */
     public User() {
+
     }
 
-    public User(String uid) {
+    public void setDefaultInfo(String uid){
         this.uid = uid;
         star = 0.0d;
         homecareCount = 0;
@@ -48,7 +48,6 @@ public class User {
         exceededPayments = 0;
         type0 = 1;
         type1 = 0; //normal user
-
     }
 
     public String getUid() {
@@ -67,13 +66,6 @@ public class User {
         this.name = name;
     }
 
-    public Object getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Object birthday) {
-        this.birthday = birthday;
-    }
 
 
     public String getCurrent_homecare() {
@@ -188,4 +180,19 @@ public class User {
         this.location = location;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 }

@@ -3,7 +3,9 @@ package org.androidtown.homecare.Firebase;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,7 +77,7 @@ public class FirebaseAccount {
 
 
     //회원가입
-    public void attemptSignup(String email, String password, final User user){
+    public void attemptSignup(final String email, final String password, final User user, @Nullable final Bitmap bitmap){
         //firebase instances initialize
         database = FirebaseDatabase.getInstance();
         userRef = database.getReference().child("user"); // root/user
@@ -83,34 +85,37 @@ public class FirebaseAccount {
         if(context == null || user == null)
             return;
 
-        if(!checkEmailValid(email) || !checkPasswordValid(password)){
-            MessageDialogFragment.showDialog(MessageDialogFragment.INVALID_EMAIL_OR_PASSWORD, context);
-            return;
-        }
-
-        ProgressDialogHelper.show(context); //프로그래스바 띄우기
+        ProgressDialogHelper.show(context, "회원가입 시도 중입니다"); //프로그래스바 띄우기
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity)context, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        ProgressDialogHelper.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            MessageDialogFragment.showDialog(MessageDialogFragment.SIGN_UP_SUCCESS, context);
                             DatabaseReference specificUser = userRef.child(mAuth.getCurrentUser().getUid());
-                            user.setUid(mAuth.getCurrentUser().getUid());
-                            /* 임시 */
-                            user.setHomecareCount(0);
-                            user.setName(user.getUid().substring(0,5));
-                            user.setStar(0.0d);
-                            user.setMoney(0);
-                            user.setNewMessages(0);
-                            /* 임시끝 */
-                            specificUser.setValue(user);
+                            user.setDefaultInfo(mAuth.getCurrentUser().getUid());
+
+                            specificUser.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(bitmap!= null) {
+                                        ProgressDialogHelper.dismiss();
+                                        ProgressDialogHelper.show(context, "사진을 업로드 중입니다");
+                                        FirebasePicture firebasePicture = new FirebasePicture(context);
+                                        firebasePicture.uploadImage(user.getUid(), bitmap, context);
+
+                                    } else {
+                                        ProgressDialogHelper.dismiss();
+                                        MessageDialogFragment.setContext(context);
+                                        MessageDialogFragment.showDialog(MessageDialogFragment.SIGN_UP_SUCCESS, context);
+                                    }
+                                }
+                            });
 
                         } else {
+                            ProgressDialogHelper.dismiss();
                             // If sign in fails, display a message to the user.
                             MessageDialogFragment.showDialog(MessageDialogFragment.SIGN_UP_FAILED, context);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());

@@ -58,6 +58,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int ESTIMATION_SUCCESS = 17;
     public final static int HOMECARE_CANCELLATION = 18;
     public final static int LOG_OUT = 19;
+    public final static int SIGN_UP_INVALID = 20;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -71,6 +72,7 @@ public class MessageDialogFragment extends DialogFragment {
     private static HomeCareCreationFragment homeCareCreationFragment;
     private static Context context;
     private static String key, uid; //home care의 key와, candidate의 uid
+    private static String contentOfDialog;
     private static Estimation estimation;
 
     @SuppressLint("ValidFragment")
@@ -82,6 +84,8 @@ public class MessageDialogFragment extends DialogFragment {
         md.setCancelable(false);
         md.show(((Activity)context).getFragmentManager(), "");
     }
+
+
 
     @Nullable
     @Override
@@ -110,6 +114,13 @@ public class MessageDialogFragment extends DialogFragment {
             case SIGN_UP_SUCCESS :
                 titleText.setText("회원가입");
                 contentText.setText("회원가입에 성공하였습니다!");
+                rightButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ((Activity)context).finish();
+                        dismiss();
+                    }
+                });
                 break;
             case CANCEL_ASKING :
                 titleText.setText("알림");
@@ -272,6 +283,10 @@ public class MessageDialogFragment extends DialogFragment {
                 });
                 rightButton.setText("아니오");
                 break;
+            case SIGN_UP_INVALID :
+                titleText.setText("회원가입 실패");
+                contentText.setText(contentOfDialog);
+                break;
             default:
                 titleText.setText("에러");
                 break;
@@ -313,5 +328,9 @@ public class MessageDialogFragment extends DialogFragment {
 
     public static void setEstimation(Estimation estimation) {
         MessageDialogFragment.estimation = estimation;
+    }
+
+    public static void setContentOfDialog(String contentOfDialog) {
+        MessageDialogFragment.contentOfDialog = contentOfDialog;
     }
 }

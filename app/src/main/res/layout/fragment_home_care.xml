@@ -28,7 +28,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
                     <TextView
-                        android:textColor="#ff6d6d"
+                        android:textColor="@color/colorAccent"
                         android:layout_margin="10dp"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -264,7 +264,7 @@
                         android:background="@android:color/transparent"
                         android:gravity="center"
                         android:textSize="16dp"
-                        android:textColor="#cdff6492"
+                        android:textColor="@color/colorAccent"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />

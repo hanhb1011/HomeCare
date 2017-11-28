@@ -6,12 +6,19 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import org.androidtown.homecare.Fragments.MessageDialogFragment;
+import org.androidtown.homecare.Utils.ProgressDialogHelper;
 
 import java.io.ByteArrayOutputStream;
 
@@ -59,8 +66,26 @@ public class FirebasePicture {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
-        storageRef.child(uid).putBytes(data);
-
+        storageRef.child(uid).putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                Toast.makeText(context, "사진 업로드에 성공했습니다!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
+    public void uploadImage(String uid, Bitmap bitmap, final Context context){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        storageRef.child(uid).putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                ProgressDialogHelper.dismiss();
+                MessageDialogFragment.setContext(context);
+                MessageDialogFragment.showDialog(MessageDialogFragment.SIGN_UP_SUCCESS, context);
+            }
+        });
+
+    }
 }
