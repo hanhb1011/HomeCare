@@ -143,7 +143,7 @@ public class HomeCareActivity extends AppCompatActivity {
         dateText.setText(fmt3.format(cal.getTime()));
 
         //나머지
-        payText.setText(String.valueOf(homeCare.getPay()));
+        payText.setText(String.valueOf(homeCare.getPay()) +"만원");
         careTypeText.setText(homeCare.getCareType());
         locationText.setText(homeCare.getLocation());
         commentText.setText(homeCare.getComment());

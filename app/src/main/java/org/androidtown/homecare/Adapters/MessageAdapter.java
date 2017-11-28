@@ -1,6 +1,7 @@
 package org.androidtown.homecare.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -33,6 +34,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
     //SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private final String oUid, oName;
+    private Bitmap bitmap;
 
 
     public MessageAdapter(Context context, List<Message> list, String oUid, String oName) {
@@ -130,8 +132,8 @@ public class MessageAdapter extends RecyclerView.Adapter {
             profileImage.setClipToOutline(true);
             profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            //TODO 하나의 자원만 사용하게 바꾸기
-            MainActivity.getFirebasePicture().downloadImage(MainActivity.getUidOfOpponentUser(), profileImage);
+            if(bitmap != null)
+                profileImage.setImageBitmap(bitmap);
 
         }
 
@@ -145,4 +147,7 @@ public class MessageAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
 }

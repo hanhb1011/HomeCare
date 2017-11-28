@@ -1,10 +1,15 @@
 package org.androidtown.homecare.Firebase;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.androidtown.homecare.Adapters.MessageAdapter;
 import org.androidtown.homecare.Models.Chat;
 import org.androidtown.homecare.Models.Message;
+import org.androidtown.homecare.Utils.MyLinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,59 +48,50 @@ public class FirebaseMessenger {
     private final static DatabaseReference userRef = database.getReference().child("user");
     private RecyclerView recyclerView;
 
+    private String key;
     private String oUid;
     private Context context;
-    private static RecyclerView.LayoutManager layoutManager;
+    private Bitmap bitmap;
+    private MessageValueEventListenter messageValueEventListenter;
+    private MyLinearLayoutManager myLinearLayoutManager;
 
 
 
-    public FirebaseMessenger(Context context, String oUid) {
+    public FirebaseMessenger(Context context, String oUid, final String key, boolean getImage) {
         this.context = context;
         this.oUid = oUid;
-        layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        this.key = key;
+
+        messageValueEventListenter = new MessageValueEventListenter();
+
+        if(getImage) {
+            final long ONE_MEGABYTE = 1024 * 1024;
+            FirebasePicture.storageRef.child(oUid).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    bitmap = BitmapFactory.decodeByteArray(bytes , 0, bytes.length);
+                    chatRef.child(key).child("message").removeEventListener(messageValueEventListenter);
+                    readMessages();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+
+
+        }
     }
 
     /* Message 관련 */
-    public void readMessages(String key){
+    public void readMessages(){
         if(recyclerView == null || key == null || oUid == null) {
             Toast.makeText(context, "비정상적인 접근입니다.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        chatRef.child(key).child("message").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                messageList.clear();
-
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
-                    messageList.add(ds.getValue(Message.class));
-                }
-
-                userRef.child(oUid).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        MessageAdapter messageAdapter = new MessageAdapter(context, messageList, oUid, dataSnapshot.child("name").getValue(String.class));
-
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setAdapter(messageAdapter);
-                        layoutManager.scrollToPosition(messageList.size()-1);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+        chatRef.child(key).child("message").addValueEventListener(messageValueEventListenter);
 
     }
 
@@ -116,6 +113,44 @@ public class FirebaseMessenger {
 
 
 
+    }
+    class MessageValueEventListenter implements ValueEventListener {
+
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            messageList.clear();
+
+            for(DataSnapshot ds : dataSnapshot.getChildren()){
+                messageList.add(ds.getValue(Message.class));
+            }
+
+            userRef.child(oUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    MessageAdapter messageAdapter = new MessageAdapter(context, messageList, oUid, dataSnapshot.child("name").getValue(String.class));
+                    if(bitmap!=null)
+                        messageAdapter.setBitmap(bitmap);
+
+                    if(myLinearLayoutManager== null) {
+                        myLinearLayoutManager = new MyLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+                        recyclerView.setLayoutManager(myLinearLayoutManager);
+                    }
+                    recyclerView.setAdapter(messageAdapter);
+                    myLinearLayoutManager.scrollToPosition(messageList.size()-1);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
     }
 
 

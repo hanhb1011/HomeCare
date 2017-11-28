@@ -31,10 +31,14 @@
         <EditText
             android:id="@+id/message_edit_text"
             android:layout_weight="1"
+            android:maxLines="6"
+            android:maxLength="1000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/message_send_button"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
             android:background="@android:color/transparent"
             android:text="전송"
             android:layout_width="70dp"

@@ -34,7 +34,7 @@ public class FirebasePicture {
      */
 
     private Context context;
-    private final static StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("profileImage");
+    public final static StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("profileImage");
 
 
     public FirebasePicture(Context context) {

@@ -79,7 +79,7 @@ public class CandidateAdapter extends RecyclerView.Adapter {
     private class CandidateViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         ImageView profileImageView;
-        TextView nameText, starText;
+        TextView nameText, starText, phoneText, personalityText, locationText, birthdayText, homeCareStatusText;
         LinearLayout hiddenLayout;
         Button acceptButton;
         boolean isVisible = false;
@@ -96,12 +96,25 @@ public class CandidateAdapter extends RecyclerView.Adapter {
             starText = itemView.findViewById(R.id.star_text_view_in_candidate_item);
             hiddenLayout = itemView.findViewById(R.id.hidden_view_in_candidate_item);
             acceptButton = itemView.findViewById(R.id.accept_button_in_candidate_item);
+            phoneText = itemView.findViewById(R.id.phone_text_in_item_candidate);
+            personalityText = itemView.findViewById(R.id.personality_text_in_item_candidate);
+            locationText = itemView.findViewById(R.id.location_text_in_item_candidate);
+            birthdayText = itemView.findViewById(R.id.birthdat_text_in_item_candidate);
+            homeCareStatusText = itemView.findViewById(R.id.home_care_status_text_in_item_candidate);
+
         }
 
         void bind(final User user){
 
             nameText.setText(user.getName());
             starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
+            phoneText.setText(user.getPhoneNumber());
+            personalityText.setText(user.getPersonality());
+            locationText.setText(user.getLocation());
+            birthdayText.setText(user.getBirthday());
+            homeCareStatusText.setText(user.getHomecareCount() + "회");
+
+
 
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override

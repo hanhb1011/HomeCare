@@ -30,12 +30,14 @@
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/name_text_view_in_candidate_item"
-                    android:textSize="19dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/star_text_view_in_candidate_item"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -46,7 +48,9 @@
         <LinearLayout
             android:visibility="gone"
             android:id="@+id/hidden_view_in_candidate_item"
-            android:layout_margin="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -54,8 +58,9 @@
             android:layout_gravity="center">
 
             <TextView
+                android:textStyle="bold"
                 android:text="상세정보"
-                android:textSize="17dp"
+                android:textSize="16dp"
                 android:textAlignment="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -78,12 +83,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:textStyle="bold"
                         android:layout_weight="3"
                         android:textAlignment="center"
                         android:text="연락처"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/phone_text_in_item_candidate"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -94,12 +103,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:textStyle="bold"
                         android:layout_weight="3"
                         android:textAlignment="center"
                         android:text="성격"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/personality_text_in_item_candidate"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -110,12 +123,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:textStyle="bold"
                         android:layout_weight="3"
                         android:textAlignment="center"
                         android:text="지역"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/location_text_in_item_candidate"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -126,12 +143,36 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:textStyle="bold"
+                        android:layout_weight="3"
+                        android:textAlignment="center"
+                        android:text="생년월일"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/birthdat_text_in_item_candidate"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:textStyle="bold"
                         android:layout_weight="3"
                         android:textAlignment="center"
                         android:text="홈케어 진행"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                     <TextView
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:id="@+id/home_care_status_text_in_item_candidate"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -144,7 +185,7 @@
                 android:text="수락하기"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="40dp" />
 
         </LinearLayout>
     </LinearLayout>

@@ -35,9 +35,9 @@ public class MessageActivity extends AppCompatActivity {
 
 
     private void initFirebase() {
-        firebaseMessenger = new FirebaseMessenger(MessageActivity.this, MainActivity.getUidOfOpponentUser());
+        firebaseMessenger = new FirebaseMessenger(MessageActivity.this, MainActivity.getUidOfOpponentUser(), MainActivity.getHomeCareOfCurrentUser().getKey(), true);
         firebaseMessenger.setRecyclerView(messageRecyclerView);
-        firebaseMessenger.readMessages(MainActivity.getHomeCareOfCurrentUser().getKey());
+        firebaseMessenger.readMessages();
     }
 
     private void initView() {

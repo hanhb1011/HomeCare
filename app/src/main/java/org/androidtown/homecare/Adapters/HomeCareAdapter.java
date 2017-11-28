@@ -141,7 +141,7 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             cal.setTimeInMillis((long)homeCare.getTimestamp());
             dateText.setText(fmt3.format(cal.getTime()));
 
-            payText.setText(String.valueOf(homeCare.getPay()));
+            payText.setText(String.valueOf(homeCare.getPay()) +"만원");
             careTypeText.setText(homeCare.getCareType());
             locationText.setText(homeCare.getLocation());
 

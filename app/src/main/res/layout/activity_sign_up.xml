@@ -20,10 +20,11 @@
             android:background="@drawable/back_button_image1" />
 
         <TextView
-            android:textColor="#000000"
+            android:textColor="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:textStyle="bold"
             android:text="회원가입"
             android:textAlignment="center"
             android:textSize="23sp" />
@@ -229,6 +230,8 @@
         android:id="@+id/submit_button_in_sign_up"
         android:background="@android:color/transparent"
         android:textSize="17sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
         android:text="등록하기"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
