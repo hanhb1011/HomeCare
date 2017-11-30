@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context="org.androidtown.homecare.Activities.CandidateListActivity"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="@color/colorbackground">
 
-    <LinearLayout
+    <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -18,16 +20,18 @@
             android:textSize="15dp"
             android:layout_width="50dp"
             android:layout_height="50dp" />
-    </LinearLayout>
+        <TextView
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:text="홈케어 신청자 목록"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-    <TextView
-        android:textAlignment="center"
-        android:text="홈케어 신청자 목록"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:textColor="@color/colorAccent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
 
     <android.support.v7.widget.RecyclerView
         android:animateLayoutChanges="true"

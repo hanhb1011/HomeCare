@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorbackground">
     <LinearLayout
@@ -39,6 +40,7 @@
         android:layout_marginRight="25dp"
         android:transitionName="card_view_transition"
         android:layout_gravity="center"
+        app:cardCornerRadius="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout

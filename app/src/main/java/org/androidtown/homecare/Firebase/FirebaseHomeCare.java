@@ -215,7 +215,10 @@ public class FirebaseHomeCare {
                     FirebaseMessenger.destroyChat(key); //Chat 제거
 
                     userRef.child(uid).child(CURRENT_HOME_CARE).removeValue();
+                    userRef.child(uid).child("newMessages").setValue(0);
                     userRef.child(homeCare.getWaitingForDeletion()).child(CURRENT_HOME_CARE).removeValue();
+                    userRef.child(homeCare.getWaitingForDeletion()).child("newMessages").setValue(0);
+
                     homeCareRef.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

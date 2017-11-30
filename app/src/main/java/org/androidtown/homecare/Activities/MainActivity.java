@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseAccount.mAuth.addAuthStateListener(firebaseAccount.mAuthListener);
 
+
     }
 
     @Override

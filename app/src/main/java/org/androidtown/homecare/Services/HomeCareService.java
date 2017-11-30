@@ -1,10 +1,7 @@
 package org.androidtown.homecare.Services;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,8 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Utils.HomeCareNotification;
-
-import java.util.List;
 
 /*
 
@@ -65,7 +60,7 @@ public class HomeCareService extends Service {
                             }
 
                             //비활성화일 때만 알림
-                            if(dataSnapshot.child("isOnline").getValue(Boolean.class)==null || !dataSnapshot.child("isOnline").getValue(Boolean.class)){
+                            if(currentHomeCare && dataSnapshot.child("isOnline").getValue(Boolean.class)==null || !dataSnapshot.child("isOnline").getValue(Boolean.class)){
 
                                 //새 메시지 알림
                                 final Integer newMessages = dataSnapshot.child("newMessages").getValue(Integer.class);
@@ -152,21 +147,5 @@ public class HomeCareService extends Service {
     public static String getUid() {
         return uid;
     }
-    private static String getLauncherClassName(Context context) {
 
-        PackageManager pm = context.getPackageManager();
-
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0);
-        for (ResolveInfo resolveInfo : resolveInfos) {
-            String pkgName = resolveInfo.activityInfo.applicationInfo.packageName;
-            if (pkgName.equalsIgnoreCase(context.getPackageName())) {
-                String className = resolveInfo.activityInfo.name;
-                return className;
-            }
-        }
-        return null;
-    }
 }

@@ -89,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String name = nameEdit.getText().toString().trim();
                 String phone = phoneEdit.getText().toString().trim();
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder("\n");
                 boolean valid = true;
 
                 if(!FirebaseAccount.checkEmailValid(email)){

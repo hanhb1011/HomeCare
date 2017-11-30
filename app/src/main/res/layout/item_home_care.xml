@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:id="@+id/home_care_card_view"
+<android.support.v7.widget.CardView android:id="@+id/home_care_card_view"
     android:transitionName="card_view_transition"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="25dp"
     android:layout_marginRight="25dp"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="20dp"
+    app:cardCornerRadius="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
