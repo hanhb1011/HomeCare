@@ -1,7 +1,10 @@
 package org.androidtown.homecare.Services;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +19,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Utils.HomeCareNotification;
 
+import java.util.List;
+
 /*
 
     홈케어 서비스(구현 예정)
@@ -27,7 +32,7 @@ import org.androidtown.homecare.Utils.HomeCareNotification;
 
 public class HomeCareService extends Service {
 
-    private String uid;
+    private static String uid;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference userRef = database.getReference().child("user");
     private int previousNumOfMessages = 0;
@@ -59,13 +64,14 @@ public class HomeCareService extends Service {
                                 return;
                             }
 
-                            //애플리케이션을 사용중일 때만
-                            if(!dataSnapshot.child("isOnline").getValue(Boolean.class)){
+                            //비활성화일 때만 알림
+                            if(dataSnapshot.child("isOnline").getValue(Boolean.class)==null || !dataSnapshot.child("isOnline").getValue(Boolean.class)){
 
                                 //새 메시지 알림
                                 final Integer newMessages = dataSnapshot.child("newMessages").getValue(Integer.class);
                                 if(newMessages > 0 && previousNumOfMessages!=newMessages){
                                     previousNumOfMessages = newMessages; //계속해서 띄우는 현상을 방지
+
                                     HomeCareNotification.notifyNewMessage(HomeCareService.this, "새로운 메시지가 "+ newMessages + "건 도착했습니다!");
                                 }
 
@@ -141,5 +147,26 @@ public class HomeCareService extends Service {
         }
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public static String getUid() {
+        return uid;
+    }
+    private static String getLauncherClassName(Context context) {
+
+        PackageManager pm = context.getPackageManager();
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0);
+        for (ResolveInfo resolveInfo : resolveInfos) {
+            String pkgName = resolveInfo.activityInfo.applicationInfo.packageName;
+            if (pkgName.equalsIgnoreCase(context.getPackageName())) {
+                String className = resolveInfo.activityInfo.name;
+                return className;
+            }
+        }
+        return null;
     }
 }

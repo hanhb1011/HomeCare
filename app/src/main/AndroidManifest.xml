@@ -9,6 +9,7 @@
         android:roundIcon="@drawable/homecare1"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".Activities.SigninActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

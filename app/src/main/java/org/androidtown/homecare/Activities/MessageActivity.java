@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.androidtown.homecare.Firebase.FirebaseMessenger;
 import org.androidtown.homecare.Models.Message;
 import org.androidtown.homecare.R;
@@ -32,7 +34,21 @@ public class MessageActivity extends AppCompatActivity {
         initFirebase();
 
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        // 유저 상태를 온라인으로 바꾸고 메시지를 "읽음"으로 표시
+        FirebaseDatabase.getInstance().getReference().child("user").child( MainActivity.getUidOfCurrentUser()).child("isOnline").setValue(true);
+        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //유저 상태를 오프라인으로 바꾸고 메시지를 "읽음"으로 표시
+        FirebaseDatabase.getInstance().getReference().child("user").child( MainActivity.getUidOfCurrentUser()).child("isOnline").setValue(false);
+        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
+    }
 
     private void initFirebase() {
         firebaseMessenger = new FirebaseMessenger(MessageActivity.this, MainActivity.getUidOfOpponentUser(), MainActivity.getHomeCareOfCurrentUser().getKey(), true);

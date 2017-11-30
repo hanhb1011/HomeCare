@@ -123,11 +123,11 @@ public class FirebaseHomeCare {
             5. 프로그레스 다이얼로그 dismiss
          */
 
-        userRef.child(uid).child(CURRENT_HOME_CARE).addListenerForSingleValueEvent(new ValueEventListener() {
+        userRef.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.getValue()==null) {
+                if(dataSnapshot.child(CURRENT_HOME_CARE).getValue()==null) {
 
                     DatabaseReference specificHomeCareRef = homeCareRef.push();
                     homeCare.setKey(specificHomeCareRef.getKey());
@@ -143,6 +143,12 @@ public class FirebaseHomeCare {
                     });
                     userRef.child(uid).child(CURRENT_HOME_CARE).setValue(specificHomeCareRef.getKey());
 
+                    //일 당 200만원 이상일 경우 과도한 금액 입력으로 판단
+                    long homecarePeriod = (homeCare.getEndPeriod() - homeCare.getStartPeriod())/(1000*60*60*24) +1; //단위는 일
+
+                    if(homeCare.getPay()/homecarePeriod >100 ) {
+                        userRef.child(uid).child("exceededPayments").setValue(dataSnapshot.child("exceededPayments").getValue(Integer.class)+1); // 과도한 금액 입력 Increment
+                    }
                 } else {
                     ProgressDialogHelper.dismiss();
                     MessageDialogFragment.showDialog(MessageDialogFragment.HOME_CARE_ALREADY_EXISTS, context);
@@ -223,7 +229,22 @@ public class FirebaseHomeCare {
                 } else {
                     //홈케어 도중, 상대방에게 삭제 요청을 해야하는 경우
                     if(MainActivity.getUidOfOpponentUser()!=null)
-                       userRef.child(MainActivity.getUidOfOpponentUser()).child(WAITING_FOR_DELETION).setValue(uid);
+                        userRef.child(MainActivity.getUidOfOpponentUser()).child(WAITING_FOR_DELETION).setValue(uid);
+                    else
+                        return;
+
+                    userRef.child(uid).child("suspensions").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Integer suspensions = dataSnapshot.getValue(Integer.class);
+                            userRef.child(uid).child("suspensions").setValue(suspensions+1); //위반 횟수를 1 increment
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                     homeCareRef.child(key).child(WAITING_FOR_DELETION).setValue(uid).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

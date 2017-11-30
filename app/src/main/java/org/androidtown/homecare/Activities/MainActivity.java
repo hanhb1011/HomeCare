@@ -16,8 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
 import org.androidtown.homecare.Firebase.FirebaseAccount;
 import org.androidtown.homecare.Firebase.FirebaseHomeCare;
@@ -218,9 +216,6 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         firebaseAccount.mAuth.addAuthStateListener(firebaseAccount.mAuthListener);
 
-        // 유저 상태를 온라인으로 바꾸고 메시지를 "읽음"으로 표시
-        FirebaseDatabase.getInstance().getReference().child("user").child(uidOfCurrentUser).child("isOnline").setValue(true);
-        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
     }
 
     @Override
@@ -229,10 +224,6 @@ public class MainActivity extends AppCompatActivity {
         if (firebaseAccount.mAuthListener != null) {
             firebaseAccount.mAuth.removeAuthStateListener(firebaseAccount.mAuthListener);
         }
-
-        //유저 상태를 오프라인으로 바꾸고 메시지를 "읽음"으로 표시
-        FirebaseDatabase.getInstance().getReference().child("user").child(uidOfCurrentUser).child("isOnline").setValue(false);
-        FirebaseDatabase.getInstance().getReference().child("user").child(MainActivity.getUidOfCurrentUser()).child("newMessages").setValue(0);
     }
 
     @Override

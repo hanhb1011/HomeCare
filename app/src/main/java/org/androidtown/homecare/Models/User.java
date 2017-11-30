@@ -44,10 +44,12 @@ public class User {
         homecareCount = 0;
         newMessages = 0;
         money = 0;
+        isOnline = false;
         suspensions = 0;
         exceededPayments = 0;
         type0 = 1;
         type1 = 0; //normal user
+
     }
 
     public String getUid() {
