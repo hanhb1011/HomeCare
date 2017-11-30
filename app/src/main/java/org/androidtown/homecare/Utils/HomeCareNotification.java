@@ -25,13 +25,17 @@ public class HomeCareNotification extends Notification {
     public static void notifyNewMessage(Context context, String content){
         if(notificationManager == null)
             notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Intent intent = new Intent(context, SigninActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 
-        Notification notification = notificationBuilder.setContentTitle("홈케어")
+        Notification notification = notificationBuilder
                 .setContentInfo("홈케어")
                 .setContentText(content)
-                .setSmallIcon(R.mipmap.ic_launcher).build();
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.homecare1)
+                .setContentIntent(pendingIntent).build();
 
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(context, SigninActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         notificationBuilder.setContentIntent(contentIntent);
