@@ -38,7 +38,6 @@ import org.androidtown.homecare.Utils.PageChangeListener;
     할 것들
     TODO 평가 완료됐을 때 현재 진행중인 홈케어 비우기
     TODO 테스팅 뒤 ->홈케어 기간이 끝났을 때 평가되게 변경
-    TODO 채팅 상대방 프로필사진 공유 자원으로 변경
     TODO 가상화폐 관련 기능 추가
 
 */

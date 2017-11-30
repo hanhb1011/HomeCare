@@ -104,8 +104,9 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"/>
         <Button
+
             android:id="@+id/start_date_pick_button_in_creation"
-            android:background="#000000"
+            android:background="@drawable/date_pick_button_image1"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginRight="5dp" />
@@ -122,7 +123,7 @@
             android:layout_marginRight="5dp" />
         <Button
             android:id="@+id/end_date_pick_button_in_creation"
-            android:background="#000000"
+            android:background="@drawable/date_pick_button_image1"
             android:layout_width="20dp"
             android:layout_height="20dp" />
     </LinearLayout>
