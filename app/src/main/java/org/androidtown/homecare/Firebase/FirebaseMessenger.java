@@ -177,4 +177,8 @@ public class FirebaseMessenger {
     public static DatabaseReference getChatRef() {
         return chatRef;
     }
+
+    public static DatabaseReference getUserRef() {
+        return userRef;
+    }
 }

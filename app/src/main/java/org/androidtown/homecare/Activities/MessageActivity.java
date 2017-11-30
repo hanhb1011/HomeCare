@@ -6,9 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.androidtown.homecare.Firebase.FirebaseMessenger;
 import org.androidtown.homecare.Models.Message;
@@ -20,6 +24,7 @@ public class MessageActivity extends AppCompatActivity {
     private Button messageSendButton, backButton;
     private EditText messageEditText;
     private FirebaseMessenger firebaseMessenger;
+    private TextView nameText, statusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +37,37 @@ public class MessageActivity extends AppCompatActivity {
         }
         initView();
         initFirebase();
+        initActionBar(); //상대방 이름, 활동 상태 표시
 
     }
+
+    private void initActionBar() {
+        String content = MainActivity.getOpponentUser().getName()+" 님과의 대화";
+        nameText.setText(content);
+
+        //현재 유저의 활동 상태에 따라 텍스트뷰에 표시
+        FirebaseMessenger.getUserRef().child(MainActivity.getUidOfOpponentUser()).child("isOnline").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot== null) {
+                    statusText.setText("활동 중이지 않음");
+                    return;
+                }
+                if(dataSnapshot.getValue(Boolean.class)){
+                    statusText.setText("현재 활동 중");
+                } else {
+                    statusText.setText("활동 중이지 않음");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -57,6 +91,8 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        nameText = findViewById(R.id.name_text_view_in_message);
+        statusText = findViewById(R.id.status_text_view_in_message);
         messageEditText = findViewById(R.id.message_edit_text);
         messageSendButton = findViewById(R.id.message_send_button);
         messageRecyclerView = findViewById(R.id.message_recycler_view);
