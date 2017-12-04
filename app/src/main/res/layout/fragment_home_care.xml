@@ -307,6 +307,7 @@
 
         <TextView
             android:textSize="20dp"
+            android:textStyle="bold"
             android:text="진행 중인 케어가 없습니다."
             android:textAlignment="center"
             android:layout_width="wrap_content"

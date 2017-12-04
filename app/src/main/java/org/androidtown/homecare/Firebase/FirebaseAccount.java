@@ -97,9 +97,11 @@ public class FirebaseAccount {
                             DatabaseReference specificUser = userRef.child(mAuth.getCurrentUser().getUid());
                             user.setDefaultInfo(mAuth.getCurrentUser().getUid());
 
+
                             specificUser.setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
+                                    userRef.child(mAuth.getCurrentUser().getUid()).child("isOnline").setValue(false);
                                     if(bitmap!= null) {
                                         ProgressDialogHelper.dismiss();
                                         ProgressDialogHelper.show(context, "사진을 업로드 중입니다");
