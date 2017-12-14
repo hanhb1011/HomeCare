@@ -131,7 +131,12 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
 
                 }
             });
-            titleText.setText(homeCare.getTitle());
+            if(homeCare.getTitle().length() > 12){
+                String title = homeCare.getTitle().substring(0, 12) + " ...";
+                titleText.setText(title);
+            } else {
+                titleText.setText(homeCare.getTitle());
+            }
 
             //시간 관련 텍스트뷰 (Period, Date)
             SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
