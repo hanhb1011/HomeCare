@@ -9,6 +9,7 @@
         android:orientation="vertical"
         android:background="@color/colorbackground">
         <RelativeLayout
+            android:id="@+id/action_bar_in_main"
             android:background="#ffffff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">

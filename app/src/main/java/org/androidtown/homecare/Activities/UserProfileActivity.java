@@ -18,12 +18,14 @@ import org.androidtown.homecare.R;
 public class UserProfileActivity extends AppCompatActivity {
 
     private ImageView profileImage;
-    private TextView starText;
+    private TextView starText, countText, locText;
     private RecyclerView recyclerView;
 
     private String uid;
     private String star;
     private String name;
+    private int count;
+    private String loc;
 
     private FirebaseProfile firebaseProfile;
     private FirebasePicture firebasePicture;
@@ -50,6 +52,8 @@ public class UserProfileActivity extends AppCompatActivity {
         uid = intent.getStringExtra("uid");
         star = intent.getStringExtra("star");
         name = intent.getStringExtra("name");
+        count = intent.getIntExtra("count", 0);
+        loc = intent.getStringExtra("loc");
 
         firebaseProfile = new FirebaseProfile(this);
         firebasePicture = new FirebasePicture(this);
@@ -71,10 +75,15 @@ public class UserProfileActivity extends AppCompatActivity {
         profileImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
-        starText = findViewById(R.id.star_text_view_in_profile);
+        starText = findViewById(R.id.star_text_view_in_activity_user_profile);
         starText.setText(star);
         recyclerView = findViewById(R.id.recycler_view_in_profile);
 
+        locText = findViewById(R.id.location_text_in_activity_user_profile);
+        locText.setText(loc);
+
+        countText = findViewById(R.id.home_care_count_in_activity_user_profile);
+        countText.setText(count + "회");
     }
 
     @Override

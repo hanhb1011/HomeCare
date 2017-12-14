@@ -9,7 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="235dp"
+        android:layout_height="250dp"
         android:fitsSystemWindows="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
@@ -20,9 +20,9 @@
             android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleGravity="top|center_horizontal"
-            app:contentScrim="?attr/colorPrimary">
+            app:contentScrim="?attr/colorPrimaryDark">
             <ImageView
-                android:background="@android:color/transparent"
+                android:background="@drawable/gradient_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -32,22 +32,108 @@
                 android:layout_marginTop="80dp"
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
-
                 <ImageView
                     android:scaleType="fitXY"
                     android:src="@drawable/profile_image_view_in_activity_home_care_image"
                     android:id="@+id/profile_image_view_in_profile"
                     android:layout_width="110dp"
-                    android:layout_height="110dp" />
-
-                <TextView
-                    android:id="@+id/star_text_view_in_profile"
-                    android:layout_marginTop="5dp"
-                    android:textAlignment="center"
-                    android:text="★"
-                    android:textSize="22sp"
+                    android:layout_height="110dp"
+                    android:layout_marginBottom="10dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:textSize="17sp"
+                                android:text="★"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/star_text_view_in_activity_user_profile"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:textSize="15sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:background="#ffffff"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent" />
+                        <LinearLayout
+                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:textSize="17sp"
+                                android:text="홈케어 진행"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/home_care_count_in_activity_user_profile"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:textSize="15sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:background="#ffffff"
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:textStyle="bold"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:textSize="17sp"
+                                android:text="지역"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:id="@+id/location_text_in_activity_user_profile"
+                                android:textColor="@color/white"
+                                android:textAlignment="center"
+                                android:textSize="15sp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
 
             </LinearLayout>
 

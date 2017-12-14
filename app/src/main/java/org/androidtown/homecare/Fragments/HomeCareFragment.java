@@ -90,7 +90,9 @@ public class HomeCareFragment extends Fragment {
                     Intent intent = new Intent(context, UserProfileActivity.class);
                     intent.putExtra("uid", user.getUid());
                     intent.putExtra("name", user.getName());
-                    intent.putExtra("star", "★ " + String.format("%.2f", user.getStar()) + " (" + user.getHomecareCount().toString() + ")");
+                    intent.putExtra("star",  String.format("%.2f", user.getStar()));
+                    intent.putExtra("loc", user.getLocation());
+                    intent.putExtra("count", user.getHomecareCount());
                     context.startActivity(intent);
 
                 }

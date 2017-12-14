@@ -17,6 +17,7 @@ import org.androidtown.homecare.Activities.UserProfileActivity;
 import org.androidtown.homecare.Adapters.EstimationAdapter;
 import org.androidtown.homecare.Fragments.HomeCareFragment;
 import org.androidtown.homecare.Fragments.MessageDialogFragment;
+import org.androidtown.homecare.Fragments.MyPageFragment;
 import org.androidtown.homecare.Models.Estimation;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
@@ -57,6 +58,7 @@ public class FirebaseProfile {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final User user = dataSnapshot.getValue(User.class);
                 MainActivity.setCurrentUser(user);
+                MyPageFragment.setView();
                 if(((MainActivity)context).getProfileImageView()!=null){
                     ((MainActivity)context).getProfileImageView().setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -64,7 +66,9 @@ public class FirebaseProfile {
                             Intent intent = new Intent(context, UserProfileActivity.class);
                             intent.putExtra("uid", uidOfCurrentUser);
                             intent.putExtra("name", user.getName());
-                            intent.putExtra("star",  "★ "+ String.format("%.2f", user.getStar())+" ("+user.getHomecareCount().toString()+")");
+                            intent.putExtra("star",  String.format("%.2f", user.getStar()));
+                            intent.putExtra("loc", user.getLocation());
+                            intent.putExtra("count", user.getHomecareCount());
                             context.startActivity(intent);
                         }
                     });

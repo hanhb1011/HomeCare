@@ -21,16 +21,28 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <LinearLayout
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <ImageView
-                    android:id="@+id/profile_image_view"
-                    android:src="@drawable/profile_image_view_in_activity_home_care_image"
-                    android:scaleType="fitCenter"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp" />
+                <RelativeLayout
+                    android:layout_width="85dp"
+                    android:layout_height="85dp">
+                    <ImageView
+                        android:layout_margin="10dp"
+                        android:id="@+id/profile_image_view"
+                        android:src="@drawable/profile_image_view_in_activity_home_care_image"
+                        android:scaleType="fitCenter"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <ImageView
+                        android:id="@+id/alert_image"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/alert_img"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp" />
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/home_care_name_text_view"
                     android:textAlignment="center"
@@ -41,6 +53,7 @@
                     android:textAlignment="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_marginRight="15dp"
@@ -54,7 +67,7 @@
                     android:textAlignment="center"
                     android:id="@+id/home_care_title_text_view"
                     android:text="제목"
-                    android:textSize="20dp"
+                    android:textSize="18sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -63,7 +76,6 @@
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="2017-11-07 20:00"
                     android:textAlignment="textEnd" />
 
                 <TextView
@@ -85,7 +97,6 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/home_care_location_text_view"
-                        android:text="서울"
                         android:textAlignment="center"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
@@ -106,7 +117,6 @@
                     <TextView
                         android:id="@+id/home_care_pay_text_view"
                         android:textAlignment="center"
-                        android:text="n만원"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -126,7 +136,6 @@
                     <TextView
                         android:id="@+id/home_care_period_text_view"
                         android:textAlignment="center"
-                        android:text="yyyy-mm-dd ~ mm-dd"
                         android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
@@ -145,7 +154,6 @@
                         android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/home_care_care_type_text_view"
-                        android:text="타입"
                         android:textAlignment="center"
                         android:layout_weight="1"
                         android:layout_width="match_parent"

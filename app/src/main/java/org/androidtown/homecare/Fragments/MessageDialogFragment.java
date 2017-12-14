@@ -60,6 +60,7 @@ public class MessageDialogFragment extends DialogFragment {
     public final static int LOG_OUT = 19;
     public final static int SIGN_UP_INVALID = 20;
     public final static int HOMECARE_DELETION_IN_MAIN = 21;
+    public final static int ALERT_ABNORMAL = 22;
 
     private static int code; //띄울 다이얼로그 타입 구분
 
@@ -303,6 +304,10 @@ public class MessageDialogFragment extends DialogFragment {
                     }
                 });
                 rightButton.setText("아니오");
+                break;
+            case ALERT_ABNORMAL :
+                titleText.setText("경고!");
+                contentText.setText("비정상 행동이 많은 사용자입니다.\n유의해주세요!\n\n홈케어 중단을 과도하게 많이 하거나\n과도한 금액을 자주 입력하였을 경우\n자동으로 비정상 사용자로 분류됩니다.");
                 break;
             default:
                 titleText.setText("에러");

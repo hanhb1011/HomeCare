@@ -61,7 +61,7 @@ public class DataGenerator {
 
     //실제 유저 데이터로부터 데이터셋을 생성
     //홈케어 카운트가 1회 이상인 유저 정보만 데이터셋에 포함시킨다.
-    //TODO TEST REQUIRED
+    @Deprecated //파이썬 코드로 대체됨
     public void generateTraningDataFromUsers(){
         DatabaseReference userRef = database.getReference().child("user");
         final DatabaseReference userDatasetRef = database.getReference().child("train_data_users");

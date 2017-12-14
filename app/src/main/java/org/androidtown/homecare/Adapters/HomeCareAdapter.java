@@ -19,6 +19,7 @@ import android.widget.TextView;
 import org.androidtown.homecare.Activities.HomeCareActivity;
 import org.androidtown.homecare.Activities.MainActivity;
 import org.androidtown.homecare.Activities.UserProfileActivity;
+import org.androidtown.homecare.Fragments.MessageDialogFragment;
 import org.androidtown.homecare.Models.HomeCare;
 import org.androidtown.homecare.Models.User;
 import org.androidtown.homecare.R;
@@ -88,12 +89,13 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
 
     private class HomeCareViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        ImageView profileImageView;
+        ImageView profileImageView, alertImage;
         TextView titleText, dateText, payText, periodText, careTypeText, locationText, nameText, starText;
         CardView homeCareCardView;
 
         public HomeCareViewHolder(View itemView) {
             super(itemView);
+            alertImage = itemView.findViewById(R.id.alert_image);
             homeCareCardView = itemView.findViewById(R.id.home_care_card_view);
             profileImageView = itemView.findViewById(R.id.profile_image_view);
             ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
@@ -122,7 +124,9 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
                     Intent intent = new Intent(context, UserProfileActivity.class);
                     intent.putExtra("uid", user.getUid());
                     intent.putExtra("name", user.getName());
-                    intent.putExtra("star",  "★ "+ String.format("%.2f", user.getStar())+" ("+user.getHomecareCount().toString()+")");
+                    intent.putExtra("star",  String.format("%.2f", user.getStar()));
+                    intent.putExtra("loc", user.getLocation());
+                    intent.putExtra("count", user.getHomecareCount());
                     context.startActivity(intent);
 
                 }
@@ -148,7 +152,17 @@ public class HomeCareAdapter extends RecyclerView.Adapter {
             starText.setText("★ " + String.format("%.2f",user.getStar()) + " (" + user.getHomecareCount() + ")");
             nameText.setText(user.getName());
 
-
+            if(user.getType1() == 1){
+                alertImage.setVisibility(View.VISIBLE);
+                alertImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        MessageDialogFragment.showDialog(MessageDialogFragment.ALERT_ABNORMAL, context);
+                    }
+                });
+            } else {
+                alertImage.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.androidtown.homecare.Adapters.ViewPagerAdapter;
@@ -32,12 +33,12 @@ import org.androidtown.homecare.Utils.BackButtonHandler;
 import org.androidtown.homecare.Utils.PageChangeListener;
 
 /*
-
     할 것들
     TODO 평가 완료됐을 때 현재 진행중인 홈케어 비우기
     TODO 테스팅 뒤 ->홈케어 기간이 끝났을 때 평가되게 변경
-    TODO 가상화폐 관련 기능 추가
-
+    TODO 다이얼로그 스크롤가능하게
+    TODO 위험유저 표시
+    TODO 프로필액티비티 수정
 */
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private static ImageView profileImageView;
     private TextView profileNameText, titleText;
     private static LinearLayout progressBarLayout;
+    private RelativeLayout actionBarLayout;
     private Button testButton;
 
     private static FirebaseAccount firebaseAccount;
@@ -145,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         //타이틀
         titleText = findViewById(R.id.title_text_view_in_main);
-
+        actionBarLayout = findViewById(R.id.action_bar_in_main);
 
         //버튼
         hiringButton = findViewById(R.id.hiring_fragment_button);
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         mainViewPager.setOffscreenPageLimit(3);
         mainViewPager.setAdapter(new ViewPagerAdapter(this, getSupportFragmentManager()));
         PageChangeListener pageChangeListener = new PageChangeListener(hiringButton, messageButton,
-                myPageButton, addOrCheckHomeCareButton, filterButton ,logOutButton, titleText);
+                myPageButton, addOrCheckHomeCareButton, filterButton ,logOutButton, titleText, actionBarLayout);
         pageChangeListener.onPageSelected(0);
         mainViewPager.setOnPageChangeListener(pageChangeListener);
         mainViewPager.setCurrentItem(0);
