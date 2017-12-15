@@ -1,5 +1,6 @@
 package org.androidtown.homecare.Firebase;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -127,6 +128,11 @@ public class FirebaseMessenger {
             userRef.child(oUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getValue()== null){
+                        Toast.makeText(context, "삭제된 홈케어입니다.", Toast.LENGTH_SHORT).show();
+                        ((Activity)context).finish();
+                    }
+
                     MessageAdapter messageAdapter = new MessageAdapter(context, messageList, oUid, dataSnapshot.child("name").getValue(String.class));
                     if(bitmap!=null)
                         messageAdapter.setBitmap(bitmap);

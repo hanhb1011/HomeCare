@@ -307,7 +307,7 @@ public class FirebaseHomeCare {
                         }
 
                         HomeCareAdapter homeCareAdapter = new HomeCareAdapter(homeCareList, userList, context);
-                        homeCareRecyclerView.setLayoutManager(new MyLinearLayoutManager(context));
+                        homeCareRecyclerView.setLayoutManager(new MyLinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
                         homeCareRecyclerView.setAdapter(homeCareAdapter);
                         if(MainActivity.getProgressBarLayout()!=null && MainActivity.getProgressBarLayout().getVisibility() != View.GONE)
                             MainActivity.getProgressBarLayout().setVisibility(View.GONE);
@@ -480,6 +480,11 @@ public class FirebaseHomeCare {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ProgressDialogHelper.dismiss();
+                if(dataSnapshot.getValue()==null){
+                    MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_NULL, context);
+                    return;
+                }
+
                 if(dataSnapshot.child("uid").getValue(String.class).equals(uid)){
                     Toast.makeText(context, "자신에게 신청할 수 없습니다.", Toast.LENGTH_SHORT).show();
                     return;
@@ -519,6 +524,11 @@ public class FirebaseHomeCare {
         homeCareRef.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getValue()==null){
+                    MessageDialogFragment.showDialog(MessageDialogFragment.HOMECARE_NULL, context);
+                    return;
+                }
 
                 //자신이 있는지 탐색하기
                 for (DataSnapshot ds : dataSnapshot.child(CANDIDATES).getChildren()) {
