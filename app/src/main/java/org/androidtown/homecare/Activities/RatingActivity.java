@@ -28,7 +28,7 @@ public class RatingActivity extends AppCompatActivity {
         initView();
         initInstances();
 
-
+        Toast.makeText(this, "현재 홈케어 기간에 관계 없이 여러 번 평가할 수 있습니다.", Toast.LENGTH_SHORT).show();
     }
 
     private void initInstances() {
