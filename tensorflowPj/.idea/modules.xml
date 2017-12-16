@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/first.iml" filepath="$PROJECT_DIR$/.idea/first.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/HomeCare.iml" filepath="$PROJECT_DIR$/.idea/HomeCare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../LastHomework/.idea/LastHomework.iml" filepath="$PROJECT_DIR$/../LastHomework/.idea/LastHomework.iml" />
     </modules>
   </component>
 </project>
