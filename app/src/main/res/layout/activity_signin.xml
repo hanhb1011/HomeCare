@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center">
     <ImageView
-        android:src="@drawable/homecare1"
+        android:src="@drawable/logo_main"
         android:layout_width="200dp"
         android:layout_height="200dp" />
     <LinearLayout
@@ -81,6 +81,7 @@
     </LinearLayout>
 
     <Button
+        android:visibility="gone"
         android:text="데이터셋 생성"
         android:id="@+id/data_generate_button"
         android:background="@android:color/transparent"
