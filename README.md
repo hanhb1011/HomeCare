@@ -1,9 +1,16 @@
-# 홈케어
-### 홈케어 매칭 애플리케이션입니다.
-#### last update : 17.12.20.
-![Alt text](/imgsources/logo_main.png)<br>
-![Alt text](/imgsources/1.jpg)
-![Alt text](/imgsources/2.jpg)<br>
-![Alt text](/imgsources/3.jpg)
-![Alt text](/imgsources/4.jpg)<br>
-![Alt text](/imgsources/5.png)
+# 홈케어 #
+
+## 설명 ##
+홈케어 서비스를 원하는 시니어와 홈케어 제공자를 연결시켜주는 앱 <br>
+
+
+<img align="center" src="/imgsources/logo_main.png" width="250"/>
+<p align="center">
+  <img src="/imgsources/1.jpg" width="250"/>
+  <img src="/imgsources/2.jpg" width="250"/>
+  <img src="/imgsources/3.jpg" width="250"/>
+</p>
+<p align="center">
+  <img src="/imgsources/4.jpg" width="250"/>
+  <img src="/imgsources/5.png" width="250"/>
+</p>
